@@ -90,6 +90,9 @@ Copyable `mfigci.yml` examples are available in `examples/configs/`:
 - `png-svg-pdf-gallery.yml`
 - `strict-release-gate.yml`
 
+For a staged rollout strategy, see the
+[adoption playbook](adoption-playbook.md).
+
 PNG and SVG example:
 
 ```yaml

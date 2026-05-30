@@ -9,6 +9,8 @@
   PNG/SVG/PDF galleries, and strict release gates.
 - Added GitHub issue and pull request templates for reproducible bug reports,
   scoped feature requests, and privacy-aware PR review.
+- Added an adoption playbook for staged repository rollout from scan-only
+  onboarding to gallery manifests, release gates, and optional MATLAB render.
 
 ## v2.4.1 - 2026-05-30
 

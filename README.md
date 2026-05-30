@@ -118,6 +118,8 @@ For real repositories, replace `example.png` with the actual gallery outputs.
 The [MATLAB CI guide](docs/matlab-ci-guide.md) includes PNG/SVG/PDF manifest
 examples and optional MATLAB render examples for local and self-hosted runners.
 Reusable starter configs live in [examples/configs](examples/configs/).
+The [adoption playbook](docs/adoption-playbook.md) shows a staged rollout from
+static scans to gallery manifests, release gates, and optional MATLAB render.
 The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
 preset, including its gallery-scoped PDF allowance.
 The [JSON report guide](docs/json-report.md) defines the stable report fields,
@@ -176,6 +178,7 @@ jobs:
 ## Documentation
 
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
+- [Adoption playbook](docs/adoption-playbook.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Rule design](docs/rule-design.md)

@@ -1,0 +1,105 @@
+# Adoption Playbook
+
+This playbook shows a conservative rollout path for adding `matlab-figure-ci`
+to a MATLAB figure repository. The goal is to make quality checks useful early
+without turning CI into a fragile release blocker.
+
+## Stage 1: Static Scan
+
+Start with privacy, provenance, and risky-extension scanning only.
+
+```bash
+cp examples/configs/minimal-static-scan.yml mfigci.yml
+mfigci scan --config mfigci.yml
+```
+
+Use this stage when a repository has source code and documentation but no stable
+gallery output yet.
+
+Expected outcome:
+
+- privacy findings are errors
+- provenance findings are warnings
+- risky binary/source files such as `.fig`, `.mat`, `.p`, `.docx`, and `.xlsx`
+  are blocked
+- MATLAB is not required
+
+## Stage 2: Gallery Manifest
+
+Once example figures are committed, add exact gallery expectations.
+
+```bash
+cp examples/configs/png-svg-gallery.yml mfigci.yml
+mfigci gallery --config mfigci.yml
+mfigci check --config mfigci.yml --report mfigci-report.md
+```
+
+Keep the manifest small at first. List only figures that are intentionally part
+of the public gallery. Avoid temporary renders, private drafts, and screenshots
+that contain local paths or unpublished project details.
+
+For figure repositories that export vector PDFs, use
+`examples/configs/png-svg-pdf-gallery.yml` and keep PDF files under the gallery
+path. The default extension policy warns on PDFs outside the gallery because
+they can also be papers, scans, or unclear source material.
+
+## Stage 3: Release Gate
+
+After the repository has stable examples and clean reports, enable warning
+failures only in release-oriented jobs.
+
+```bash
+mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
+```
+
+Or use the configuration form:
+
+```yaml
+strict:
+  fail_on_warnings: true
+```
+
+This is useful for release tags and pre-release branches. It is often too strict
+for early development because provenance warnings are designed to prompt human
+review, not to claim a file is illegal or unsafe.
+
+## Stage 4: Optional MATLAB Render
+
+Keep render disabled on public GitHub-hosted runners unless MATLAB is explicitly
+available.
+
+```yaml
+matlab:
+  enabled: false
+```
+
+For local machines or self-hosted runners:
+
+```bash
+export MATLAB_BIN=/Applications/MATLAB_R2025a.app/bin/matlab
+mfigci render --config mfigci.yml
+```
+
+When render is enabled in `mfigci check`, failures use a distinct render exit
+code so maintainers can separate policy failures from MATLAB runtime failures.
+
+## Dogfooding Pattern
+
+The companion repository `matlab-scientific-figures` uses the staged approach:
+
+- gallery files are checked against a real manifest
+- scan rules run without requiring MATLAB
+- render remains optional
+- reports are uploaded as CI artifacts
+
+This is a maintenance signal: the tool is exercised by a real public repository.
+It should not be described as download volume, external adoption, or guaranteed program eligibility.
+
+## Maintainer Checklist
+
+- Use relative paths in reports and issue examples.
+- Redact emails, local usernames, tokens, unpublished project names, and private
+  paths before sharing failures publicly.
+- Keep `gallery.expected` limited to intentional public artifacts.
+- Keep MATLAB rendering optional until runners are known to have MATLAB.
+- Use warning-strict mode for releases, not as the first onboarding step.

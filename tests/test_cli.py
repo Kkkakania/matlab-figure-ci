@@ -233,6 +233,44 @@ matlab:
     assert str(tmp_path) not in result.stdout
 
 
+def test_rules_lists_effective_policy_rules(tmp_path):
+    result = run_cli(["rules"], tmp_path)
+
+    assert result.returncode == 0
+    assert "matlab-figure-ci rules" in result.stdout
+    assert "Privacy rules: enabled" in result.stdout
+    assert "privacy.email error redacted" in result.stdout
+    assert "Provenance rules: enabled" in result.stdout
+    assert "provenance.author_marker warning pattern matched" in result.stdout
+    assert "Extension errors: .p, .mat, .fig, .doc, .docx, .xlsx, .vsd" in result.stdout
+    assert "Extension warnings: .pdf, .mlx, .zip" in result.stdout
+    assert str(tmp_path) not in result.stdout
+
+
+def test_rules_respects_disabled_sections_and_custom_extensions(tmp_path):
+    (tmp_path / "mfigci.yml").write_text(
+        """
+privacy:
+  enabled: false
+provenance:
+  enabled: false
+extensions:
+  error:
+    - ".raw"
+  warning: []
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["rules", "--config", "mfigci.yml"], tmp_path)
+
+    assert result.returncode == 0
+    assert "Privacy rules: disabled" in result.stdout
+    assert "Provenance rules: disabled" in result.stdout
+    assert "Extension errors: .raw" in result.stdout
+    assert "Extension warnings: (none)" in result.stdout
+
+
 def test_render_without_matlab_reports_clear_error(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

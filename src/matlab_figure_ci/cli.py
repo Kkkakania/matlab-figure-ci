@@ -265,6 +265,34 @@ def command_doctor(args) -> int:
     return 0
 
 
+def _print_rule_group(title: str, section: dict, privacy: bool = False) -> None:
+    enabled = section.get("enabled", True)
+    print(f"{title}: {'enabled' if enabled else 'disabled'}")
+    if not enabled:
+        return
+
+    redaction = "redacted" if privacy and section.get("redact_matches", True) else "pattern matched"
+    for rule in section.get("rules", []):
+        rule_id = rule.get("id", "(unnamed)")
+        severity = rule.get("severity", "warning")
+        message = redaction if privacy else "pattern matched"
+        print(f"  - {rule_id} {severity} {message}")
+
+
+def command_rules(args) -> int:
+    config = load_config(args.config)
+    privacy = config.get("privacy", {})
+    provenance = config.get("provenance", {})
+    extensions = config.get("extensions", {})
+
+    print("matlab-figure-ci rules")
+    _print_rule_group("Privacy rules", privacy, privacy=True)
+    _print_rule_group("Provenance rules", provenance)
+    print(f"Extension errors: {_format_list(extensions.get('error', []))}")
+    print(f"Extension warnings: {_format_list(extensions.get('warning', []))}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mfigci", description="CI checks for MATLAB scientific figure repositories.")
     parser.add_argument("--version", action="version", version=f"mfigci {__version__}")
@@ -302,6 +330,10 @@ def build_parser() -> argparse.ArgumentParser:
     doctor = subparsers.add_parser("doctor", help="show effective config summary")
     doctor.add_argument("--config", default="mfigci.yml")
     doctor.set_defaults(func=command_doctor)
+
+    rules = subparsers.add_parser("rules", help="show effective privacy, provenance, and extension rules")
+    rules.add_argument("--config", default="mfigci.yml")
+    rules.set_defaults(func=command_rules)
 
     return parser
 

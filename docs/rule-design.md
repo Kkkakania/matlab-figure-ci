@@ -47,6 +47,10 @@ Default warnings:
 PDF is a warning, not an error, because scientific figure repositories often
 export legitimate vector PDFs.
 
+Use `mfigci rules --config mfigci.yml` to inspect the effective rules before
+running a scan. The command prints rule ids, severities, and extension policies,
+but it does not print regex patterns or scan file contents.
+
 ## Presets
 
 Presets are named bundles of conservative defaults. They reduce configuration

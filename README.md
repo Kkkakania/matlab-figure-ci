@@ -56,6 +56,7 @@ mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
+mfigci rules --config mfigci.yml
 ```
 
 `mfigci check` writes both a Markdown report and machine-readable JSON:
@@ -127,6 +128,7 @@ config, policy, and report boundary.
 | `mfigci init` | Generate starter config and GitHub Actions workflow |
 | `mfigci render` | Optionally run MATLAB with `-batch` |
 | `mfigci doctor` | Show a privacy-safe summary of the effective configuration |
+| `mfigci rules` | Inspect effective privacy, provenance, and extension rules |
 
 ## GitHub Actions
 

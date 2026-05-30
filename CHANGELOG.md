@@ -3,6 +3,9 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+
+## v2.1.0 - 2026-05-30
+
 - Added `mfigci rules` for privacy-safe inspection of effective policy rules.
 
 ## v2.0.0 - 2026-05-30

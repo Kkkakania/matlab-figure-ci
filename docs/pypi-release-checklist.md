@@ -6,7 +6,8 @@ gate for a future PyPI release so publishing is deliberate and reproducible.
 ## Current Status
 
 - GitHub tag installation is the supported installation path.
-- `v2.0.0` has been released and dogfooded by `matlab-scientific-figures`.
+- Each GitHub release should be dogfooded by `matlab-scientific-figures`
+  before any future PyPI publishing step.
 - On 2026-05-30, `https://pypi.org/pypi/matlab-figure-ci/json` returned `404`,
   which means the package name was not present on PyPI at that time.
 

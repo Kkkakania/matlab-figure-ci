@@ -3,6 +3,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from matlab_figure_ci import __version__
+
 
 def run_cli(args, cwd):
     return subprocess.run(
@@ -168,6 +170,15 @@ def test_init_does_not_overwrite_without_force(tmp_path):
 
     assert forced.returncode == 0
     assert "keep-me" not in existing.read_text(encoding="utf-8")
+
+
+def test_init_workflow_uses_current_release_tag(tmp_path):
+    result = run_cli(["init"], tmp_path)
+
+    workflow = (tmp_path / ".github" / "workflows" / "figure-quality.yml").read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert f"matlab-figure-ci.git@v{__version__}" in workflow
+    assert __version__ == "0.2.0"
 
 
 def test_render_without_matlab_reports_clear_error(tmp_path):

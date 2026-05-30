@@ -69,7 +69,7 @@ matlab:
 """
 
 
-WORKFLOW = """name: figure-quality
+WORKFLOW = f"""name: figure-quality
 
 on:
   push:
@@ -88,7 +88,7 @@ jobs:
       - name: Install matlab-figure-ci
         run: |
           python -m pip install --upgrade pip
-          pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v0.1.0
+          pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v{__version__}
 
       - name: Run mfigci checks
         run: |

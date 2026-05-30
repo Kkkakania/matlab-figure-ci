@@ -2,7 +2,7 @@
 
 MATLAB rendering is optional in `matlab-figure-ci`.
 
-Public GitHub-hosted runners usually do not include MATLAB, so v0.1.0 keeps
+Public GitHub-hosted runners usually do not include MATLAB, so `mfigci` keeps
 `matlab.enabled: false` by default. The static checks still work without MATLAB:
 privacy scanning, provenance warnings, risky extension checks, gallery checks,
 and report generation.

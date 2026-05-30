@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.2.0 - 2026-05-30
 
 - Added the `matlab-figures` rule preset for gallery-oriented MATLAB figure
   repositories.

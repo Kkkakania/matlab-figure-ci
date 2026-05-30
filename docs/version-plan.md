@@ -4,7 +4,7 @@ This project uses version numbers to mark verified behavior, not momentum.
 
 ## Current State
 
-- Current public release: `v2.4.2`.
+- Current public release: `v2.4.3`.
 - Distribution: GitHub release tag install.
 - Maturity: small public CLI, dogfooded by the companion
   `matlab-scientific-figures` repository, not yet claiming broad adoption.
@@ -66,6 +66,17 @@ Delivered:
 - README install and GitHub Actions snippets aligned to the current release tag.
 - Continued downstream dogfooding by `matlab-scientific-figures`.
 
+## v2.4.3 Released
+
+Goal met: harden generated GitHub Actions workflows with least-privilege
+defaults.
+
+Delivered:
+
+- `mfigci init` workflow template now includes `permissions: contents: read`.
+- README workflow snippet mirrors the generated template.
+- CLI tests assert the generated workflow keeps least-privilege permissions.
+
 ## v2.4.2 Released
 
 Goal met: ship the post-v2 adoption and maintenance polish as a patch release.
@@ -76,7 +87,8 @@ Delivered:
 - Adoption playbook for staged repository rollout.
 - GitHub issue and pull request templates.
 - Release cadence documentation.
-- Generated workflow template updated to `actions/upload-artifact@v5`.
+- Generated workflow template updated to current maintained GitHub Actions and
+  `permissions: contents: read`.
 
 ## What Version Numbers Do Not Mean
 

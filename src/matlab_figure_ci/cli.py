@@ -75,6 +75,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   mfigci:
     runs-on: ubuntu-latest

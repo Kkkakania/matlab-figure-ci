@@ -8,7 +8,7 @@ Going forward, releases should slow down.
 
 ## Current Policy
 
-- Keep `v2.4.2` as the current public release until a user-visible reason
+- Keep `v2.4.3` as the current public release until a user-visible reason
   justifies another tag.
 - Use patch releases, such as `v2.4.3`, for documentation, CI template, or
   packaging maintenance.

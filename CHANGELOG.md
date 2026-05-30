@@ -4,6 +4,11 @@
 
 - Planned: post-v2 packaging and adoption hardening.
 
+## v2.4.3 - 2026-05-30
+
+- Updated the generated GitHub Actions workflow template and README example to
+  include `permissions: contents: read`.
+
 ## v2.4.2 - 2026-05-30
 
 - Add release cadence guidance and update the version plan so it matches the

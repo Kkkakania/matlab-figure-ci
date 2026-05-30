@@ -127,6 +127,10 @@ def _policy_exit_code(error_count: int, warning_count: int, fail_on_warnings: bo
     return 0
 
 
+def _fail_on_warnings(args, config: dict) -> bool:
+    return bool(args.fail_on_warnings or config.get("strict", {}).get("fail_on_warnings", False))
+
+
 def _build_check_results(config_path: Path, config: dict, root: Path, include_render: bool) -> CheckResults:
     scan = run_scan(root, config)
     gallery = run_gallery_check(root, config)
@@ -163,7 +167,7 @@ def command_scan(args) -> int:
     config = load_config(args.config)
     result = run_scan(Path.cwd(), config)
     _print_scan(result)
-    return _policy_exit_code(result.error_count, result.warning_count, args.fail_on_warnings)
+    return _policy_exit_code(result.error_count, result.warning_count, _fail_on_warnings(args, config))
 
 
 def command_gallery(args) -> int:
@@ -197,7 +201,7 @@ def command_check(args) -> int:
     return _policy_exit_code(
         int(results.summary.get("errors", 0)),
         int(results.summary.get("warnings", 0)),
-        args.fail_on_warnings,
+        _fail_on_warnings(args, config),
     )
 
 
@@ -251,6 +255,7 @@ def command_doctor(args) -> int:
     scan = config.get("scan", {})
     privacy = config.get("privacy", {})
     provenance = config.get("provenance", {})
+    strict = config.get("strict", {})
     gallery = config.get("gallery", {})
     matlab = config.get("matlab", {})
     presets = config.get("presets", config.get("preset", []))
@@ -270,6 +275,7 @@ def command_doctor(args) -> int:
     print(f"Scan exclude: {_format_list(scan.get('exclude', []))}")
     print(f"Privacy scan: {'enabled' if privacy.get('enabled', True) else 'disabled'}")
     print(f"Provenance scan: {'enabled' if provenance.get('enabled', True) else 'disabled'}")
+    print(f"Fail on warnings: {'enabled' if strict.get('fail_on_warnings', False) else 'disabled'}")
     print(f"Gallery path: {gallery.get('path', 'gallery')}")
     print(f"Gallery allowed extensions: {_format_list(gallery.get('allowed_extensions', []))}")
     print(f"Gallery expected files: {len(gallery.get('expected', []))}")

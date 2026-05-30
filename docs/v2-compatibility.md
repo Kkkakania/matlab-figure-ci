@@ -44,6 +44,7 @@ The following top-level keys are public v2 config keys:
 - `provenance`
 - `extensions`
 - `gallery`
+- `strict`
 - `matlab`
 
 The following nested keys are stable enough for downstream repositories:
@@ -63,6 +64,7 @@ The following nested keys are stable enough for downstream repositories:
 - `gallery.allowed_extensions`
 - `gallery.min_size_bytes`
 - `gallery.expected`
+- `strict.fail_on_warnings`
 - `matlab.enabled`
 - `matlab.bin_env`
 - `matlab.fallback_bin`
@@ -75,6 +77,9 @@ Unknown future keys should be ignored unless they conflict with existing keys.
 - Privacy rules are errors by default.
 - Privacy match messages are redacted as `<redacted>`.
 - Provenance rules are warnings by default.
+- Warnings do not fail `mfigci scan` or `mfigci check` by default.
+- `strict.fail_on_warnings: true` or `--fail-on-warnings` makes warning-only
+  `scan` and `check` runs return exit code 1.
 - Risky binary extensions such as `.p`, `.mat`, and `.fig` are errors by
   default.
 - `.pdf` is a warning globally but may be allowed in gallery paths by the

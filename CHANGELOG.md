@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added optional `strict.fail_on_warnings` config support for warning-strict
+  repositories.
 
 ## v2.2.0 - 2026-05-30
 

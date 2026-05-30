@@ -10,6 +10,7 @@ def test_missing_config_uses_safe_defaults(tmp_path):
 
     assert config["gallery"]["expected"] == []
     assert config["matlab"]["enabled"] is False
+    assert config["strict"]["fail_on_warnings"] is False
     assert ".pdf" in config["extensions"]["warning"]
     assert ".pdf" not in config["extensions"]["error"]
 

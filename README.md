@@ -102,6 +102,9 @@ gallery:
   expected:
     - "example.png"
 
+strict:
+  fail_on_warnings: false
+
 matlab:
   enabled: false
   bin_env: "MATLAB_BIN"

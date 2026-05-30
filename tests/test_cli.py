@@ -52,6 +52,22 @@ def test_scan_can_fail_on_warnings_when_requested(tmp_path):
     assert "1 warning" in strict.stdout
 
 
+def test_scan_can_fail_on_warnings_from_config(tmp_path):
+    (tmp_path / "script.m").write_text("% Author: example maintainer\nplot(1:10)\n", encoding="utf-8")
+    (tmp_path / "mfigci.yml").write_text(
+        """
+strict:
+  fail_on_warnings: true
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["scan", "--config", "mfigci.yml"], tmp_path)
+
+    assert result.returncode == 1
+    assert "1 warning" in result.stdout
+
+
 def test_check_generates_markdown_and_json_results(tmp_path):
     gallery = tmp_path / "gallery"
     gallery.mkdir()
@@ -85,6 +101,25 @@ def test_check_can_fail_on_warnings_when_requested(tmp_path):
 
     assert default.returncode == 0
     assert strict.returncode == 1
+    assert (tmp_path / ".mfigci-results.json").exists()
+
+
+def test_check_can_fail_on_warnings_from_config(tmp_path):
+    (tmp_path / "script.m").write_text("% Author: example maintainer\nplot(1:10)\n", encoding="utf-8")
+    (tmp_path / "gallery").mkdir()
+    (tmp_path / "mfigci.yml").write_text(
+        """
+strict:
+  fail_on_warnings: true
+gallery:
+  expected: []
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["check", "--config", "mfigci.yml"], tmp_path)
+
+    assert result.returncode == 1
     assert (tmp_path / ".mfigci-results.json").exists()
 
 

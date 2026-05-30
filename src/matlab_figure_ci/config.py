@@ -65,6 +65,9 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "warning": [".pdf", ".mlx", ".zip"],
         "allow": [],
     },
+    "strict": {
+        "fail_on_warnings": False,
+    },
     "gallery": {
         "path": "gallery",
         "allowed_extensions": [".png", ".svg", ".pdf"],

@@ -16,10 +16,11 @@ EXCLUDED_DIRS = {".git", ".mypy_cache", ".pytest_cache", ".venv", "__pycache__",
 EXTERNAL_PREFIXES = ("http://", "https://", "mailto:", "tel:")
 
 
-def iter_markdown_files() -> list[Path]:
+def iter_markdown_files(root: Path = ROOT) -> list[Path]:
+    root = root.resolve()
     files: list[Path] = []
-    for path in ROOT.rglob("*.md"):
-        if any(part in EXCLUDED_DIRS for part in path.relative_to(ROOT).parts):
+    for path in root.rglob("*.md"):
+        if any(part in EXCLUDED_DIRS for part in path.relative_to(root).parts):
             continue
         files.append(path)
     return sorted(files)
@@ -41,7 +42,9 @@ def should_skip(target: str) -> bool:
     )
 
 
-def check_file(path: Path) -> list[str]:
+def check_file(path: Path, root: Path = ROOT) -> list[str]:
+    root = root.resolve()
+    path = path.resolve()
     text = path.read_text(encoding="utf-8")
     text = FENCE_RE.sub("", text)
     errors: list[str] = []
@@ -55,27 +58,29 @@ def check_file(path: Path) -> list[str]:
             continue
         resolved = (path.parent / target_path).resolve()
         try:
-            resolved.relative_to(ROOT)
+            resolved.relative_to(root)
         except ValueError:
-            errors.append(f"{path.relative_to(ROOT)}: link escapes repository: {target}")
+            errors.append(f"{path.relative_to(root)}: link escapes repository: {target}")
             continue
         if not resolved.exists():
-            errors.append(f"{path.relative_to(ROOT)}: missing link target: {target}")
+            errors.append(f"{path.relative_to(root)}: missing link target: {target}")
 
     return errors
 
 
 def main() -> int:
+    root = ROOT
+    markdown_files = iter_markdown_files(root)
     errors: list[str] = []
-    for path in iter_markdown_files():
-        errors.extend(check_file(path))
+    for path in markdown_files:
+        errors.extend(check_file(path, root=root))
 
     if errors:
         for error in errors:
             print(f"ERROR {error}", file=sys.stderr)
         return 1
 
-    print(f"OK checked {len(iter_markdown_files())} Markdown file(s)")
+    print(f"OK checked {len(markdown_files)} Markdown file(s)")
     return 0
 
 

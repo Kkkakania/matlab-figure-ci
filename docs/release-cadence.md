@@ -10,7 +10,7 @@ Going forward, releases should slow down.
 
 - Keep `v2.4.5` as the current public release until a user-visible reason
   justifies another tag.
-- Use patch releases, such as `v2.4.5`, for documentation, CI template, or
+- Use patch releases, such as `v2.4.6`, for documentation, CI template, or
   packaging maintenance.
 - Use minor releases, such as `v2.5.0`, only when users get a new command,
   policy option, report field, or documented workflow.

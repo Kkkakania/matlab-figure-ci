@@ -1,6 +1,9 @@
 project:
   name: matlab-figure-ci
 
+presets:
+  - matlab-figures
+
 scan:
   include:
     - "."

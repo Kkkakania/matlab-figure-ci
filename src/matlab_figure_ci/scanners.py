@@ -100,11 +100,24 @@ def _extension_findings(root: Path, path: Path, config: dict) -> list[Finding]:
     suffix = path.suffix.lower()
     relative = _relative(root, path)
     extensions = config.get("extensions", {})
+    if _extension_is_allowed(relative, suffix, extensions.get("allow", [])):
+        return []
     if suffix in extensions.get("error", []):
         return [Finding("error", "extension.error", relative, None, f"risky extension {suffix}")]
     if suffix in extensions.get("warning", []):
         return [Finding("warning", "extension.warning", relative, None, f"review extension {suffix}")]
     return []
+
+
+def _extension_is_allowed(relative_path: str, suffix: str, allow_rules: list[dict]) -> bool:
+    for rule in allow_rules:
+        base_path = str(rule.get("path", "")).strip("/")
+        allowed_extensions = {str(item).lower() for item in rule.get("extensions", [])}
+        if not base_path or suffix not in allowed_extensions:
+            continue
+        if relative_path == base_path or relative_path.startswith(f"{base_path}/"):
+            return True
+    return False
 
 
 def _rule_findings(root: Path, path: Path, text: str, rules: list[dict], redact: bool) -> list[Finding]:

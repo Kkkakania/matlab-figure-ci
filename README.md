@@ -57,6 +57,9 @@ scan can run, gallery has no expected files, and MATLAB rendering is disabled.
 project:
   name: matlab-scientific-figures
 
+presets:
+  - matlab-figures
+
 scan:
   include:
     - "."
@@ -89,6 +92,8 @@ matlab:
 For real repositories, replace `example.png` with the actual gallery outputs.
 The [MATLAB CI guide](docs/matlab-ci-guide.md) includes PNG/SVG/PDF manifest
 examples and optional MATLAB render examples for local and self-hosted runners.
+The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
+preset, including its gallery-scoped PDF allowance.
 
 ## Commands
 

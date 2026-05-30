@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added the `matlab-figures` rule preset for gallery-oriented MATLAB figure
+  repositories.
 - Added `mfigci report --format json` for a documented machine-readable report.
 - Added a compact `mfigci report --style pr-comment` output for manual PR
   review notes.

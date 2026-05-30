@@ -63,6 +63,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "extensions": {
         "error": [".p", ".mat", ".fig", ".doc", ".docx", ".xlsx", ".vsd"],
         "warning": [".pdf", ".mlx", ".zip"],
+        "allow": [],
     },
     "gallery": {
         "path": "gallery",
@@ -79,6 +80,24 @@ DEFAULT_CONFIG: dict[str, Any] = {
 }
 
 
+PRESETS: dict[str, dict[str, Any]] = {
+    "matlab-figures": {
+        "gallery": {
+            "allowed_extensions": [".png", ".svg", ".pdf"],
+            "min_size_bytes": 1024,
+        },
+        "extensions": {
+            "allow": [
+                {
+                    "path": "gallery",
+                    "extensions": [".pdf"],
+                }
+            ],
+        },
+    }
+}
+
+
 def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
     result = deepcopy(base)
     for key, value in override.items():
@@ -86,6 +105,27 @@ def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]
             result[key] = deep_merge(result[key], value)
         else:
             result[key] = value
+    return result
+
+
+def _preset_names(loaded: dict[str, Any]) -> list[str]:
+    configured = loaded.get("presets", loaded.get("preset", []))
+    if isinstance(configured, str):
+        return [configured]
+    if isinstance(configured, list) and all(isinstance(item, str) for item in configured):
+        return list(configured)
+    if configured:
+        raise ConfigError("presets must be a string or list of strings")
+    return []
+
+
+def _apply_presets(config: dict[str, Any], names: list[str]) -> dict[str, Any]:
+    result = deepcopy(config)
+    for name in names:
+        if name not in PRESETS:
+            available = ", ".join(sorted(PRESETS))
+            raise ConfigError(f"Unknown preset '{name}'. Available presets: {available}")
+        result = deep_merge(result, PRESETS[name])
     return result
 
 
@@ -102,4 +142,5 @@ def load_config(path: str | Path = "mfigci.yml") -> dict[str, Any]:
     if not isinstance(loaded, dict):
         raise ConfigError(f"Configuration must be a mapping: {config_path}")
 
-    return deep_merge(DEFAULT_CONFIG, loaded)
+    config = _apply_presets(DEFAULT_CONFIG, _preset_names(loaded))
+    return deep_merge(config, loaded)

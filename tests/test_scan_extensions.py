@@ -26,6 +26,23 @@ def test_pdf_is_warning_not_error_by_default(tmp_path):
     assert result.findings[0].rule_id == "extension.warning"
 
 
+def test_matlab_figures_preset_allows_gallery_pdf_but_warns_elsewhere(tmp_path):
+    project = tmp_path / "project"
+    (project / "gallery").mkdir(parents=True)
+    (project / "docs").mkdir()
+    (project / "gallery" / "figure.pdf").write_bytes(b"%PDF-1.7")
+    (project / "docs" / "notes.pdf").write_bytes(b"%PDF-1.7")
+    config_path = project / "mfigci.yml"
+    config_path.write_text("presets:\n  - matlab-figures\n", encoding="utf-8")
+
+    result = run_scan(project, load_config(config_path))
+
+    warning_paths = {finding.path for finding in result.findings if finding.rule_id == "extension.warning"}
+    assert "gallery/figure.pdf" not in warning_paths
+    assert "docs/notes.pdf" in warning_paths
+    assert result.error_count == 0
+
+
 def test_binary_files_are_skipped_for_text_scans_without_traceback(tmp_path):
     project = tmp_path / "project"
     project.mkdir()

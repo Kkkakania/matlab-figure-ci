@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added a regression test that keeps public release references aligned with
+  the package version.
 
 ## v2.4.4 - 2026-05-30
 

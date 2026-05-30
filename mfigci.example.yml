@@ -1,0 +1,56 @@
+project:
+  name: matlab-scientific-figures
+
+scan:
+  include:
+    - "."
+  exclude:
+    - ".git"
+    - ".venv"
+    - "venv"
+    - "__pycache__"
+    - "pycache"
+    - "dist"
+    - "build"
+    - ".pytest_cache"
+    - "src/matlab_figure_ci.egg-info"
+    - "src/matlab_figure_ci/config.py"
+    - "mfigci.example.yml"
+    - "tests"
+    - "tests/fixtures"
+
+privacy:
+  enabled: true
+  redact_matches: true
+
+provenance:
+  enabled: true
+
+extensions:
+  error:
+    - ".p"
+    - ".mat"
+    - ".fig"
+    - ".doc"
+    - ".docx"
+    - ".xlsx"
+    - ".vsd"
+  warning:
+    - ".pdf"
+    - ".mlx"
+    - ".zip"
+
+gallery:
+  path: "gallery"
+  allowed_extensions:
+    - ".png"
+    - ".svg"
+    - ".pdf"
+  min_size_bytes: 1
+  expected: []
+
+matlab:
+  enabled: false
+  bin_env: "MATLAB_BIN"
+  fallback_bin: "matlab"
+  batch_command: "run_all_figures"

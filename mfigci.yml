@@ -1,0 +1,32 @@
+project:
+  name: matlab-figure-ci
+
+scan:
+  include:
+    - "."
+  exclude:
+    - ".git"
+    - ".venv"
+    - "venv"
+    - "__pycache__"
+    - "pycache"
+    - "dist"
+    - "build"
+    - ".pytest_cache"
+    - "src/matlab_figure_ci.egg-info"
+    - "src/matlab_figure_ci/config.py"
+    - "mfigci.example.yml"
+    - "tests"
+    - "tests/fixtures"
+
+gallery:
+  path: "gallery"
+  allowed_extensions:
+    - ".png"
+    - ".svg"
+    - ".pdf"
+  min_size_bytes: 1
+  expected: []
+
+matlab:
+  enabled: false

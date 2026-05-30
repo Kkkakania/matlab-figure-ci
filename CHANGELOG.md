@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: v2 compatibility-boundary work.
+- Documented the v2 CLI, config, policy, report, and migration compatibility
+  boundary.
 
 ## v1.0.0 - 2026-05-30
 

@@ -112,7 +112,9 @@ examples and optional MATLAB render examples for local and self-hosted runners.
 The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
 preset, including its gallery-scoped PDF allowance.
 The [JSON report guide](docs/json-report.md) defines the stable report fields,
-redaction guarantees, and path guarantees expected before v1.0.
+redaction guarantees, and path guarantees. The
+[v2 compatibility guide](docs/v2-compatibility.md) defines the long-term CLI,
+config, policy, and report boundary.
 
 ## Commands
 
@@ -164,6 +166,7 @@ jobs:
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Rule design](docs/rule-design.md)
+- [v2 compatibility](docs/v2-compatibility.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
 - [PyPI release checklist](docs/pypi-release-checklist.md)
 - [Version plan](docs/version-plan.md)

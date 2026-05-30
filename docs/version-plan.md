@@ -32,6 +32,7 @@ the public contract. A v2 release is justified only if the contract is clear and
 dogfooded by at least the companion repository.
 
 Primary issue: #9.
+Compatibility notes: `docs/v2-compatibility.md`.
 
 ## What Version Numbers Do Not Mean
 

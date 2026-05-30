@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Planned: conservative adoption and packaging improvements tracked in issues.
+
+## v0.2.1 - 2026-05-30
+
 - Added PyPI release checklist and package build CI for future publishing.
 - Added project URLs and optional build dependencies to package metadata.
 - Documented downstream dogfooding with `matlab-scientific-figures`.

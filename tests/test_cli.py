@@ -178,7 +178,7 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     workflow = (tmp_path / ".github" / "workflows" / "figure-quality.yml").read_text(encoding="utf-8")
     assert result.returncode == 0
     assert f"matlab-figure-ci.git@v{__version__}" in workflow
-    assert __version__ == "0.2.0"
+    assert "matlab-figure-ci.git@v0.1.0" not in workflow
 
 
 def test_render_without_matlab_reports_clear_error(tmp_path):

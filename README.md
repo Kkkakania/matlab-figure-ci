@@ -84,6 +84,10 @@ matlab:
   batch_command: "run_all_figures"
 ```
 
+For real repositories, replace `example.png` with the actual gallery outputs.
+The [MATLAB CI guide](docs/matlab-ci-guide.md) includes PNG/SVG/PDF manifest
+examples and optional MATLAB render examples for local and self-hosted runners.
+
 ## Commands
 
 | Command | Purpose |

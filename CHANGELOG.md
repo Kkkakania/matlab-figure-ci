@@ -3,6 +3,9 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+
+## v2.4.0 - 2026-05-30
+
 - Added early validation for policy rule severities, strict warning settings,
   and extension policy lists.
 

@@ -27,6 +27,16 @@ def test_feature_request_template_keeps_scope_small():
     assert "Backward compatibility risk" in text
 
 
+def test_adoption_report_template_collects_safe_downstream_feedback():
+    text = read_template(".github/ISSUE_TEMPLATE/adoption_report.md")
+
+    assert "Repository Context" in text
+    assert "Configuration Used" in text
+    assert "mfigci check" in text
+    assert "Redact private paths" in text
+    assert "Follow-Up Suggestion" in text
+
+
 def test_pull_request_template_preserves_quality_gate_checklist():
     text = read_template(".github/pull_request_template.md")
 

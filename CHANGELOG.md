@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added an adoption report issue template for downstream repository feedback.
 
 ## v2.4.3 - 2026-05-30
 

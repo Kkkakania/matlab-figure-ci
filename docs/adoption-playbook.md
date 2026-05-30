@@ -103,3 +103,13 @@ It should not be described as download volume, external adoption, or guaranteed 
 - Keep `gallery.expected` limited to intentional public artifacts.
 - Keep MATLAB rendering optional until runners are known to have MATLAB.
 - Use warning-strict mode for releases, not as the first onboarding step.
+
+## Share Adoption Feedback
+
+If you try `matlab-figure-ci` in another repository, open an adoption report
+issue. Include the smallest relevant `mfigci.yml` snippet, the commands you ran,
+the summary counts from the report, and one setup step that was awkward.
+
+Do not include private repository names, local absolute paths, unpublished data
+names, tokens, emails, or copied third-party materials. The report is meant to
+improve defaults and documentation, not to collect private project details.

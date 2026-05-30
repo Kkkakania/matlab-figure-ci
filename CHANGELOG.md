@@ -4,6 +4,7 @@
 
 - Planned: post-v2 packaging and adoption hardening.
 - Added an adoption report issue template for downstream repository feedback.
+- Documented how downstream users should share adoption feedback safely.
 
 ## v2.4.3 - 2026-05-30
 

@@ -120,6 +120,8 @@ examples and optional MATLAB render examples for local and self-hosted runners.
 Reusable starter configs live in [examples/configs](examples/configs/).
 The [adoption playbook](docs/adoption-playbook.md) shows a staged rollout from
 static scans to gallery manifests, release gates, and optional MATLAB render.
+If you try that rollout in another repository, use the adoption report issue
+template to share what worked and what made setup harder.
 The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
 preset, including its gallery-scoped PDF allowance.
 The [JSON report guide](docs/json-report.md) defines the stable report fields,

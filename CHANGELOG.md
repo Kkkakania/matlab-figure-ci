@@ -8,6 +8,7 @@
 - Added a README badge for the package build workflow.
 - Documented excluding a reviewed project `LICENSE` from scan noise without
   exempting third-party license bundles.
+- Added the reviewed `LICENSE` exclusion to sample configs.
 
 ## v2.4.3 - 2026-05-30
 

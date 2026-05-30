@@ -15,6 +15,7 @@ scan:
     - "dist"
     - "build"
     - ".pytest_cache"
+    - "LICENSE"
 
 gallery:
   path: "gallery"

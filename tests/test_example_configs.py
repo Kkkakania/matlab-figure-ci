@@ -12,6 +12,7 @@ def test_example_configs_parse_with_public_loader():
         config = load_config(config_path)
         assert config["matlab"]["enabled"] is False
         assert isinstance(config["gallery"]["expected"], list)
+        assert "LICENSE" in config["scan"]["exclude"]
 
 
 def test_strict_release_gate_sample_enables_warning_failures():

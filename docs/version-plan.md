@@ -4,7 +4,7 @@ This project uses version numbers to mark verified behavior, not momentum.
 
 ## Current State
 
-- Current public release: `v2.4.4`.
+- Current public release: `v2.4.5`.
 - Distribution: GitHub release tag install.
 - Maturity: small public CLI, dogfooded by the companion
   `matlab-scientific-figures` repository, not yet claiming broad adoption.
@@ -90,6 +90,18 @@ Delivered:
   `mfigci init` configuration.
 - Documentation on excluding a reviewed project `LICENSE` without exempting
   third-party license bundles.
+
+## v2.4.5 Released
+
+Goal met: make generated GitHub Actions workflows show the effective policy
+before enforcing it.
+
+Delivered:
+
+- `mfigci init` workflow template now runs `mfigci rules --config mfigci.yml`
+  before `mfigci check`.
+- README GitHub Actions snippet mirrors the generated workflow.
+- CLI tests assert the generated workflow exposes policy diagnostics.
 
 ## v2.4.2 Released
 

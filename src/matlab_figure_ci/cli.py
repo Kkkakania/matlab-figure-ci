@@ -94,6 +94,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v{__version__}
 
+      - name: Show effective mfigci policy
+        run: |
+          mfigci rules --config mfigci.yml
+
       - name: Run mfigci checks
         run: |
           mfigci check --config mfigci.yml --report mfigci-report.md

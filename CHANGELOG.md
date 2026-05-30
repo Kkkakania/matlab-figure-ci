@@ -3,11 +3,16 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+
+## v2.4.5 - 2026-05-30
+
 - Added a regression test that keeps public release references aligned with
   the package version.
 - Expanded the Codex maintainer workflow with concrete API credit uses and a
   factual evidence checklist.
 - Added CI smoke coverage for `mfigci doctor` and `mfigci rules`.
+- Updated the generated `mfigci init` workflow and README workflow snippet to
+  print effective policy rules before running the full check.
 
 ## v2.4.4 - 2026-05-30
 

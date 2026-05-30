@@ -244,6 +244,8 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     assert "actions/setup-python@v6" in workflow
     assert "actions/upload-artifact@v5" in workflow
     assert "actions/upload-artifact@v4" not in workflow
+    assert "Show effective mfigci policy" in workflow
+    assert "mfigci rules --config mfigci.yml" in workflow
 
 
 def test_init_config_excludes_reviewed_root_license(tmp_path):

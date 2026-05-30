@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Planned: conservative adoption and packaging improvements tracked in issues.
+- Documented the path from v0.3.0 to v2.0.0 with milestone boundaries.
 
 ## v0.2.1 - 2026-05-30
 

@@ -162,4 +162,5 @@ jobs:
 - [Rule design](docs/rule-design.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
 - [PyPI release checklist](docs/pypi-release-checklist.md)
+- [Version plan](docs/version-plan.md)
 - [Roadmap](ROADMAP.md)

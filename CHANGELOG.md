@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: stable result-schema work toward v1.0.0.
+- Documented stable JSON report fields, internal results boundaries, and
+  redaction/path guarantees.
 
 ## v0.3.0 - 2026-05-30
 

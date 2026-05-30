@@ -111,6 +111,8 @@ The [MATLAB CI guide](docs/matlab-ci-guide.md) includes PNG/SVG/PDF manifest
 examples and optional MATLAB render examples for local and self-hosted runners.
 The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
 preset, including its gallery-scoped PDF allowance.
+The [JSON report guide](docs/json-report.md) defines the stable report fields,
+redaction guarantees, and path guarantees expected before v1.0.
 
 ## Commands
 

@@ -24,7 +24,19 @@ mfigci report --format json --output mfigci-report.json
 If `.mfigci-results.json` is missing, run `mfigci check` before generating the
 report.
 
-## Stable Fields
+## Stability Boundary
+
+There are two JSON files in normal use:
+
+| File | Stability |
+|---|---|
+| `.mfigci-results.json` | Working file for `mfigci report`; useful for debugging but not the public integration surface before v1.0. |
+| `mfigci report --format json` output | Public report surface for integrations; uses `schema_version`. |
+
+Before v1.0, integrations should prefer the public JSON report. The working
+results file can gain internal fields as commands evolve.
+
+## Stable Report Fields
 
 The v1 JSON report exposes these top-level fields:
 
@@ -50,3 +62,144 @@ Finding entries expose:
 
 Privacy matches remain redacted in JSON reports, Markdown reports, terminal
 output, and `.mfigci-results.json`.
+
+## Summary Fields
+
+The `summary` object currently contains:
+
+| Field | Meaning |
+|---|---|
+| `errors` | Total policy or gallery errors |
+| `warnings` | Total warnings |
+| `files_scanned` | Number of text files scanned |
+| `gallery_checks` | Number of gallery entries checked |
+| `skipped_binary` | Number of binary or undecodable files skipped for text scanning |
+
+Consumers should tolerate additional summary keys.
+
+## Gallery Fields
+
+`gallery.items[]` contains:
+
+| Field | Meaning |
+|---|---|
+| `status` | `ok`, `warning`, or `error` |
+| `path` | Repository-relative gallery path |
+| `message` | Non-sensitive status message |
+
+## Render Fields
+
+`render` contains at least:
+
+| Field | Meaning |
+|---|---|
+| `status` | `skipped`, `ok`, or `error` |
+| `message` | Non-sensitive render status |
+| `exit_code` | Render process exit code when available |
+
+When MATLAB rendering is disabled, render status is `skipped`.
+
+## Redaction And Paths
+
+- Privacy match contents are written as `<redacted>`.
+- Terminal output, Markdown reports, public JSON reports, and
+  `.mfigci-results.json` all use redacted privacy messages.
+- File paths in findings and gallery results are repository-relative.
+- Config paths are reported exactly as passed to the CLI, such as `mfigci.yml`;
+  avoid passing absolute local config paths in public CI logs.
+
+## Examples
+
+### Scan-Only Finding
+
+```json
+{
+  "schema_version": "mfigci.report.v1",
+  "summary": {
+    "errors": 1,
+    "warnings": 0,
+    "files_scanned": 4,
+    "gallery_checks": 0,
+    "skipped_binary": 1
+  },
+  "findings": [
+    {
+      "severity": "error",
+      "rule_id": "privacy.email",
+      "path": "src/example.m",
+      "line": 12,
+      "message": "<redacted>"
+    }
+  ],
+  "gallery": {
+    "items": []
+  },
+  "render": {
+    "status": "skipped",
+    "message": "disabled",
+    "exit_code": 0
+  }
+}
+```
+
+### Gallery Error
+
+```json
+{
+  "schema_version": "mfigci.report.v1",
+  "summary": {
+    "errors": 1,
+    "warnings": 0,
+    "files_scanned": 10,
+    "gallery_checks": 1,
+    "skipped_binary": 0
+  },
+  "findings": [
+    {
+      "severity": "error",
+      "rule_id": "gallery.error",
+      "path": "gallery/example.png",
+      "line": null,
+      "message": "missing"
+    }
+  ],
+  "gallery": {
+    "items": [
+      {
+        "status": "error",
+        "path": "gallery/example.png",
+        "message": "missing"
+      }
+    ]
+  },
+  "render": {
+    "status": "skipped",
+    "message": "disabled",
+    "exit_code": 0
+  }
+}
+```
+
+### Render Failed
+
+```json
+{
+  "schema_version": "mfigci.report.v1",
+  "summary": {
+    "errors": 1,
+    "warnings": 0,
+    "files_scanned": 10,
+    "gallery_checks": 1,
+    "skipped_binary": 0
+  },
+  "findings": [],
+  "gallery": {
+    "items": []
+  },
+  "render": {
+    "status": "error",
+    "message": "MATLAB executable not found",
+    "exit_code": 3
+  }
+}
+```

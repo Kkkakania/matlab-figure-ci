@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added optional `--fail-on-warnings` strict mode to `scan` and `check`.
 
 ## v2.1.0 - 2026-05-30
 

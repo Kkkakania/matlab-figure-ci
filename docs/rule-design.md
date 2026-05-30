@@ -26,6 +26,11 @@ chooses to make them errors in `mfigci.yml`.
 Default provenance checks include source markers, third-party license markers,
 and platform traces.
 
+Projects that want strict release gates can keep provenance rules as warnings
+for local developer feedback and run `mfigci scan --fail-on-warnings` or
+`mfigci check --fail-on-warnings` in CI. This preserves the default v2 behavior
+while allowing a repository to opt into stricter policy enforcement.
+
 ## Extension Rules
 
 Default errors:

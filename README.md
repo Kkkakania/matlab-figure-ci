@@ -50,8 +50,10 @@ Run the quality gate:
 
 ```bash
 mfigci scan --config mfigci.yml
+mfigci scan --config mfigci.yml --fail-on-warnings
 mfigci gallery --config mfigci.yml
 mfigci check --config mfigci.yml --report mfigci-report.md
+mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
 mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
 mfigci report --format json --output mfigci-report.json
@@ -129,6 +131,9 @@ config, policy, and report boundary.
 | `mfigci render` | Optionally run MATLAB with `-batch` |
 | `mfigci doctor` | Show a privacy-safe summary of the effective configuration |
 | `mfigci rules` | Inspect effective privacy, provenance, and extension rules |
+
+By default, warnings do not fail CI. Add `--fail-on-warnings` to `scan` or
+`check` when a release gate should treat warnings as policy failures.
 
 ## GitHub Actions
 

@@ -119,6 +119,14 @@ def _print_gallery(result) -> None:
     print(f"{result.error_count} error(s), {result.warning_count} warning(s), {result.checked_count} gallery file(s) ok.")
 
 
+def _policy_exit_code(error_count: int, warning_count: int, fail_on_warnings: bool) -> int:
+    if error_count:
+        return 1
+    if fail_on_warnings and warning_count:
+        return 1
+    return 0
+
+
 def _build_check_results(config_path: Path, config: dict, root: Path, include_render: bool) -> CheckResults:
     scan = run_scan(root, config)
     gallery = run_gallery_check(root, config)
@@ -155,7 +163,7 @@ def command_scan(args) -> int:
     config = load_config(args.config)
     result = run_scan(Path.cwd(), config)
     _print_scan(result)
-    return result.exit_code
+    return _policy_exit_code(result.error_count, result.warning_count, args.fail_on_warnings)
 
 
 def command_gallery(args) -> int:
@@ -186,7 +194,11 @@ def command_check(args) -> int:
     if results.render.get("status") == "error":
         print(f"ERROR render {results.render.get('message')}")
         return 3
-    return 1 if results.summary.get("errors", 0) else 0
+    return _policy_exit_code(
+        int(results.summary.get("errors", 0)),
+        int(results.summary.get("warnings", 0)),
+        args.fail_on_warnings,
+    )
 
 
 def command_report(args) -> int:
@@ -300,6 +312,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     scan = subparsers.add_parser("scan", help="scan privacy, provenance, and risky file extensions")
     scan.add_argument("--config", default="mfigci.yml")
+    scan.add_argument("--fail-on-warnings", action="store_true", help="return exit code 1 when warnings are present")
     scan.set_defaults(func=command_scan)
 
     gallery = subparsers.add_parser("gallery", help="check expected gallery outputs")
@@ -314,6 +327,7 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--config", default="mfigci.yml")
     check.add_argument("--report", default="mfigci-report.md")
     check.add_argument("--results", default=".mfigci-results.json")
+    check.add_argument("--fail-on-warnings", action="store_true", help="return exit code 1 when warnings are present")
     check.set_defaults(func=command_check)
 
     report = subparsers.add_parser("report", help="build markdown or JSON from .mfigci-results.json")

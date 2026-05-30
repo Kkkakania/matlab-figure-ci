@@ -105,6 +105,20 @@ def build_pr_comment_report(results: CheckResults) -> str:
     return "\n".join(lines)
 
 
+def build_json_report(results: CheckResults) -> str:
+    payload = results.to_dict()
+    public_payload = {
+        "schema_version": "mfigci.report.v1",
+        "tool_version": payload.get("tool_version", ""),
+        "config_path": payload.get("config_path", ""),
+        "summary": payload.get("summary", {}),
+        "findings": payload.get("findings", []),
+        "gallery": payload.get("gallery", {}),
+        "render": payload.get("render", {}),
+    }
+    return json.dumps(public_payload, indent=2, ensure_ascii=False) + "\n"
+
+
 def save_results(results: CheckResults, path: str | Path) -> None:
     Path(path).write_text(json.dumps(results.to_dict(), indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -125,3 +139,7 @@ def save_markdown(results: CheckResults, path: str | Path, style: str = "full") 
     else:
         content = build_markdown_report(results)
     Path(path).write_text(content, encoding="utf-8")
+
+
+def save_json_report(results: CheckResults, path: str | Path) -> None:
+    Path(path).write_text(build_json_report(results), encoding="utf-8")

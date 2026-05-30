@@ -119,6 +119,41 @@ def test_report_can_write_pr_comment_style(tmp_path):
     assert "| error | privacy.email | src/example.m:1 | <redacted> |" in output
 
 
+def test_report_can_write_public_json_format(tmp_path):
+    secret = "person@example.com"
+    (tmp_path / ".mfigci-results.json").write_text(
+        json.dumps(
+            {
+                "summary": {"errors": 1, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},
+                "findings": [
+                    {
+                        "severity": "error",
+                        "rule_id": "privacy.email",
+                        "path": "src/example.m",
+                        "line": 1,
+                        "message": "<redacted>",
+                    }
+                ],
+                "scan": {"files_scanned": 1},
+                "gallery": {"items": []},
+                "render": {"status": "skipped", "message": "disabled"},
+                "config_path": "mfigci.yml",
+                "tool_version": "0.1.0",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_cli(["report", "--format", "json", "--output", "mfigci-report.json"], tmp_path)
+
+    output = (tmp_path / "mfigci-report.json").read_text(encoding="utf-8")
+    payload = json.loads(output)
+    assert result.returncode == 0
+    assert payload["schema_version"] == "mfigci.report.v1"
+    assert payload["findings"][0]["message"] == "<redacted>"
+    assert secret not in output
+
+
 def test_init_does_not_overwrite_without_force(tmp_path):
     existing = tmp_path / "mfigci.yml"
     existing.write_text("project:\n  name: keep-me\n", encoding="utf-8")

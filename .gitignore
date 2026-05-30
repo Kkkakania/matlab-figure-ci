@@ -6,5 +6,6 @@ dist/
 build/
 *.egg-info/
 mfigci-report.md
+mfigci-report.json
 mfigci-pr-comment.md
 .mfigci-results.json

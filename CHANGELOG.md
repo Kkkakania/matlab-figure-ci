@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added `mfigci report --format json` for a documented machine-readable report.
 - Added a compact `mfigci report --style pr-comment` output for manual PR
   review notes.
 - Added documentation for PR-comment-ready reports without adding a bot or

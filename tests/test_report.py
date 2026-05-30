@@ -1,6 +1,6 @@
 import json
 
-from matlab_figure_ci.report import build_markdown_report, build_pr_comment_report, load_results
+from matlab_figure_ci.report import build_json_report, build_markdown_report, build_pr_comment_report, load_results
 from matlab_figure_ci.result import CheckResults, Finding, GalleryItem, GalleryResults, ScanResults
 
 
@@ -100,3 +100,31 @@ def test_pr_comment_report_is_compact_and_redacted():
     assert "| error | privacy.email | src/example.m:3 | <redacted> |" in comment
     assert secret not in comment
     assert len(comment) < 1500
+
+
+def test_json_report_has_stable_fields_and_redacted_findings():
+    secret = "person@example.com"
+    results = CheckResults(
+        summary={"errors": 1, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},
+        findings=[
+            Finding(
+                severity="error",
+                rule_id="privacy.email",
+                path="src/example.m",
+                line=1,
+                message="<redacted>",
+            )
+        ],
+        scan=ScanResults(files_scanned=1),
+        gallery=GalleryResults(items=[]),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="mfigci.yml",
+        tool_version="0.1.0",
+    )
+
+    payload = json.loads(build_json_report(results))
+
+    assert payload["schema_version"] == "mfigci.report.v1"
+    assert payload["summary"]["errors"] == 1
+    assert payload["findings"][0]["message"] == "<redacted>"
+    assert secret not in json.dumps(payload)

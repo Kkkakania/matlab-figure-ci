@@ -14,7 +14,6 @@ make the tool easier to adopt without turning it into a large platform.
 ## v0.2.x Candidates
 
 - Publish to PyPI after the GitHub-tag install path has been tested.
-- Add a stable JSON report output interface.
 - Add rule presets for common MATLAB figure repository layouts.
 - Expand MATLAB render and gallery manifest examples.
 

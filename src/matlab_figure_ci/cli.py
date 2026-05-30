@@ -9,7 +9,7 @@ from . import __version__
 from .config import ConfigError, load_config
 from .gallery import run_gallery_check
 from .matlab import run_matlab_render
-from .report import load_results, save_markdown, save_results
+from .report import load_results, save_json_report, save_markdown, save_results
 from .result import CheckResults, Finding
 from .scanners import run_scan
 
@@ -195,7 +195,10 @@ def command_report(args) -> int:
     except FileNotFoundError as exc:
         print(str(exc))
         return 2
-    save_markdown(results, args.output, style=args.style)
+    if args.format == "json":
+        save_json_report(results, args.output)
+    else:
+        save_markdown(results, args.output, style=args.style)
     print(f"Report written to {args.output}")
     return 0
 
@@ -242,9 +245,10 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--results", default=".mfigci-results.json")
     check.set_defaults(func=command_check)
 
-    report = subparsers.add_parser("report", help="build markdown from .mfigci-results.json")
+    report = subparsers.add_parser("report", help="build markdown or JSON from .mfigci-results.json")
     report.add_argument("--input", default=".mfigci-results.json")
     report.add_argument("--output", default="mfigci-report.md")
+    report.add_argument("--format", choices=["markdown", "json"], default="markdown")
     report.add_argument("--style", choices=["full", "pr-comment"], default="full")
     report.set_defaults(func=command_report)
 

@@ -29,6 +29,7 @@ scan:
     - "dist"
     - "build"
     - ".pytest_cache"
+    - "LICENSE"
 
 privacy:
   enabled: true

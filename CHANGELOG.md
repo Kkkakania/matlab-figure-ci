@@ -3,12 +3,17 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+
+## v2.4.4 - 2026-05-30
+
 - Added an adoption report issue template for downstream repository feedback.
 - Documented how downstream users should share adoption feedback safely.
 - Added a README badge for the package build workflow.
 - Documented excluding a reviewed project `LICENSE` from scan noise without
   exempting third-party license bundles.
 - Added the reviewed `LICENSE` exclusion to sample configs.
+- Added the reviewed `LICENSE` exclusion to the generated `mfigci init`
+  configuration.
 
 ## v2.4.3 - 2026-05-30
 

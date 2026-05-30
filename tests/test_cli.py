@@ -246,6 +246,14 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     assert "actions/upload-artifact@v4" not in workflow
 
 
+def test_init_config_excludes_reviewed_root_license(tmp_path):
+    result = run_cli(["init"], tmp_path)
+
+    config_text = (tmp_path / "mfigci.yml").read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert '    - "LICENSE"' in config_text
+
+
 def test_doctor_shows_safe_defaults_without_config(tmp_path):
     result = run_cli(["doctor"], tmp_path)
 

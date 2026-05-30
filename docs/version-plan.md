@@ -4,7 +4,7 @@ This project uses version numbers to mark verified behavior, not momentum.
 
 ## Current State
 
-- Current public release: `v2.4.3`.
+- Current public release: `v2.4.4`.
 - Distribution: GitHub release tag install.
 - Maturity: small public CLI, dogfooded by the companion
   `matlab-scientific-figures` repository, not yet claiming broad adoption.
@@ -76,6 +76,20 @@ Delivered:
 - `mfigci init` workflow template now includes `permissions: contents: read`.
 - README workflow snippet mirrors the generated template.
 - CLI tests assert the generated workflow keeps least-privilege permissions.
+
+## v2.4.4 Released
+
+Goal met: publish post-v2 adoption and scan-noise hardening after it proved
+useful in downstream dogfooding.
+
+Delivered:
+
+- Adoption report issue template for downstream feedback.
+- README package workflow badge and adoption feedback documentation.
+- Reviewed root `LICENSE` exclusion in sample configs and generated
+  `mfigci init` configuration.
+- Documentation on excluding a reviewed project `LICENSE` without exempting
+  third-party license bundles.
 
 ## v2.4.2 Released
 

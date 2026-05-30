@@ -5,7 +5,7 @@ CHANGELOG, and the latest GitHub release.
 
 ## Current State
 
-- Latest release: `v2.3.0`.
+- Latest release: `v2.4.1`.
 - Supported install path: GitHub release tag.
 - Dogfooded by `matlab-scientific-figures`.
 - PyPI is planned but not published yet.
@@ -63,12 +63,30 @@ Delivered:
 - CHANGELOG and documentation aligned around the v2 adoption path.
 - Continued downstream dogfooding by `matlab-scientific-figures`.
 
+### v2.4.0: Policy Validation
+
+Delivered:
+
+- Early validation for policy rule severities.
+- Early validation for strict warning settings.
+- Early validation for extension policy lists.
+- README install examples aligned to the current release tag.
+
+### v2.4.1: Workflow Template Maintenance
+
+Delivered:
+
+- Repository CI workflows updated to Node 24-ready GitHub Actions.
+- `mfigci init` now generates Node 24-ready workflow examples.
+- README GitHub Actions snippets match the generated template.
+- Release tag, package smoke checks, and downstream dogfooding stay aligned.
+
 ## Next Candidates
 
 - PyPI release after package-name recheck and clean install smoke tests.
 - More sample configs for figure repositories with PNG/SVG/PDF galleries.
 - A short migration note for users moving from GitHub tag installs to PyPI.
-- Stronger docs around warning policy choices.
+- Stronger docs around warning policy choices and CI lifecycle maintenance.
 
 ## Non-Goals
 

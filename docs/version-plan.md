@@ -4,7 +4,7 @@ This project uses version numbers to mark verified behavior, not momentum.
 
 ## Current State
 
-- Current public release: `v2.4.1`.
+- Current public release: `v2.4.2`.
 - Distribution: GitHub release tag install.
 - Maturity: small public CLI, dogfooded by the companion
   `matlab-scientific-figures` repository, not yet claiming broad adoption.
@@ -65,6 +65,18 @@ Delivered:
 - Node 24-ready workflow templates.
 - README install and GitHub Actions snippets aligned to the current release tag.
 - Continued downstream dogfooding by `matlab-scientific-figures`.
+
+## v2.4.2 Released
+
+Goal met: ship the post-v2 adoption and maintenance polish as a patch release.
+
+Delivered:
+
+- Tested sample configs for common onboarding modes.
+- Adoption playbook for staged repository rollout.
+- GitHub issue and pull request templates.
+- Release cadence documentation.
+- Generated workflow template updated to `actions/upload-artifact@v5`.
 
 ## What Version Numbers Do Not Mean
 

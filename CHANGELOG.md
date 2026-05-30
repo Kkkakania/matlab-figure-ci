@@ -3,14 +3,19 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+
+## v2.4.2 - 2026-05-30
+
 - Add release cadence guidance and update the version plan so it matches the
-  current `v2.4.1` release state.
+  current release state.
 - Added tested example configs for minimal scanning, PNG/SVG galleries,
   PNG/SVG/PDF galleries, and strict release gates.
 - Added GitHub issue and pull request templates for reproducible bug reports,
   scoped feature requests, and privacy-aware PR review.
 - Added an adoption playbook for staged repository rollout from scan-only
   onboarding to gallery manifests, release gates, and optional MATLAB render.
+- Updated the generated GitHub Actions workflow template to use
+  `actions/upload-artifact@v5`.
 
 ## v2.4.1 - 2026-05-30
 

@@ -241,6 +241,8 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     assert "matlab-figure-ci.git@v0.1.0" not in workflow
     assert "actions/checkout@v6" in workflow
     assert "actions/setup-python@v6" in workflow
+    assert "actions/upload-artifact@v5" in workflow
+    assert "actions/upload-artifact@v4" not in workflow
 
 
 def test_doctor_shows_safe_defaults_without_config(tmp_path):

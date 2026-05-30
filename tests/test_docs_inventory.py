@@ -43,3 +43,10 @@ def test_docs_index_lists_all_documentation_files():
     assert doc_files
     for doc_file in doc_files:
         assert f"({doc_file})" in docs_index
+
+
+def test_ci_runs_markdown_link_check():
+    workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+
+    assert (ROOT / "scripts" / "check_markdown_links.py").exists()
+    assert "python scripts/check_markdown_links.py" in workflow

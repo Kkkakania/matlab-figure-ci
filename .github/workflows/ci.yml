@@ -25,6 +25,9 @@ jobs:
       - name: Run tests
         run: pytest
 
+      - name: Check Markdown links
+        run: python scripts/check_markdown_links.py
+
       - name: CLI help
         run: mfigci --help
 

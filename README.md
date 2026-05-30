@@ -145,4 +145,5 @@ jobs:
 - [PR comment report](docs/pr-comment-template.md)
 - [Rule design](docs/rule-design.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
+- [PyPI release checklist](docs/pypi-release-checklist.md)
 - [Roadmap](ROADMAP.md)

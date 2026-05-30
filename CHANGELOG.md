@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added PyPI release checklist and package build CI for future publishing.
+- Added project URLs and optional build dependencies to package metadata.
+
 ## v0.2.0 - 2026-05-30
 
 - Added the `matlab-figures` rule preset for gallery-oriented MATLAB figure

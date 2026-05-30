@@ -7,6 +7,8 @@
   documentation Markdown file discoverable from it.
 - Added a lightweight CI Markdown link check for repository-local documentation
   links.
+- Fixed roadmap and version-plan release metadata ordering after the `v2.4.5`
+  release, and added roadmap coverage to the public-version regression test.
 
 ## v2.4.5 - 2026-05-30
 

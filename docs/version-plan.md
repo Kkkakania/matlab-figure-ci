@@ -66,6 +66,19 @@ Delivered:
 - README install and GitHub Actions snippets aligned to the current release tag.
 - Continued downstream dogfooding by `matlab-scientific-figures`.
 
+## v2.4.2 Released
+
+Goal met: ship the post-v2 adoption and maintenance polish as a patch release.
+
+Delivered:
+
+- Tested sample configs for common onboarding modes.
+- Adoption playbook for staged repository rollout.
+- GitHub issue and pull request templates.
+- Release cadence documentation.
+- Generated workflow template updated to current maintained GitHub Actions and
+  `permissions: contents: read`.
+
 ## v2.4.3 Released
 
 Goal met: harden generated GitHub Actions workflows with least-privilege
@@ -102,19 +115,6 @@ Delivered:
   before `mfigci check`.
 - README GitHub Actions snippet mirrors the generated workflow.
 - CLI tests assert the generated workflow exposes policy diagnostics.
-
-## v2.4.2 Released
-
-Goal met: ship the post-v2 adoption and maintenance polish as a patch release.
-
-Delivered:
-
-- Tested sample configs for common onboarding modes.
-- Adoption playbook for staged repository rollout.
-- GitHub issue and pull request templates.
-- Release cadence documentation.
-- Generated workflow template updated to current maintained GitHub Actions and
-  `permissions: contents: read`.
 
 ## What Version Numbers Do Not Mean
 

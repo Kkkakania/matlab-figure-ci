@@ -5,7 +5,7 @@ CHANGELOG, and the latest GitHub release.
 
 ## Current State
 
-- Latest release: `v2.4.1`.
+- Latest release: `v2.4.5`.
 - Supported install path: GitHub release tag.
 - Dogfooded by `matlab-scientific-figures`.
 - PyPI is planned but not published yet.
@@ -82,6 +82,45 @@ Delivered:
 - `mfigci init` now generates Node 24-ready workflow examples.
 - README GitHub Actions snippets match the generated template.
 - Release tag, package smoke checks, and downstream dogfooding stay aligned.
+
+### v2.4.2: Adoption Materials
+
+Delivered:
+
+- Tested starter configurations for common onboarding modes.
+- Adoption playbook for staged rollout from scan-only checks to gallery
+  manifests and optional MATLAB rendering.
+- GitHub issue and pull request templates for reproducible maintainer feedback.
+- Release cadence documentation that separates patch, minor, and major release
+  reasons.
+
+### v2.4.3: Least-Privilege Workflows
+
+Delivered:
+
+- Generated GitHub Actions workflow now includes `permissions: contents: read`.
+- README workflow snippet mirrors the least-privilege template.
+- CLI tests assert the generated workflow keeps the permission boundary.
+
+### v2.4.4: Adoption Feedback and Scan Noise
+
+Delivered:
+
+- Adoption report issue template for downstream repository feedback.
+- Documentation for excluding a reviewed root `LICENSE` without exempting
+  third-party license bundles.
+- Sample configs and generated init config include the reviewed root `LICENSE`
+  exclusion.
+
+### v2.4.5: Policy Diagnostics in CI
+
+Delivered:
+
+- Generated GitHub Actions workflow runs `mfigci rules --config mfigci.yml`
+  before the full quality gate.
+- README workflow snippet mirrors the policy diagnostics step.
+- CLI tests assert the generated workflow exposes effective policy rules before
+  enforcement.
 
 ## Next Candidates
 

@@ -5,6 +5,8 @@
 - Planned: post-v2 packaging and adoption hardening.
 - Added a regression test that keeps public release references aligned with
   the package version.
+- Expanded the Codex maintainer workflow with concrete API credit uses and a
+  factual evidence checklist.
 
 ## v2.4.4 - 2026-05-30
 

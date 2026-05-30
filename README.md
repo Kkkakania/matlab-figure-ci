@@ -190,6 +190,7 @@ jobs:
 
 ## Documentation
 
+- [Documentation index](docs/README.md)
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
 - [Adoption playbook](docs/adoption-playbook.md)
 - [JSON report](docs/json-report.md)

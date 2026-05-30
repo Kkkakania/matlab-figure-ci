@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added a grouped documentation index and a regression test that keeps every
+  documentation Markdown file discoverable from it.
 
 ## v2.4.5 - 2026-05-30
 

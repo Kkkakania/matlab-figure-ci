@@ -34,3 +34,12 @@ def test_public_version_references_match_package_version():
     assert f"## {tag} -" in changelog
     assert f"Current public release: `{tag}`" in version_plan
     assert f"Keep `{tag}` as the current public release" in release_cadence
+
+
+def test_docs_index_lists_all_documentation_files():
+    docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    doc_files = sorted(path.name for path in (ROOT / "docs").glob("*.md") if path.name != "README.md")
+
+    assert doc_files
+    for doc_file in doc_files:
+        assert f"({doc_file})" in docs_index

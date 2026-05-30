@@ -132,3 +132,4 @@ jobs:
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
 - [Rule design](docs/rule-design.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
+- [Roadmap](ROADMAP.md)

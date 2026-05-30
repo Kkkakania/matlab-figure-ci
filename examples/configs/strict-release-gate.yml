@@ -1,0 +1,37 @@
+project:
+  name: matlab-strict-release-gallery
+
+presets:
+  - matlab-figures
+
+scan:
+  include:
+    - "."
+  exclude:
+    - ".git"
+    - ".venv"
+    - "venv"
+    - "__pycache__"
+    - "dist"
+    - "build"
+    - ".pytest_cache"
+
+gallery:
+  path: "gallery"
+  allowed_extensions:
+    - ".png"
+    - ".svg"
+    - ".pdf"
+  min_size_bytes: 1024
+  expected:
+    - "line_plot.png"
+    - "line_plot.svg"
+
+strict:
+  fail_on_warnings: true
+
+matlab:
+  enabled: false
+  bin_env: "MATLAB_BIN"
+  fallback_bin: "matlab"
+  batch_command: "addpath(genpath('src')); addpath(genpath('examples')); runAllExamples('gallery')"

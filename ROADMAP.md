@@ -9,6 +9,8 @@ CHANGELOG, and the latest GitHub release.
 - Supported install path: GitHub release tag.
 - Dogfooded by `matlab-scientific-figures`.
 - PyPI is planned but not published yet.
+- Maturity: small public CLI; adoption claims should stay conservative until
+  external users appear.
 - Stable public surface: CLI commands, config keys, JSON report fields, exit
   behavior, and policy warning semantics documented for v2.
 
@@ -87,6 +89,14 @@ Delivered:
 - More sample configs for figure repositories with PNG/SVG/PDF galleries.
 - A short migration note for users moving from GitHub tag installs to PyPI.
 - Stronger docs around warning policy choices and CI lifecycle maintenance.
+
+## Versioning Pace
+
+The fast `v2.x` stabilization happened during the first public hardening pass.
+It should not become the normal release rhythm. Future releases should follow
+[Release cadence](docs/release-cadence.md): patch tags for small fixes, minor
+tags for user-visible workflows, and no major tag unless the public
+compatibility boundary changes.
 
 ## Non-Goals
 

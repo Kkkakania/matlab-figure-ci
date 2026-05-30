@@ -117,6 +117,7 @@ matlab:
 For real repositories, replace `example.png` with the actual gallery outputs.
 The [MATLAB CI guide](docs/matlab-ci-guide.md) includes PNG/SVG/PDF manifest
 examples and optional MATLAB render examples for local and self-hosted runners.
+Reusable starter configs live in [examples/configs](examples/configs/).
 The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
 preset, including its gallery-scoped PDF allowance.
 The [JSON report guide](docs/json-report.md) defines the stable report fields,
@@ -181,5 +182,6 @@ jobs:
 - [v2 compatibility](docs/v2-compatibility.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
 - [PyPI release checklist](docs/pypi-release-checklist.md)
+- [Release cadence](docs/release-cadence.md)
 - [Version plan](docs/version-plan.md)
 - [Roadmap](ROADMAP.md)

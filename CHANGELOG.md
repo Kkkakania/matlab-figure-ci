@@ -3,6 +3,10 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Add release cadence guidance and update the version plan so it matches the
+  current `v2.4.1` release state.
+- Added tested example configs for minimal scanning, PNG/SVG galleries,
+  PNG/SVG/PDF galleries, and strict release gates.
 
 ## v2.4.1 - 2026-05-30
 

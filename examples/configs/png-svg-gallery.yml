@@ -1,0 +1,35 @@
+project:
+  name: matlab-png-svg-gallery
+
+scan:
+  include:
+    - "."
+  exclude:
+    - ".git"
+    - ".venv"
+    - "venv"
+    - "__pycache__"
+    - "dist"
+    - "build"
+    - ".pytest_cache"
+
+gallery:
+  path: "gallery"
+  allowed_extensions:
+    - ".png"
+    - ".svg"
+  min_size_bytes: 1024
+  expected:
+    - "line_plot.png"
+    - "line_plot.svg"
+    - "heatmap.png"
+    - "heatmap.svg"
+
+strict:
+  fail_on_warnings: false
+
+matlab:
+  enabled: false
+  bin_env: "MATLAB_BIN"
+  fallback_bin: "matlab"
+  batch_command: "addpath(genpath('src')); addpath(genpath('examples')); runAllExamples('gallery')"

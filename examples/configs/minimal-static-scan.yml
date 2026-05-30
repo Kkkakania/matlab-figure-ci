@@ -1,0 +1,27 @@
+project:
+  name: matlab-figure-project
+
+scan:
+  include:
+    - "."
+  exclude:
+    - ".git"
+    - ".venv"
+    - "venv"
+    - "__pycache__"
+    - "dist"
+    - "build"
+    - ".pytest_cache"
+
+gallery:
+  path: "gallery"
+  expected: []
+
+strict:
+  fail_on_warnings: false
+
+matlab:
+  enabled: false
+  bin_env: "MATLAB_BIN"
+  fallback_bin: "matlab"
+  batch_command: "run_all_figures"

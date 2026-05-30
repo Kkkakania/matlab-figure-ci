@@ -83,6 +83,13 @@ The `gallery.expected` list is a manifest of files that must exist after
 rendering or after checking in committed gallery outputs. Use real output names,
 not placeholder names.
 
+Copyable `mfigci.yml` examples are available in `examples/configs/`:
+
+- `minimal-static-scan.yml`
+- `png-svg-gallery.yml`
+- `png-svg-pdf-gallery.yml`
+- `strict-release-gate.yml`
+
 PNG and SVG example:
 
 ```yaml

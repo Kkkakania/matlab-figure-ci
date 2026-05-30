@@ -2,37 +2,69 @@
 
 This project uses version numbers to mark verified behavior, not momentum.
 
-## v0.3.0
+## Current State
 
-The next adoption release should make configuration easier to inspect before a
-repository enables CI. The main target is a config doctor command that can show
-the effective config, enabled scanners, gallery expectations, and MATLAB render
-setting without leaking private paths or scan matches.
+- Current public release: `v2.4.1`.
+- Distribution: GitHub release tag install.
+- Maturity: small public CLI, dogfooded by the companion
+  `matlab-scientific-figures` repository, not yet claiming broad adoption.
+- PyPI is planned after package-name and clean-install checks.
+
+Future tags should follow [Release cadence](release-cadence.md). Small
+documentation or workflow-template edits can land on `main` without a tag.
+
+## v0.3.0 Released
+
+Goal met: make configuration easier to inspect before a repository enables CI.
+
+Delivered:
+
+- `mfigci doctor`.
+- Effective config, enabled scanner, gallery, and MATLAB render summaries.
+- Privacy-safe output that avoids leaking scan matches or private paths.
 
 Primary issue: #7.
 
-## v1.0.0
+## v1.0.0 Released
 
-The first stable release should define what downstream users can rely on:
+Goal met: define what downstream users can rely on.
 
-- command names and exit codes
-- `.mfigci-results.json` structure
-- JSON report schema
-- redaction guarantees
-- relative-path guarantees
-- default config behavior
+Delivered:
+
+- Command names and exit codes.
+- `.mfigci-results.json` structure.
+- JSON report schema.
+- Redaction guarantees.
+- Relative-path guarantees.
+- Default config behavior.
 
 Primary issue: #8.
 
-## v2.0.0
+## v2.0.0 Released
 
-The major release should mark an explicit compatibility boundary for policy and
-report behavior. It should include migration notes from v0.x/v1.x and tests for
-the public contract. A v2 release is justified only if the contract is clear and
-dogfooded by at least the companion repository.
+Goal met: mark an explicit compatibility boundary for policy and report
+behavior.
+
+Delivered:
+
+- Migration notes from v0.x/v1.x.
+- Tests for the public contract.
+- Stable documented policy behavior.
+- Dogfooding by the companion repository.
 
 Primary issue: #9.
 Compatibility notes: `docs/v2-compatibility.md`.
+
+## v2.4.1 Released
+
+Goal met: keep generated workflow templates aligned with current GitHub Actions
+runtime changes.
+
+Delivered:
+
+- Node 24-ready workflow templates.
+- README install and GitHub Actions snippets aligned to the current release tag.
+- Continued downstream dogfooding by `matlab-scientific-figures`.
 
 ## What Version Numbers Do Not Mean
 

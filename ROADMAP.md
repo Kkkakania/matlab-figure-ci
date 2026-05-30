@@ -1,63 +1,80 @@
 # Roadmap
 
-`matlab-figure-ci` is intentionally small. Future releases should make the tool
-easier to adopt without turning it into a large platform. Version numbers move
-only when the public behavior is tested, documented, released, and dogfooded.
+`matlab-figure-ci` is intentionally small. The roadmap should match README,
+CHANGELOG, and the latest GitHub release.
 
 ## Current State
 
-- Latest release: `v0.2.1`.
+- Latest release: `v2.3.0`.
 - Supported install path: GitHub release tag.
 - Dogfooded by `matlab-scientific-figures`.
 - PyPI is planned but not published yet.
+- Stable public surface: CLI commands, config keys, JSON report fields, exit
+  behavior, and policy warning semantics documented for v2.
 
-## v0.3.0: Adoption Diagnostics
+## Completed Release Tracks
 
-Goal: help maintainers understand what `mfigci` will do before CI fails.
+### v0.3.0: Adoption Diagnostics
 
-- Add a config doctor command.
-- Make effective config, gallery expectations, enabled scanners, and MATLAB
-  render settings easier to inspect.
-- Keep output privacy-safe and path-safe.
+Delivered:
 
-Tracking issue: #7.
+- `mfigci doctor`.
+- Effective configuration inspection.
+- Privacy-safe configuration summaries.
 
-## v1.0.0: Stable CLI Contract
+### v1.0.0: Stable CLI Contract
 
-Goal: define the stable behavior that downstream repositories can rely on.
+Delivered:
 
-- Document result schema stability.
-- Document exit codes, redaction guarantees, and relative-path guarantees.
-- Keep the core commands stable: `scan`, `gallery`, `check`, `report`, `init`,
-  and optional `render`.
-- Publish only after local package checks and downstream dogfooding pass.
+- Stable command set for `scan`, `gallery`, `check`, `report`, `init`, and
+  optional `render`.
+- Documented exit behavior and local-first usage.
+- Downstream dogfooding in `matlab-scientific-figures`.
 
-Tracking issue: #8.
+### v2.0.0: Compatibility Boundary
 
-## v2.0.0: Compatibility Boundary
+Delivered:
 
-Goal: make policy and report compatibility explicit enough for long-term use.
+- Stable config and report compatibility contract.
+- v2 compatibility documentation.
+- Public policy behavior for privacy, provenance, risky extensions, gallery
+  checks, and optional MATLAB rendering.
 
-- Define stable config keys, policy rule behavior, result fields, and exit
-  codes.
-- Add migration notes from v0.x/v1.x.
-- Add tests for the public compatibility surface.
-- Keep the tool small and local-first.
+### v2.1.0: Policy Visibility
 
-Tracking issue: #9.
+Delivered:
 
-## PyPI Track
+- `mfigci rules`.
+- Downstream workflow step that prints the effective policy before checking.
 
-PyPI publishing is tracked separately in #1. It should happen only after the
-package name is rechecked, build verification passes, and a fresh install smoke
-test succeeds. PyPI is not required for the v2.0.0 compatibility boundary, but
-it can become the preferred install path once published.
+### v2.2.0: Warning Policy Clarity
 
-## Non-Goals For Early Releases
+Delivered:
+
+- README guidance that strict warning failure is available.
+- Downstream dogfooding keeps warnings non-blocking while policy evidence is
+  visible in CI artifacts.
+
+### v2.3.0: Adoption Hardening
+
+Delivered:
+
+- Current GitHub release tag used by README install examples.
+- CHANGELOG and documentation aligned around the v2 adoption path.
+- Continued downstream dogfooding by `matlab-scientific-figures`.
+
+## Next Candidates
+
+- PyPI release after package-name recheck and clean install smoke tests.
+- More sample configs for figure repositories with PNG/SVG/PDF galleries.
+- A short migration note for users moving from GitHub tag installs to PyPI.
+- Stronger docs around warning policy choices.
+
+## Non-Goals
 
 - Web UI.
 - Cloud service.
 - PR comment bot.
 - GitHub Marketplace action.
 - Complex plugin system.
-- Artificial usage, stars, or download claims.
+- Artificial usage, stars, downloads, or adoption claims.

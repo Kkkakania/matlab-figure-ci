@@ -2,7 +2,10 @@
 
 ## Unreleased
 
-- Planned: conservative adoption and packaging improvements tracked in issues.
+- Planned: stable result-schema work toward v1.0.0.
+
+## v0.3.0 - 2026-05-30
+
 - Documented the path from v0.3.0 to v2.0.0 with milestone boundaries.
 - Added `mfigci doctor` for privacy-safe effective configuration summaries.
 

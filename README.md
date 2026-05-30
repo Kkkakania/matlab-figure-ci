@@ -1,6 +1,7 @@
 # matlab-figure-ci
 
 [![CI](https://github.com/Kkkakania/matlab-figure-ci/actions/workflows/ci.yml/badge.svg)](https://github.com/Kkkakania/matlab-figure-ci/actions/workflows/ci.yml)
+[![Package](https://github.com/Kkkakania/matlab-figure-ci/actions/workflows/package.yml/badge.svg)](https://github.com/Kkkakania/matlab-figure-ci/actions/workflows/package.yml)
 [![Release](https://img.shields.io/github/v/release/Kkkakania/matlab-figure-ci)](https://github.com/Kkkakania/matlab-figure-ci/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 

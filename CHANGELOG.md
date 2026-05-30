@@ -5,6 +5,7 @@
 - Planned: post-v2 packaging and adoption hardening.
 - Added an adoption report issue template for downstream repository feedback.
 - Documented how downstream users should share adoption feedback safely.
+- Added a README badge for the package build workflow.
 
 ## v2.4.3 - 2026-05-30
 

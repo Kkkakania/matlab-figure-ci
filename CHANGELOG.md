@@ -2,7 +2,10 @@
 
 ## Unreleased
 
-- Planned: v2 compatibility-boundary work.
+- Planned: post-v2 packaging and adoption hardening.
+
+## v2.0.0 - 2026-05-30
+
 - Documented the v2 CLI, config, policy, report, and migration compatibility
   boundary.
 

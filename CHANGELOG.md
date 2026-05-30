@@ -4,6 +4,7 @@
 
 - Added PyPI release checklist and package build CI for future publishing.
 - Added project URLs and optional build dependencies to package metadata.
+- Documented downstream dogfooding with `matlab-scientific-figures`.
 
 ## v0.2.0 - 2026-05-30
 

@@ -16,6 +16,22 @@ It is designed to pair with
 - `matlab-figure-ci` checks that figure repositories stay clean, reproducible,
   and safe to publish.
 
+## Dogfooding Status
+
+This tool is dogfooded by
+[`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures),
+the companion MATLAB gallery repository. Its workflow installs
+`matlab-figure-ci` from a release tag and runs:
+
+```bash
+mfigci check --config mfigci.yml --report mfigci-report.md
+```
+
+The downstream configuration checks gallery PNG/SVG outputs, privacy and
+provenance traces, risky file extensions, and the `matlab-figures` preset. This
+is a maintenance signal, not a usage metric: it shows the CLI is exercised by a
+real public repository without claiming external adoption or downloads.
+
 ## Quick Start
 
 Install from the GitHub release tag:

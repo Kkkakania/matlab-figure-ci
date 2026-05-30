@@ -195,7 +195,7 @@ def command_report(args) -> int:
     except FileNotFoundError as exc:
         print(str(exc))
         return 2
-    save_markdown(results, args.output)
+    save_markdown(results, args.output, style=args.style)
     print(f"Report written to {args.output}")
     return 0
 
@@ -245,6 +245,7 @@ def build_parser() -> argparse.ArgumentParser:
     report = subparsers.add_parser("report", help="build markdown from .mfigci-results.json")
     report.add_argument("--input", default=".mfigci-results.json")
     report.add_argument("--output", default="mfigci-report.md")
+    report.add_argument("--style", choices=["full", "pr-comment"], default="full")
     report.set_defaults(func=command_report)
 
     init = subparsers.add_parser("init", help="write example config and GitHub Actions workflow")

@@ -8,6 +8,12 @@ from pathlib import Path
 from .result import CheckResults
 
 
+def _format_location(path: str, line: int | None) -> str:
+    if line is None:
+        return path
+    return f"{path}:{line}"
+
+
 def build_markdown_report(results: CheckResults) -> str:
     summary = results.summary
     lines = [
@@ -52,6 +58,53 @@ def build_markdown_report(results: CheckResults) -> str:
     return "\n".join(lines)
 
 
+def build_pr_comment_report(results: CheckResults) -> str:
+    summary = results.summary
+    errors = int(summary.get("errors", 0))
+    warnings = int(summary.get("warnings", 0))
+    status = "failed" if errors else "passed"
+    lines = [
+        "### matlab-figure-ci check",
+        "",
+        f"Status: **{status}**",
+        "",
+        f"- Errors: {errors}",
+        f"- Warnings: {warnings}",
+        f"- Files scanned: {summary.get('files_scanned', 0)}",
+        f"- Gallery checks: {summary.get('gallery_checks', 0)}",
+        f"- MATLAB render: {results.render.get('status', 'skipped')}",
+        "",
+    ]
+
+    if results.findings:
+        lines.extend(
+            [
+                "Top findings:",
+                "",
+                "| Severity | Rule | Location | Message |",
+                "|---|---|---|---|",
+            ]
+        )
+        for finding in results.findings[:8]:
+            lines.append(
+                f"| {finding.severity} | {finding.rule_id} | {_format_location(finding.path, finding.line)} | {finding.message} |"
+            )
+        if len(results.findings) > 8:
+            lines.append(f"| info | truncated |  | {len(results.findings) - 8} more finding(s) in the full report |")
+        lines.append("")
+    else:
+        lines.extend(["No findings.", ""])
+
+    if errors:
+        lines.append("Next step: fix error findings before merging or releasing.")
+    elif warnings:
+        lines.append("Next step: review warning findings and confirm they are intentional.")
+    else:
+        lines.append("Next step: no blocking figure-quality issues found.")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def save_results(results: CheckResults, path: str | Path) -> None:
     Path(path).write_text(json.dumps(results.to_dict(), indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -66,5 +119,9 @@ def load_results(path: str | Path) -> CheckResults:
     return CheckResults.from_dict(data)
 
 
-def save_markdown(results: CheckResults, path: str | Path) -> None:
-    Path(path).write_text(build_markdown_report(results), encoding="utf-8")
+def save_markdown(results: CheckResults, path: str | Path, style: str = "full") -> None:
+    if style == "pr-comment":
+        content = build_pr_comment_report(results)
+    else:
+        content = build_markdown_report(results)
+    Path(path).write_text(content, encoding="utf-8")

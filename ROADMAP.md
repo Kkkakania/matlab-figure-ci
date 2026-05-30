@@ -16,7 +16,6 @@ make the tool easier to adopt without turning it into a large platform.
 - Publish to PyPI after the GitHub-tag install path has been tested.
 - Add a stable JSON report output interface.
 - Add rule presets for common MATLAB figure repository layouts.
-- Add a PR-comment-ready Markdown report template without building a bot.
 - Expand MATLAB render and gallery manifest examples.
 
 ## Later Ideas

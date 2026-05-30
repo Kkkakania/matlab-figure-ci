@@ -1,6 +1,6 @@
 import json
 
-from matlab_figure_ci.report import build_markdown_report, load_results
+from matlab_figure_ci.report import build_markdown_report, build_pr_comment_report, load_results
 from matlab_figure_ci.result import CheckResults, Finding, GalleryItem, GalleryResults, ScanResults
 
 
@@ -64,3 +64,39 @@ def test_json_results_do_not_contain_privacy_match(tmp_path):
     loaded = load_results(path)
 
     assert secret not in json.dumps(loaded.to_dict())
+
+
+def test_pr_comment_report_is_compact_and_redacted():
+    secret = "person@example.com"
+    results = CheckResults(
+        summary={"errors": 1, "warnings": 1, "files_scanned": 8, "gallery_checks": 2},
+        findings=[
+            Finding(
+                severity="error",
+                rule_id="privacy.email",
+                path="src/example.m",
+                line=3,
+                message="<redacted>",
+            ),
+            Finding(
+                severity="warning",
+                rule_id="provenance.author_marker",
+                path="README.md",
+                line=9,
+                message="pattern matched",
+            ),
+        ],
+        scan=ScanResults(files_scanned=8),
+        gallery=GalleryResults(items=[GalleryItem(status="ok", path="gallery/example.png", message="present")]),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="mfigci.yml",
+        tool_version="0.1.0",
+    )
+
+    comment = build_pr_comment_report(results)
+
+    assert comment.startswith("### matlab-figure-ci check")
+    assert "# matlab-figure-ci report" not in comment
+    assert "| error | privacy.email | src/example.m:3 | <redacted> |" in comment
+    assert secret not in comment
+    assert len(comment) < 1500

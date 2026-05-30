@@ -37,6 +37,7 @@ mfigci scan --config mfigci.yml
 mfigci gallery --config mfigci.yml
 mfigci check --config mfigci.yml --report mfigci-report.md
 mfigci report --input .mfigci-results.json --output mfigci-report.md
+mfigci report --style pr-comment --output mfigci-pr-comment.md
 ```
 
 `mfigci check` writes both a Markdown report and machine-readable JSON:
@@ -95,7 +96,7 @@ examples and optional MATLAB render examples for local and self-hosted runners.
 | `mfigci scan` | Scan privacy, provenance, and risky file extensions |
 | `mfigci gallery` | Check expected gallery files exist, are non-empty, and use allowed formats |
 | `mfigci check` | Run scan, gallery, optional render, and write reports |
-| `mfigci report` | Build Markdown from `.mfigci-results.json` |
+| `mfigci report` | Build full or PR-comment Markdown from `.mfigci-results.json` |
 | `mfigci init` | Generate starter config and GitHub Actions workflow |
 | `mfigci render` | Optionally run MATLAB with `-batch` |
 
@@ -134,6 +135,7 @@ jobs:
 ## Documentation
 
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
+- [PR comment report](docs/pr-comment-template.md)
 - [Rule design](docs/rule-design.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
 - [Roadmap](ROADMAP.md)

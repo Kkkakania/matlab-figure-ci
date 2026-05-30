@@ -87,6 +87,38 @@ def test_report_reads_existing_json_and_does_not_make_empty_report(tmp_path):
     assert "# matlab-figure-ci report" in (tmp_path / "report.md").read_text(encoding="utf-8")
 
 
+def test_report_can_write_pr_comment_style(tmp_path):
+    (tmp_path / ".mfigci-results.json").write_text(
+        json.dumps(
+            {
+                "summary": {"errors": 1, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},
+                "findings": [
+                    {
+                        "severity": "error",
+                        "rule_id": "privacy.email",
+                        "path": "src/example.m",
+                        "line": 1,
+                        "message": "<redacted>",
+                    }
+                ],
+                "scan": {"files_scanned": 1},
+                "gallery": {"items": []},
+                "render": {"status": "skipped", "message": "disabled"},
+                "config_path": "mfigci.yml",
+                "tool_version": "0.1.0",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_cli(["report", "--style", "pr-comment", "--output", "pr-comment.md"], tmp_path)
+
+    output = (tmp_path / "pr-comment.md").read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert output.startswith("### matlab-figure-ci check")
+    assert "| error | privacy.email | src/example.m:1 | <redacted> |" in output
+
+
 def test_init_does_not_overwrite_without_force(tmp_path):
     existing = tmp_path / "mfigci.yml"
     existing.write_text("project:\n  name: keep-me\n", encoding="utf-8")

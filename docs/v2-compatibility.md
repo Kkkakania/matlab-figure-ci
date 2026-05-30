@@ -80,6 +80,8 @@ Unknown future keys should be ignored unless they conflict with existing keys.
 - Warnings do not fail `mfigci scan` or `mfigci check` by default.
 - `strict.fail_on_warnings: true` or `--fail-on-warnings` makes warning-only
   `scan` and `check` runs return exit code 1.
+- Invalid policy configuration, such as unknown severities or malformed
+  extension lists, fails before scanning and returns exit code 2.
 - Risky binary extensions such as `.p`, `.mat`, and `.fig` are errors by
   default.
 - `.pdf` is a warning globally but may be allowed in gallery paths by the

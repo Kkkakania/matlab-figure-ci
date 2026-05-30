@@ -331,6 +331,26 @@ extensions:
     assert "Extension warnings: (none)" in result.stdout
 
 
+def test_invalid_config_returns_usage_error_without_traceback(tmp_path):
+    (tmp_path / "mfigci.yml").write_text(
+        """
+provenance:
+  rules:
+    - id: provenance.author_marker
+      pattern: Author
+      severity: blocker
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["scan", "--config", "mfigci.yml"], tmp_path)
+
+    assert result.returncode == 2
+    assert "Configuration error:" in result.stdout
+    assert "provenance.rules[0].severity" in result.stdout
+    assert "Traceback" not in result.stderr
+
+
 def test_render_without_matlab_reports_clear_error(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

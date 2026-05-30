@@ -64,6 +64,14 @@ Use `mfigci rules --config mfigci.yml` to inspect the effective rules before
 running a scan. The command prints rule ids, severities, and extension policies,
 but it does not print regex patterns or scan file contents.
 
+## Config Validation
+
+`mfigci` validates the policy shape before scanning files. Invalid severities
+such as `critical`, non-boolean strict settings, or extension entries that do not
+start with `.` return exit code 2 with a configuration error. This keeps CI
+failures focused on the mistake in `mfigci.yml` instead of producing confusing
+scan output.
+
 ## Presets
 
 Presets are named bundles of conservative defaults. They reduce configuration

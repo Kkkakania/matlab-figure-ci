@@ -72,6 +72,8 @@ mfigci-report.md
 
 `mfigci` reads `mfigci.yml` by default. If it is missing, safe defaults are used:
 scan can run, gallery has no expected files, and MATLAB rendering is disabled.
+Configuration mistakes such as unknown rule severities or malformed extension
+lists fail early with a clear configuration error before files are scanned.
 
 ```yaml
 project:

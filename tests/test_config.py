@@ -72,3 +72,49 @@ def test_unknown_preset_raises_clear_error(tmp_path):
 
     with pytest.raises(ConfigError, match="Unknown preset"):
         load_config(config_path)
+
+
+def test_invalid_policy_severity_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+privacy:
+  rules:
+    - id: privacy.email
+      pattern: email
+      severity: critical
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"privacy.rules\[0\].severity"):
+        load_config(config_path)
+
+
+def test_invalid_strict_flag_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+strict:
+  fail_on_warnings: sometimes
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="strict.fail_on_warnings"):
+        load_config(config_path)
+
+
+def test_invalid_extension_policy_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+extensions:
+  error:
+    - fig
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"extensions.error\[0\]"):
+        load_config(config_path)

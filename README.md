@@ -55,6 +55,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
 mfigci report --format json --output mfigci-report.json
+mfigci doctor --config mfigci.yml
 ```
 
 `mfigci check` writes both a Markdown report and machine-readable JSON:
@@ -121,6 +122,7 @@ preset, including its gallery-scoped PDF allowance.
 | `mfigci report` | Build full Markdown, PR-comment Markdown, or JSON from `.mfigci-results.json` |
 | `mfigci init` | Generate starter config and GitHub Actions workflow |
 | `mfigci render` | Optionally run MATLAB with `-batch` |
+| `mfigci doctor` | Show a privacy-safe summary of the effective configuration |
 
 ## GitHub Actions
 

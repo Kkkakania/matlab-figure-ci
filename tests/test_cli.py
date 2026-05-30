@@ -181,6 +181,58 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     assert "matlab-figure-ci.git@v0.1.0" not in workflow
 
 
+def test_doctor_shows_safe_defaults_without_config(tmp_path):
+    result = run_cli(["doctor"], tmp_path)
+
+    assert result.returncode == 0
+    assert "Config path: mfigci.yml (not found; using defaults)" in result.stdout
+    assert "Project: matlab-figure-ci-project" in result.stdout
+    assert "Scan include: ." in result.stdout
+    assert "Gallery expected files: 0" in result.stdout
+    assert "MATLAB render: disabled" in result.stdout
+    assert str(tmp_path) not in result.stdout
+
+
+def test_doctor_shows_effective_config_summary(tmp_path):
+    (tmp_path / "mfigci.yml").write_text(
+        """
+project:
+  name: demo-gallery
+presets:
+  - matlab-figures
+scan:
+  include:
+    - src
+  exclude:
+    - raw
+gallery:
+  path: gallery
+  expected:
+    - a.png
+    - b.svg
+matlab:
+  enabled: true
+  bin_env: MATLAB_BIN
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["doctor"], tmp_path)
+
+    assert result.returncode == 0
+    assert "Config path: mfigci.yml" in result.stdout
+    assert "Project: demo-gallery" in result.stdout
+    assert "Presets: matlab-figures" in result.stdout
+    assert "Scan include: src" in result.stdout
+    assert "Scan exclude: raw" in result.stdout
+    assert "Gallery path: gallery" in result.stdout
+    assert "Gallery expected files: 2" in result.stdout
+    assert "Privacy scan: enabled" in result.stdout
+    assert "Provenance scan: enabled" in result.stdout
+    assert "MATLAB render: enabled (env: MATLAB_BIN)" in result.stdout
+    assert str(tmp_path) not in result.stdout
+
+
 def test_render_without_matlab_reports_clear_error(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

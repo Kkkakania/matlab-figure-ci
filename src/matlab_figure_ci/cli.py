@@ -222,6 +222,49 @@ def command_init(args) -> int:
     return 0
 
 
+def _format_list(values) -> str:
+    if not values:
+        return "(none)"
+    return ", ".join(str(value) for value in values)
+
+
+def command_doctor(args) -> int:
+    config_path = Path(args.config)
+    config = load_config(config_path)
+    path_label = config_path.as_posix()
+    if not config_path.exists():
+        path_label = f"{path_label} (not found; using defaults)"
+
+    project = config.get("project", {})
+    scan = config.get("scan", {})
+    privacy = config.get("privacy", {})
+    provenance = config.get("provenance", {})
+    gallery = config.get("gallery", {})
+    matlab = config.get("matlab", {})
+    presets = config.get("presets", config.get("preset", []))
+    if isinstance(presets, str):
+        presets = [presets]
+
+    matlab_enabled = bool(matlab.get("enabled", False))
+    matlab_status = "enabled" if matlab_enabled else "disabled"
+    if matlab_enabled:
+        matlab_status = f"enabled (env: {matlab.get('bin_env', 'MATLAB_BIN')})"
+
+    print("matlab-figure-ci doctor")
+    print(f"Config path: {path_label}")
+    print(f"Project: {project.get('name', '(unnamed)')}")
+    print(f"Presets: {_format_list(presets)}")
+    print(f"Scan include: {_format_list(scan.get('include', []))}")
+    print(f"Scan exclude: {_format_list(scan.get('exclude', []))}")
+    print(f"Privacy scan: {'enabled' if privacy.get('enabled', True) else 'disabled'}")
+    print(f"Provenance scan: {'enabled' if provenance.get('enabled', True) else 'disabled'}")
+    print(f"Gallery path: {gallery.get('path', 'gallery')}")
+    print(f"Gallery allowed extensions: {_format_list(gallery.get('allowed_extensions', []))}")
+    print(f"Gallery expected files: {len(gallery.get('expected', []))}")
+    print(f"MATLAB render: {matlab_status}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mfigci", description="CI checks for MATLAB scientific figure repositories.")
     parser.add_argument("--version", action="version", version=f"mfigci {__version__}")
@@ -255,6 +298,10 @@ def build_parser() -> argparse.ArgumentParser:
     init = subparsers.add_parser("init", help="write example config and GitHub Actions workflow")
     init.add_argument("--force", action="store_true")
     init.set_defaults(func=command_init)
+
+    doctor = subparsers.add_parser("doctor", help="show effective config summary")
+    doctor.add_argument("--config", default="mfigci.yml")
+    doctor.set_defaults(func=command_doctor)
 
     return parser
 

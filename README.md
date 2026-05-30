@@ -155,8 +155,8 @@ jobs:
   mfigci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.0

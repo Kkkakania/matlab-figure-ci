@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Updated the generated GitHub Actions workflow template and README snippet to
+  use Node 24-ready `actions/checkout@v6` and `actions/setup-python@v6`.
 
 ## v2.4.0 - 2026-05-30
 

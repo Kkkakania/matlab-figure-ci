@@ -16,6 +16,7 @@ scan:
     - "dist"
     - "build"
     - ".pytest_cache"
+    - "LICENSE"
     - "src/matlab_figure_ci.egg-info"
     - "src/matlab_figure_ci/config.py"
     - "mfigci.example.yml"

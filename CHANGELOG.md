@@ -6,6 +6,8 @@
 - Added an adoption report issue template for downstream repository feedback.
 - Documented how downstream users should share adoption feedback safely.
 - Added a README badge for the package build workflow.
+- Documented excluding a reviewed project `LICENSE` from scan noise without
+  exempting third-party license bundles.
 
 ## v2.4.3 - 2026-05-30
 

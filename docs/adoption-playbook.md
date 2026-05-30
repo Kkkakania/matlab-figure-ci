@@ -100,6 +100,9 @@ It should not be described as download volume, external adoption, or guaranteed 
 - Use relative paths in reports and issue examples.
 - Redact emails, local usernames, tokens, unpublished project names, and private
   paths before sharing failures publicly.
+- Exclude the repository's own reviewed `LICENSE` file if it creates expected
+  provenance noise; do not use that as a blanket exception for third-party
+  license bundles or copied source packs.
 - Keep `gallery.expected` limited to intentional public artifacts.
 - Keep MATLAB rendering optional until runners are known to have MATLAB.
 - Use warning-strict mode for releases, not as the first onboarding step.

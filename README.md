@@ -37,7 +37,7 @@ real public repository without claiming external adoption or downloads.
 Install from the GitHub release tag:
 
 ```bash
-python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v0.3.0
+python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v1.0.0
 ```
 
 Create a starter configuration and GitHub Actions workflow:
@@ -145,7 +145,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v0.3.0
+      - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v1.0.0
       - run: mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 

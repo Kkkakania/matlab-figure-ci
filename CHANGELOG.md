@@ -2,7 +2,10 @@
 
 ## Unreleased
 
-- Planned: stable result-schema work toward v1.0.0.
+- Planned: v2 compatibility-boundary work.
+
+## v1.0.0 - 2026-05-30
+
 - Documented stable JSON report fields, internal results boundaries, and
   redaction/path guarantees.
 

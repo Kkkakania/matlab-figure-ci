@@ -28,6 +28,11 @@ jobs:
       - name: CLI help
         run: mfigci --help
 
+      - name: Smoke diagnostics
+        run: |
+          mfigci doctor --config mfigci.yml
+          mfigci rules --config mfigci.yml
+
       - name: Smoke scan
         run: mfigci scan --config mfigci.yml
 

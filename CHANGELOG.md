@@ -7,6 +7,7 @@
   the package version.
 - Expanded the Codex maintainer workflow with concrete API credit uses and a
   factual evidence checklist.
+- Added CI smoke coverage for `mfigci doctor` and `mfigci rules`.
 
 ## v2.4.4 - 2026-05-30
 

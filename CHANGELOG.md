@@ -7,6 +7,8 @@
   current `v2.4.1` release state.
 - Added tested example configs for minimal scanning, PNG/SVG galleries,
   PNG/SVG/PDF galleries, and strict release gates.
+- Added GitHub issue and pull request templates for reproducible bug reports,
+  scoped feature requests, and privacy-aware PR review.
 
 ## v2.4.1 - 2026-05-30
 

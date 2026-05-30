@@ -10,6 +10,17 @@ pytest
 mfigci --help
 ```
 
+## Issues
+
+Use the bug report template for reproducible CLI problems and include the
+smallest relevant `mfigci.yml` snippet. Redact private paths, emails, local
+usernames, tokens, unpublished project names, and sensitive scan output before
+posting.
+
+Use the feature request template for focused maintainer workflow improvements.
+Keep requests tied to a command, configuration field, report output, or
+documented workflow.
+
 ## Pull Requests
 
 - Keep v0.1.x changes small and testable.

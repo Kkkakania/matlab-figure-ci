@@ -49,6 +49,17 @@ See the current [dogfooding adoption report](docs/adoption-report-matlab-scienti
 for the exact downstream configuration, latest check summary, and known
 boundaries.
 
+## Version And Distribution Status
+
+The current public release is `v2.4.5`. The supported install path is still a
+GitHub release tag install, and the package is not published on PyPI yet.
+
+The `v2` line marks the v2 compatibility boundary for the CLI commands,
+configuration keys, exit codes, and report fields documented in
+[v2 compatibility](docs/v2-compatibility.md). Future PyPI publishing is tracked
+separately from that compatibility story so users can treat the current GitHub
+tag as the public release while packaging work remains deliberate.
+
 ## Quick Start
 
 Install from the GitHub release tag:

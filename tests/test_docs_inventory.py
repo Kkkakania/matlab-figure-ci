@@ -73,3 +73,14 @@ def test_docs_cover_externally_managed_python_installs():
     assert ". .venv/bin/activate" in readme
     assert "python3 -m venv .venv" in contributing
     assert 'python -m pip install -e ".[test]"' in contributing
+
+
+def test_readme_explains_version_and_distribution_status():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    tag = f"v{__version__}"
+
+    assert "## Version And Distribution Status" in readme
+    assert f"The current public release is `{tag}`" in readme
+    assert "GitHub release tag install" in readme
+    assert "not published on PyPI yet" in readme
+    assert "v2 compatibility boundary" in readme

@@ -128,6 +128,15 @@ Use this path to try the tool without changing release policy immediately:
    mfigci init
    ```
 
+   Add report artifacts to `.gitignore` only when you want the CLI to manage
+   those entries:
+
+   ```bash
+   mfigci init --gitignore
+   ```
+
+   The plain `mfigci init` command does not edit `.gitignore`.
+
 3. Inspect the generated policy before enforcing it.
 
    ```bash

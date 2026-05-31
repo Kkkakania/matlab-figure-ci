@@ -119,6 +119,8 @@ def test_readme_has_first_five_minutes_adoption_path():
     assert "2. Create starter files in a throwaway branch or scratch repository." in readme
     assert "3. Inspect the generated policy before enforcing it." in readme
     assert "4. Run the full check and read both reports." in readme
+    assert "mfigci init --gitignore" in readme
+    assert "The plain `mfigci init` command does not edit `.gitignore`" in readme
     assert "Do not commit `mfigci-report.md` or `.mfigci-results.json`" in readme
 
 

@@ -306,6 +306,28 @@ def test_init_config_excludes_reviewed_root_license(tmp_path):
     assert '    - "LICENSE"' in config_text
 
 
+def test_init_can_append_report_artifacts_to_gitignore(tmp_path):
+    gitignore = tmp_path / ".gitignore"
+    gitignore.write_text("dist/\n", encoding="utf-8")
+
+    result = run_cli(["init", "--gitignore"], tmp_path)
+
+    assert result.returncode == 0
+    assert "updated .gitignore with mfigci report artifacts" in result.stdout
+    assert gitignore.read_text(encoding="utf-8") == (
+        "dist/\n\n"
+        "# matlab-figure-ci local reports\n"
+        "mfigci-report.md\n"
+        ".mfigci-results.json\n"
+    )
+
+    second = run_cli(["init", "--gitignore"], tmp_path)
+
+    assert second.returncode == 0
+    assert "already contains mfigci report artifacts" in second.stdout
+    assert gitignore.read_text(encoding="utf-8").count("mfigci-report.md") == 1
+
+
 def test_doctor_shows_safe_defaults_without_config(tmp_path):
     result = run_cli(["doctor"], tmp_path)
 

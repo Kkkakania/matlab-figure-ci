@@ -262,11 +262,33 @@ def _write_if_allowed(path: Path, content: str, force: bool) -> str:
     return f"wrote {path.as_posix()}"
 
 
+def _update_gitignore(path: Path) -> str:
+    entries = ["mfigci-report.md", ".mfigci-results.json"]
+    header = "# matlab-figure-ci local reports"
+    if path.exists():
+        text = path.read_text(encoding="utf-8")
+    else:
+        text = ""
+
+    if all(entry in text.splitlines() for entry in entries):
+        return "already contains mfigci report artifacts in .gitignore"
+
+    prefix = text
+    if prefix and not prefix.endswith("\n"):
+        prefix += "\n"
+    if prefix:
+        prefix += "\n"
+    path.write_text(prefix + header + "\n" + "\n".join(entries) + "\n", encoding="utf-8")
+    return "updated .gitignore with mfigci report artifacts"
+
+
 def command_init(args) -> int:
     messages = [
         _write_if_allowed(Path("mfigci.yml"), EXAMPLE_CONFIG, args.force),
         _write_if_allowed(Path(".github/workflows/figure-quality.yml"), WORKFLOW, args.force),
     ]
+    if args.gitignore:
+        messages.append(_update_gitignore(Path(".gitignore")))
     for message in messages:
         print(message)
     print("Tip: add mfigci-report.md and .mfigci-results.json to .gitignore.")
@@ -410,6 +432,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     init = subparsers.add_parser("init", help="write example config and GitHub Actions workflow")
     init.add_argument("--force", action="store_true")
+    init.add_argument("--gitignore", action="store_true", help="append local report artifacts to .gitignore")
     init.set_defaults(func=command_init)
 
     doctor = subparsers.add_parser("doctor", help="show effective config summary")

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added `mfigci init --gitignore` so users can explicitly append local report
+  artifacts to `.gitignore` without making plain `mfigci init` modify that
+  file.
 - Added a README `First 5 Minutes` adoption path that guides new users through
   release-tag installation, `mfigci init`, policy inspection, and report review
   before committing generated artifacts.

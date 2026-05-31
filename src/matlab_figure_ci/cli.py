@@ -86,6 +86,9 @@ on:
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   mfigci:
     runs-on: ubuntu-latest

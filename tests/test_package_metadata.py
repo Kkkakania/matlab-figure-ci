@@ -64,6 +64,7 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert "python -m build" in text
     assert "python -m twine check dist/*" in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
+    assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in text
     assert "actions/upload-artifact@v5" in text
     assert "name: release-preflight" in text
     assert "path: release-preflight.json" in text

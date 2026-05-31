@@ -287,6 +287,7 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     assert f"matlab-figure-ci.git@v{__version__}" in workflow
     assert "matlab-figure-ci.git@v0.1.0" not in workflow
     assert "permissions:\n  contents: read" in workflow
+    assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in workflow
     assert "actions/checkout@v6" in workflow
     assert "actions/setup-python@v6" in workflow
     assert "actions/upload-artifact@v5" in workflow

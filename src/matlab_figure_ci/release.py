@@ -161,6 +161,7 @@ def run_release_preflight(
             "python -m pip install dist/*.whl": "smoke installs built wheel",
             "mfigci --version": "checks installed console script version",
             "mfigci --help": "checks installed console script help",
+            "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true": "opts artifact upload steps into the current Node runtime",
         }
         for needle, description in workflow_checks.items():
             ok = needle in workflow

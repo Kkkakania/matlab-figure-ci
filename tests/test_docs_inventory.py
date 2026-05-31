@@ -94,6 +94,7 @@ def test_readme_lists_release_preflight_command():
     assert "mfigci release-preflight --output release-preflight.json" in readme
     assert "mfigci release-preflight --require-dist" in readme
     assert "docs/release-artifacts.md" in readme
+    assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in readme
 
 
 def test_release_artifacts_doc_explains_preflight_payload():

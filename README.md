@@ -82,6 +82,8 @@ Create a starter configuration and GitHub Actions workflow:
 
 ```bash
 mfigci init
+mfigci doctor --config mfigci.yml
+mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
 Run the quality gate:

@@ -270,6 +270,8 @@ def command_init(args) -> int:
     for message in messages:
         print(message)
     print("Tip: add mfigci-report.md and .mfigci-results.json to .gitignore.")
+    print("Next: run `mfigci doctor --config mfigci.yml` to review the effective policy.")
+    print("Then run `mfigci check --config mfigci.yml --report mfigci-report.md`.")
     return 0
 
 

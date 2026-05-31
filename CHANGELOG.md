@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Print `doctor` and `check` next-step commands after `mfigci init` so a new
+  repository can verify the generated configuration immediately.
 - Add rule-count and extension-policy summaries to `mfigci doctor` so
   maintainers can review gate strength without printing regex patterns.
 - Escape Markdown table cells in full and PR-comment reports so pipe

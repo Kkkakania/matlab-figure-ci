@@ -514,6 +514,14 @@ provenance:
     assert "Traceback" not in result.stderr
 
 
+def test_empty_config_path_returns_usage_error_without_traceback(tmp_path):
+    result = run_cli(["scan", "--config", ""], tmp_path)
+
+    assert result.returncode == 2
+    assert "--config must not be empty" in result.stderr
+    assert "Traceback" not in result.stderr
+
+
 def test_render_without_matlab_reports_clear_error(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

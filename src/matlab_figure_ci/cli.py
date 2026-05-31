@@ -146,6 +146,13 @@ def _policy_exit_code(error_count: int, warning_count: int, fail_on_warnings: bo
     return 0
 
 
+def _load_config_arg(args):
+    if not args.config:
+        print("--config must not be empty", file=sys.stderr)
+        raise SystemExit(2)
+    return load_config(args.config)
+
+
 def _fail_on_warnings(args, config: dict) -> bool:
     return bool(args.fail_on_warnings or config.get("strict", {}).get("fail_on_warnings", False))
 
@@ -183,21 +190,21 @@ def _build_check_results(config_path: Path, config: dict, root: Path, include_re
 
 
 def command_scan(args) -> int:
-    config = load_config(args.config)
+    config = _load_config_arg(args)
     result = run_scan(Path.cwd(), config)
     _print_scan(result)
     return _policy_exit_code(result.error_count, result.warning_count, _fail_on_warnings(args, config))
 
 
 def command_gallery(args) -> int:
-    config = load_config(args.config)
+    config = _load_config_arg(args)
     result = run_gallery_check(Path.cwd(), config)
     _print_gallery(result)
     return result.exit_code
 
 
 def command_render(args) -> int:
-    config = load_config(args.config)
+    config = _load_config_arg(args)
     result = run_matlab_render(Path.cwd(), config)
     print(f"{result['status'].upper()} {result['message']}")
     if result.get("status") == "error":
@@ -220,7 +227,7 @@ def command_check(args) -> int:
         print("--results must not be empty", file=sys.stderr)
         return 2
     config_path = Path(args.config)
-    config = load_config(config_path)
+    config = _load_config_arg(args)
     include_render = bool(config.get("matlab", {}).get("enabled", False))
     results = _build_check_results(config_path, config, Path.cwd(), include_render)
     save_results(results, args.results)
@@ -318,6 +325,9 @@ def _format_list(values) -> str:
 
 
 def command_doctor(args) -> int:
+    if not args.config:
+        print("--config must not be empty", file=sys.stderr)
+        return 2
     config_path = Path(args.config)
     config = load_config(config_path)
     path_label = config_path.as_posix()
@@ -376,7 +386,7 @@ def _print_rule_group(title: str, section: dict, privacy: bool = False) -> None:
 
 
 def command_rules(args) -> int:
-    config = load_config(args.config)
+    config = _load_config_arg(args)
     privacy = config.get("privacy", {})
     provenance = config.get("provenance", {})
     extensions = config.get("extensions", {})

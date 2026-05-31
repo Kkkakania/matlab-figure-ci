@@ -93,3 +93,13 @@ def test_readme_lists_release_preflight_command():
     assert "mfigci release-preflight --format json" in readme
     assert "mfigci release-preflight --output release-preflight.json" in readme
     assert "mfigci release-preflight --require-dist" in readme
+    assert "docs/release-artifacts.md" in readme
+
+
+def test_release_artifacts_doc_explains_preflight_payload():
+    text = (ROOT / "docs" / "release-artifacts.md").read_text(encoding="utf-8")
+
+    assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
+    assert "summary.errors" in text
+    assert "release-preflight" in text
+    assert "does not publish to PyPI" in text

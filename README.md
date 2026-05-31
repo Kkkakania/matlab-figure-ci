@@ -199,7 +199,8 @@ preflight items and summary counts on stdout. Add `--output
 release-preflight.json` when CI should upload the structured payload as an
 artifact while keeping the normal text summary in logs. The package workflow
 uses that output path so release candidates have a downloadable preflight
-record.
+record. See [Release artifacts](docs/release-artifacts.md) for what to inspect
+before treating that payload as release evidence.
 
 ## GitHub Actions
 
@@ -254,6 +255,7 @@ jobs:
 - [v2 compatibility](docs/v2-compatibility.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
 - [PyPI release checklist](docs/pypi-release-checklist.md)
+- [Release artifacts](docs/release-artifacts.md)
 - [Release cadence](docs/release-cadence.md)
 - [Version plan](docs/version-plan.md)
 - [Roadmap](ROADMAP.md)

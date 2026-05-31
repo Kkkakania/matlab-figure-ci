@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added a README `First 5 Minutes` adoption path that guides new users through
+  release-tag installation, `mfigci init`, policy inspection, and report review
+  before committing generated artifacts.
 - Print `doctor` and `check` next-step commands after `mfigci init` so a new
   repository can verify the generated configuration immediately.
 - Add rule-count and extension-policy summaries to `mfigci doctor` so

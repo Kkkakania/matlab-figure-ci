@@ -112,6 +112,39 @@ mfigci-report.md
 .mfigci-results.json
 ```
 
+## First 5 Minutes
+
+Use this path to try the tool without changing release policy immediately:
+
+1. Install from the current release tag.
+
+   ```bash
+   python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+   ```
+
+2. Create starter files in a throwaway branch or scratch repository.
+
+   ```bash
+   mfigci init
+   ```
+
+3. Inspect the generated policy before enforcing it.
+
+   ```bash
+   mfigci doctor --config mfigci.yml
+   mfigci rules --config mfigci.yml
+   ```
+
+4. Run the full check and read both reports.
+
+   ```bash
+   mfigci check --config mfigci.yml --report mfigci-report.md
+   ```
+
+Do not commit `mfigci-report.md` or `.mfigci-results.json` until you have
+reviewed whether the report belongs in your repository or should stay as a CI
+artifact.
+
 ## Configuration
 
 `mfigci` reads `mfigci.yml` by default. If it is missing, safe defaults are used:

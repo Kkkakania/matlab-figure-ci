@@ -111,6 +111,17 @@ def test_readme_explains_version_and_distribution_status():
     assert "v2 compatibility boundary" in readme
 
 
+def test_readme_has_first_five_minutes_adoption_path():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    assert "## First 5 Minutes" in readme
+    assert "1. Install from the current release tag." in readme
+    assert "2. Create starter files in a throwaway branch or scratch repository." in readme
+    assert "3. Inspect the generated policy before enforcing it." in readme
+    assert "4. Run the full check and read both reports." in readme
+    assert "Do not commit `mfigci-report.md` or `.mfigci-results.json`" in readme
+
+
 def test_readme_lists_release_preflight_command():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 

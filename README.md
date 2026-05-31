@@ -97,6 +97,8 @@ mfigci report --style pr-comment --output mfigci-pr-comment.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci rules --config mfigci.yml
+mfigci release-preflight
+mfigci release-preflight --require-dist
 ```
 
 `mfigci check` writes both a Markdown report and machine-readable JSON:
@@ -180,9 +182,17 @@ config, policy, and report boundary.
 | `mfigci render` | Optionally run MATLAB with `-batch` |
 | `mfigci doctor` | Show a privacy-safe summary of the effective configuration |
 | `mfigci rules` | Inspect effective privacy, provenance, and extension rules |
+| `mfigci release-preflight` | Check package metadata, release files, and packaging workflow readiness |
 
 By default, warnings do not fail CI. Add `--fail-on-warnings` to `scan` or
 `check` when a release gate should treat warnings as policy failures.
+
+`mfigci release-preflight` is a local packaging readiness check. It does not
+publish anything. By default it checks repository files, `pyproject.toml`,
+`CHANGELOG.md`, and the package workflow. Add `--require-dist` after running
+`python -m build` to require `dist/*.whl` and `dist/*.tar.gz`. Add
+`--check-pypi-name` only when you intentionally want the command to query the
+PyPI JSON API.
 
 ## GitHub Actions
 

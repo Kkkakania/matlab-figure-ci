@@ -84,3 +84,10 @@ def test_readme_explains_version_and_distribution_status():
     assert "GitHub release tag install" in readme
     assert "not published on PyPI yet" in readme
     assert "v2 compatibility boundary" in readme
+
+
+def test_readme_lists_release_preflight_command():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    assert "mfigci release-preflight" in readme
+    assert "mfigci release-preflight --require-dist" in readme

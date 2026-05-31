@@ -393,6 +393,23 @@ extensions:
     assert "Extension warnings: (none)" in result.stdout
 
 
+def test_release_preflight_passes_for_current_repository():
+    result = run_cli(["release-preflight"], Path(__file__).resolve().parents[1])
+
+    assert result.returncode == 0
+    assert "OK pyproject" in result.stdout
+    assert "OK package-workflow" in result.stdout
+    assert "0 error(s), 0 warning(s)" in result.stdout
+
+
+def test_release_preflight_can_require_dist_outputs(tmp_path):
+    result = run_cli(["release-preflight", "--require-dist"], Path(__file__).resolve().parents[1])
+
+    assert result.returncode == 1
+    assert "ERROR dist dist/*.whl missing" in result.stdout
+    assert "ERROR dist dist/*.tar.gz missing" in result.stdout
+
+
 def test_invalid_config_returns_usage_error_without_traceback(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

@@ -23,6 +23,16 @@ change.
 5. Confirm the package name is still available on PyPI.
 6. Confirm no PyPI token is committed to the repository.
 
+Run the local release preflight before building:
+
+```bash
+mfigci release-preflight
+```
+
+This checks required release files, `pyproject.toml` metadata, the matching
+`CHANGELOG.md` entry, the console script entry point, and the package workflow.
+It does not publish anything and does not query PyPI by default.
+
 Use the helper script immediately before publishing:
 
 ```bash
@@ -41,6 +51,7 @@ python -m pip install -e ".[build]"
 rm -rf dist build *.egg-info
 python -m build
 python -m twine check dist/*
+mfigci release-preflight --require-dist
 ```
 
 Smoke test the wheel in a fresh environment:

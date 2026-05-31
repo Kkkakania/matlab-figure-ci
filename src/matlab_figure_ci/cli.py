@@ -10,6 +10,7 @@ from .config import ConfigError, load_config
 from .gallery import run_gallery_check
 from .matlab import run_matlab_render
 from .report import load_results, save_json_report, save_markdown, save_results
+from .release import release_preflight_exit_code, run_release_preflight
 from .result import CheckResults, Finding
 from .scanners import run_scan
 
@@ -336,6 +337,22 @@ def command_rules(args) -> int:
     return 0
 
 
+def command_release_preflight(args) -> int:
+    items = run_release_preflight(
+        Path.cwd(),
+        expected_name=args.name,
+        expected_version=__version__,
+        check_pypi_name=args.check_pypi_name,
+        require_dist=args.require_dist,
+    )
+    for item in items:
+        print(f"{item.status.upper()} {item.check} {item.message}")
+    errors = sum(1 for item in items if item.status == "error")
+    warnings = sum(1 for item in items if item.status == "warning")
+    print(f"{errors} error(s), {warnings} warning(s), {len(items)} preflight check(s).")
+    return release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mfigci", description="CI checks for MATLAB scientific figure repositories.")
     parser.add_argument("--version", action="version", version=f"mfigci {__version__}")
@@ -379,6 +396,21 @@ def build_parser() -> argparse.ArgumentParser:
     rules = subparsers.add_parser("rules", help="show effective privacy, provenance, and extension rules")
     rules.add_argument("--config", default="mfigci.yml")
     rules.set_defaults(func=command_rules)
+
+    release_preflight = subparsers.add_parser("release-preflight", help="check packaging readiness before a release")
+    release_preflight.add_argument("--name", default="matlab-figure-ci", help="expected package/project name")
+    release_preflight.add_argument(
+        "--check-pypi-name",
+        action="store_true",
+        help="query the PyPI JSON API for the project name; disabled by default",
+    )
+    release_preflight.add_argument("--require-dist", action="store_true", help="require dist/*.whl and dist/*.tar.gz")
+    release_preflight.add_argument(
+        "--fail-on-warnings",
+        action="store_true",
+        help="return exit code 1 when warning preflight items are present",
+    )
+    release_preflight.set_defaults(func=command_release_preflight)
 
     return parser
 

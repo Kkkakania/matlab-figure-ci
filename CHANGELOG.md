@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Skip symlinks that resolve outside the scanned project root so local privacy
+  and provenance scans do not inspect external workspace files.
 - Planned: post-v2 packaging and adoption hardening.
 - Added a documentation inventory test that keeps ROADMAP status language
   aligned with the current release, PyPI posture, and slower release cadence.

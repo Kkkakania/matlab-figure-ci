@@ -58,10 +58,23 @@ def test_symlink_to_external_file_does_not_escape_project_root(tmp_path):
     project = tmp_path / "project"
     project.mkdir()
     external = tmp_path / "external.txt"
-    external.write_text("plain text\n", encoding="utf-8")
+    external.write_text("person@example.com\n", encoding="utf-8")
     (project / "linked.txt").symlink_to(external)
 
     result = run_scan(project, load_config(project / "missing.yml"))
 
-    assert result.files_scanned == 1
+    assert result.files_scanned == 0
+    assert result.error_count == 0
+
+
+def test_symlink_to_internal_file_is_scanned(tmp_path):
+    project = tmp_path / "project"
+    project.mkdir()
+    target = project / "internal.txt"
+    target.write_text("plain text\n", encoding="utf-8")
+    (project / "linked.txt").symlink_to(target)
+
+    result = run_scan(project, load_config(project / "missing.yml"))
+
+    assert result.files_scanned == 2
     assert result.error_count == 0

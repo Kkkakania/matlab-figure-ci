@@ -50,6 +50,14 @@ def _is_excluded(relative_path: Path, excludes: Iterable[str]) -> bool:
     return False
 
 
+def _stays_within_root(path: Path, root: Path) -> bool:
+    try:
+        path.resolve().relative_to(root)
+    except (OSError, ValueError):
+        return False
+    return True
+
+
 def iter_files(root: Path, config: dict) -> Iterable[Path]:
     scan = config.get("scan", {})
     includes = scan.get("include", ["."])
@@ -68,6 +76,8 @@ def iter_files(root: Path, config: dict) -> Iterable[Path]:
             try:
                 relative = path.relative_to(root)
             except ValueError:
+                continue
+            if path.is_symlink() and not _stays_within_root(path, root):
                 continue
             if _is_excluded(relative, excludes):
                 continue

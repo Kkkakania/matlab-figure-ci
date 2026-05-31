@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 
 from .result import CheckResults
@@ -18,6 +19,23 @@ def _append_render_excerpt(lines: list[str], label: str, content: str | None) ->
     if not content:
         return
     lines.extend(["", f"### {label}", "", "```text", content, "```"])
+
+
+def _finding_counts_by_rule(results: CheckResults) -> list[tuple[str, str, int]]:
+    counts = Counter((finding.severity, finding.rule_id) for finding in results.findings)
+    return sorted(((severity, rule_id, count) for (severity, rule_id), count in counts.items()), key=lambda item: (-item[2], item[0], item[1]))
+
+
+def _append_finding_summary(lines: list[str], results: CheckResults) -> None:
+    lines.extend(["", "## Finding Summary", ""])
+    counts = _finding_counts_by_rule(results)
+    if not counts:
+        lines.append("- No findings.")
+        return
+
+    lines.extend(["| Severity | Rule | Count |", "|---|---|---:|"])
+    for severity, rule_id, count in counts:
+        lines.append(f"| {severity} | {rule_id} | {count} |")
 
 
 def build_markdown_report(results: CheckResults) -> str:
@@ -44,6 +62,8 @@ def build_markdown_report(results: CheckResults) -> str:
             lines.append(f"| {finding.severity} | {finding.rule_id} | {finding.path} | {line} | {finding.message} |")
     else:
         lines.append("| ok | none |  |  | No findings |")
+
+    _append_finding_summary(lines, results)
 
     lines.extend(["", "## Gallery", ""])
     if results.gallery.items:
@@ -87,6 +107,15 @@ def build_pr_comment_report(results: CheckResults) -> str:
     ]
 
     if results.findings:
+        counts = _finding_counts_by_rule(results)
+        if counts:
+            lines.extend(["Finding summary:", "", "| Severity | Rule | Count |", "|---|---|---:|"])
+            for severity, rule_id, count in counts[:5]:
+                lines.append(f"| {severity} | {rule_id} | {count} |")
+            if len(counts) > 5:
+                lines.append(f"| info | truncated | {len(counts) - 5} more rule group(s) in the full report |")
+            lines.append("")
+
         lines.extend(
             [
                 "Top findings:",

@@ -63,6 +63,10 @@ Finding entries expose:
 Privacy matches remain redacted in JSON reports, Markdown reports, terminal
 output, and `.mfigci-results.json`.
 
+Markdown reports also include a finding summary grouped by severity and rule.
+The public JSON report keeps the raw `findings[]` list so consumers can compute
+their own grouping without depending on Markdown formatting.
+
 ## Summary Fields
 
 The `summary` object currently contains:

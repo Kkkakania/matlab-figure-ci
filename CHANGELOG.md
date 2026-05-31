@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add finding summaries grouped by severity and rule to Markdown and PR-comment
+  reports for faster maintainer triage.
 - Skip symlinks that resolve outside the scanned project root so local privacy
   and provenance scans do not inspect external workspace files.
 - Planned: post-v2 packaging and adoption hardening.

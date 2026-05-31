@@ -27,6 +27,8 @@ def test_report_outputs_markdown_with_summary_and_findings(tmp_path):
 
     assert "# matlab-figure-ci report" in markdown
     assert "| error | privacy.email | src/example.m | 3 | <redacted> |" in markdown
+    assert "## Finding Summary" in markdown
+    assert "| error | privacy.email | 1 |" in markdown
 
 
 def test_load_results_requires_existing_json(tmp_path):
@@ -85,6 +87,13 @@ def test_pr_comment_report_is_compact_and_redacted():
                 line=9,
                 message="pattern matched",
             ),
+            Finding(
+                severity="warning",
+                rule_id="provenance.author_marker",
+                path="docs/notes.md",
+                line=2,
+                message="pattern matched",
+            ),
         ],
         scan=ScanResults(files_scanned=8),
         gallery=GalleryResults(items=[GalleryItem(status="ok", path="gallery/example.png", message="present")]),
@@ -97,6 +106,8 @@ def test_pr_comment_report_is_compact_and_redacted():
 
     assert comment.startswith("### matlab-figure-ci check")
     assert "# matlab-figure-ci report" not in comment
+    assert "Finding summary:" in comment
+    assert "| warning | provenance.author_marker | 2 |" in comment
     assert "| error | privacy.email | src/example.m:3 | <redacted> |" in comment
     assert secret not in comment
     assert len(comment) < 1500

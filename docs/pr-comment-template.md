@@ -35,6 +35,13 @@ Status: **failed**
 - Gallery checks: 10
 - MATLAB render: skipped
 
+Finding summary:
+
+| Severity | Rule | Count |
+|---|---|---:|
+| error | privacy.email | 1 |
+| warning | provenance.author_marker | 1 |
+
 Top findings:
 
 | Severity | Rule | Location | Message |

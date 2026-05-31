@@ -28,9 +28,19 @@ jobs:
       - name: Check package metadata
         run: python -m twine check dist/*
 
+      - name: Run release preflight
+        run: mfigci release-preflight --require-dist --output release-preflight.json
+
       - name: Smoke install wheel
         run: |
           python -m venv /tmp/mfigci-wheel-smoke
           /tmp/mfigci-wheel-smoke/bin/python -m pip install dist/*.whl
           /tmp/mfigci-wheel-smoke/bin/mfigci --version
           /tmp/mfigci-wheel-smoke/bin/mfigci --help
+
+      - name: Upload release preflight report
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: release-preflight
+          path: release-preflight.json

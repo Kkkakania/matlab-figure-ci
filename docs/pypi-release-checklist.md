@@ -22,6 +22,8 @@ change.
 4. Confirm `CHANGELOG.md` has a dated entry for the release.
 5. Confirm the package name is still available on PyPI.
 6. Confirm no PyPI token is committed to the repository.
+7. Confirm the Package workflow uploaded `release-preflight.json` for the
+   release candidate commit.
 
 Run the local release preflight before building:
 
@@ -57,6 +59,7 @@ rm -rf dist build *.egg-info
 python -m build
 python -m twine check dist/*
 mfigci release-preflight --require-dist
+mfigci release-preflight --require-dist --output release-preflight.json
 ```
 
 Smoke test the wheel in a fresh environment:

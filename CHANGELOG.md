@@ -6,6 +6,8 @@
 - Added JSON stdout and `--output` file support for `mfigci release-preflight`
   so release workflows can consume structured preflight summaries and check
   items.
+- The Package workflow now runs `release-preflight --require-dist --output`
+  and uploads the JSON preflight report as a workflow artifact.
 - Added a grouped documentation index and a regression test that keeps every
   documentation Markdown file discoverable from it.
 - Added a lightweight CI Markdown link check for repository-local documentation

@@ -63,6 +63,10 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert 'pip install -e ".[build]"' in text
     assert "python -m build" in text
     assert "python -m twine check dist/*" in text
+    assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
+    assert "actions/upload-artifact@v5" in text
+    assert "name: release-preflight" in text
+    assert "path: release-preflight.json" in text
     assert "/tmp/mfigci-wheel-smoke/bin/python -m pip install dist/*.whl" in text
     assert "/tmp/mfigci-wheel-smoke/bin/mfigci --version" in text
     assert "/tmp/mfigci-wheel-smoke/bin/mfigci --help" in text
@@ -82,5 +86,6 @@ def test_pypi_release_checklist_uses_name_helper():
     assert "mfigci release-preflight" in text
     assert "mfigci release-preflight --format json" in text
     assert "mfigci release-preflight --output release-preflight.json" in text
+    assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "python scripts/check_pypi_name.py matlab-figure-ci" in text
     assert "exits `0` when PyPI returns `404`" in text

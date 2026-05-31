@@ -197,7 +197,9 @@ publish anything. By default it checks repository files, `pyproject.toml`,
 PyPI JSON API. Add `--format json` when a release workflow needs structured
 preflight items and summary counts on stdout. Add `--output
 release-preflight.json` when CI should upload the structured payload as an
-artifact while keeping the normal text summary in logs.
+artifact while keeping the normal text summary in logs. The package workflow
+uses that output path so release candidates have a downloadable preflight
+record.
 
 ## GitHub Actions
 

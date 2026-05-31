@@ -12,7 +12,8 @@
   reports for faster maintainer triage.
 - Skip symlinks that resolve outside the scanned project root so local privacy
   and provenance scans do not inspect external workspace files.
-- Planned: post-v2 packaging and adoption hardening.
+- Tightened post-v2 packaging and adoption documentation so public notes stay
+  factual instead of reading like pending release promises.
 - Added a documentation inventory test that keeps ROADMAP status language
   aligned with the current release, PyPI posture, and slower release cadence.
 - Added JSON stdout and `--output` file support for `mfigci release-preflight`

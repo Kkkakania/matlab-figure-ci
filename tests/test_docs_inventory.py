@@ -52,6 +52,15 @@ def test_roadmap_status_language_is_current():
     assert "latest release: `v0." not in roadmap.lower()
 
 
+def test_changelog_unreleased_section_is_release_ready():
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    unreleased = changelog.split("## v", maxsplit=1)[0]
+
+    assert "## Unreleased" in unreleased
+    assert "Planned:" not in unreleased
+    assert "TODO" not in unreleased
+
+
 def test_docs_index_lists_all_documentation_files():
     docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
     doc_files = sorted(path.name for path in (ROOT / "docs").glob("*.md") if path.name != "README.md")

@@ -1,4 +1,5 @@
 import re
+import importlib.util
 from pathlib import Path
 
 from matlab_figure_ci import __version__
@@ -9,6 +10,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def read_text(relative_path):
     return (ROOT / relative_path).read_text(encoding="utf-8")
+
+
+def load_script(relative_path):
+    spec = importlib.util.spec_from_file_location("script_under_test", ROOT / relative_path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 
 
 def assert_toml_scalar(text, key, expected):
@@ -57,3 +66,18 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert "/tmp/mfigci-wheel-smoke/bin/python -m pip install dist/*.whl" in text
     assert "/tmp/mfigci-wheel-smoke/bin/mfigci --version" in text
     assert "/tmp/mfigci-wheel-smoke/bin/mfigci --help" in text
+
+
+def test_pypi_name_helper_classifies_api_status_codes():
+    script = load_script("scripts/check_pypi_name.py")
+
+    assert script.classify_status(404) == "available"
+    assert script.classify_status(200) == "taken"
+    assert script.classify_status(500) == "unknown"
+
+
+def test_pypi_release_checklist_uses_name_helper():
+    text = read_text("docs/pypi-release-checklist.md")
+
+    assert "python scripts/check_pypi_name.py matlab-figure-ci" in text
+    assert "exits `0` when PyPI returns `404`" in text

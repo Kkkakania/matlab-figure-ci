@@ -23,6 +23,15 @@ change.
 5. Confirm the package name is still available on PyPI.
 6. Confirm no PyPI token is committed to the repository.
 
+Use the helper script immediately before publishing:
+
+```bash
+python scripts/check_pypi_name.py matlab-figure-ci
+```
+
+The helper exits `0` when PyPI returns `404`, `1` when the project already
+exists, and `2` when the availability check could not be completed.
+
 ## Local Build
 
 Build from a clean checkout:

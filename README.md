@@ -17,6 +17,18 @@ It is designed to pair with
 - `matlab-figure-ci` checks that figure repositories stay clean, reproducible,
   and safe to publish.
 
+## Project Ecosystem
+
+`matlab-figure-ci` is the quality-gate component of a small MATLAB plotting
+ecosystem:
+
+- [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
+  is the main clean-room gallery and template library.
+- [`matlab-figure-ci`](https://github.com/Kkkakania/matlab-figure-ci) checks
+  figure repositories for gallery, provenance, privacy, and release-gate drift.
+- [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill)
+  connects MATLAB plotting workflows to agent/Codex-style data-to-figure tasks.
+
 ## Dogfooding Status
 
 This tool is dogfooded by

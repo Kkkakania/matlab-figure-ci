@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Escape Markdown table cells in full and PR-comment reports so pipe
+  characters in paths, rule IDs, or messages do not break report tables.
 - Add finding summaries grouped by severity and rule to Markdown and PR-comment
   reports for faster maintainer triage.
 - Skip symlinks that resolve outside the scanned project root so local privacy

@@ -15,6 +15,11 @@ def _format_location(path: str, line: int | None) -> str:
     return f"{path}:{line}"
 
 
+def _markdown_table_cell(value: object) -> str:
+    text = str(value)
+    return text.replace("\\", "\\\\").replace("|", "\\|").replace("\n", " ")
+
+
 def _append_render_excerpt(lines: list[str], label: str, content: str | None) -> None:
     if not content:
         return
@@ -35,7 +40,7 @@ def _append_finding_summary(lines: list[str], results: CheckResults) -> None:
 
     lines.extend(["| Severity | Rule | Count |", "|---|---|---:|"])
     for severity, rule_id, count in counts:
-        lines.append(f"| {severity} | {rule_id} | {count} |")
+        lines.append(f"| {_markdown_table_cell(severity)} | {_markdown_table_cell(rule_id)} | {count} |")
 
 
 def build_markdown_report(results: CheckResults) -> str:
@@ -59,7 +64,10 @@ def build_markdown_report(results: CheckResults) -> str:
     if results.findings:
         for finding in results.findings:
             line = "" if finding.line is None else str(finding.line)
-            lines.append(f"| {finding.severity} | {finding.rule_id} | {finding.path} | {line} | {finding.message} |")
+            lines.append(
+                f"| {_markdown_table_cell(finding.severity)} | {_markdown_table_cell(finding.rule_id)} | "
+                f"{_markdown_table_cell(finding.path)} | {_markdown_table_cell(line)} | {_markdown_table_cell(finding.message)} |"
+            )
     else:
         lines.append("| ok | none |  |  | No findings |")
 
@@ -111,7 +119,7 @@ def build_pr_comment_report(results: CheckResults) -> str:
         if counts:
             lines.extend(["Finding summary:", "", "| Severity | Rule | Count |", "|---|---|---:|"])
             for severity, rule_id, count in counts[:5]:
-                lines.append(f"| {severity} | {rule_id} | {count} |")
+                lines.append(f"| {_markdown_table_cell(severity)} | {_markdown_table_cell(rule_id)} | {count} |")
             if len(counts) > 5:
                 lines.append(f"| info | truncated | {len(counts) - 5} more rule group(s) in the full report |")
             lines.append("")
@@ -126,7 +134,8 @@ def build_pr_comment_report(results: CheckResults) -> str:
         )
         for finding in results.findings[:8]:
             lines.append(
-                f"| {finding.severity} | {finding.rule_id} | {_format_location(finding.path, finding.line)} | {finding.message} |"
+                f"| {_markdown_table_cell(finding.severity)} | {_markdown_table_cell(finding.rule_id)} | "
+                f"{_markdown_table_cell(_format_location(finding.path, finding.line))} | {_markdown_table_cell(finding.message)} |"
             )
         if len(results.findings) > 8:
             lines.append(f"| info | truncated |  | {len(results.findings) - 8} more finding(s) in the full report |")

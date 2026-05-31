@@ -139,3 +139,32 @@ def test_json_report_has_stable_fields_and_redacted_findings():
     assert payload["summary"]["errors"] == 1
     assert payload["findings"][0]["message"] == "<redacted>"
     assert secret not in json.dumps(payload)
+
+
+def test_markdown_reports_escape_table_cells():
+    results = CheckResults(
+        summary={"errors": 1, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},
+        findings=[
+            Finding(
+                severity="error",
+                rule_id="privacy.custom|pipe",
+                path="src/with|pipe.m",
+                line=4,
+                message="pattern | matched\nnext line",
+            )
+        ],
+        scan=ScanResults(files_scanned=1),
+        gallery=GalleryResults(items=[]),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="mfigci.yml",
+        tool_version="0.1.0",
+    )
+
+    full = build_markdown_report(results)
+    comment = build_pr_comment_report(results)
+
+    assert "privacy.custom\\|pipe" in full
+    assert "src/with\\|pipe.m" in full
+    assert "pattern \\| matched next line" in full
+    assert "privacy.custom\\|pipe" in comment
+    assert "src/with\\|pipe.m:4" in comment

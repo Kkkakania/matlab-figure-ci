@@ -271,6 +271,7 @@ def test_init_does_not_overwrite_without_force(tmp_path):
 
     assert result.returncode == 0
     assert "skipped" in result.stdout
+    assert "Optional: run `mfigci init --gitignore` to ignore local report artifacts." in result.stdout
     assert "Next: run `mfigci doctor --config mfigci.yml`" in result.stdout
     assert "Then run `mfigci check --config mfigci.yml --report mfigci-report.md`" in result.stdout
     assert "keep-me" in existing.read_text(encoding="utf-8")

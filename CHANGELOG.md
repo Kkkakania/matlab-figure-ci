@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Updated `mfigci init` output to point users at `mfigci init --gitignore`
+  instead of giving a manual `.gitignore` reminder.
 - Added `mfigci init --gitignore` so users can explicitly append local report
   artifacts to `.gitignore` without making plain `mfigci init` modify that
   file.

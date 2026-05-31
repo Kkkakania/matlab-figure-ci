@@ -291,7 +291,8 @@ def command_init(args) -> int:
         messages.append(_update_gitignore(Path(".gitignore")))
     for message in messages:
         print(message)
-    print("Tip: add mfigci-report.md and .mfigci-results.json to .gitignore.")
+    if not args.gitignore:
+        print("Optional: run `mfigci init --gitignore` to ignore local report artifacts.")
     print("Next: run `mfigci doctor --config mfigci.yml` to review the effective policy.")
     print("Then run `mfigci check --config mfigci.yml --report mfigci-report.md`.")
     return 0

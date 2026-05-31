@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added a documentation inventory test that keeps ROADMAP status language
+  aligned with the current release, PyPI posture, and slower release cadence.
 - Added JSON stdout and `--output` file support for `mfigci release-preflight`
   so release workflows can consume structured preflight summaries and check
   items.

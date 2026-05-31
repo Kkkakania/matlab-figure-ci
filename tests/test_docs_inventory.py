@@ -38,6 +38,20 @@ def test_public_version_references_match_package_version():
     assert f"Keep `{tag}` as the current public release" in release_cadence
 
 
+def test_roadmap_status_language_is_current():
+    roadmap = (ROOT / "ROADMAP.md").read_text(encoding="utf-8")
+
+    assert "## Current State" in roadmap
+    assert "## Completed Release Tracks" in roadmap
+    assert "## Next Candidates" in roadmap
+    assert "## Versioning Pace" in roadmap
+    assert "PyPI is planned but not published yet" in roadmap
+    assert "It should not become the normal release rhythm" in roadmap
+    assert "Artificial usage, stars, downloads, or adoption claims" in roadmap
+    assert "planned additions" not in roadmap.lower()
+    assert "latest release: `v0." not in roadmap.lower()
+
+
 def test_docs_index_lists_all_documentation_files():
     docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
     doc_files = sorted(path.name for path in (ROOT / "docs").glob("*.md") if path.name != "README.md")

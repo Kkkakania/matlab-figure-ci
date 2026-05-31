@@ -52,3 +52,13 @@ def test_ci_runs_markdown_link_check():
 
     assert (ROOT / "scripts" / "check_markdown_links.py").exists()
     assert "python scripts/check_markdown_links.py" in workflow
+
+
+def test_contributing_documents_supported_test_commands():
+    contributing = (ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
+    pr_template = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
+
+    assert 'python -m pip install -e ".[test]"' in contributing
+    assert "uv run --extra test pytest" in contributing
+    assert "uv run --extra test pytest" in pr_template
+    assert "v0.1.x" not in contributing

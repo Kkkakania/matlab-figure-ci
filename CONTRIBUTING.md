@@ -4,10 +4,19 @@ Thank you for helping improve `matlab-figure-ci`.
 
 ## Development
 
+Using pip:
+
 ```bash
 python -m pip install -e ".[test]"
 pytest
 mfigci --help
+```
+
+Using uv:
+
+```bash
+uv run --extra test pytest
+uv run --extra test mfigci --help
 ```
 
 ## Issues
@@ -23,7 +32,7 @@ documented workflow.
 
 ## Pull Requests
 
-- Keep v0.1.x changes small and testable.
+- Keep changes small and testable.
 - Add or update tests for scanner, gallery, report, or CLI behavior.
 - Do not add private datasets, unclear third-party assets, or generated binary
   artifacts to the repository.

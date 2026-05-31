@@ -138,6 +138,8 @@ because they can be valid figure exports or unreviewed document artifacts.
 - Confirm `MATLAB_BIN` points to the executable, not the app bundle.
 - Confirm the batch command exists on the MATLAB path.
 - Confirm the gallery manifest lists files your render command actually writes.
-- Check the Markdown or JSON report for `stdout_excerpt`, `stderr_excerpt`,
-  and `process_exit_code` when MATLAB starts but the batch command fails.
+- Check the render section of `mfigci-report.md` or `.mfigci-results.json`.
+  Failed renders include `process_exit_code` plus redacted stdout and
+  stderr excerpts, which often contain the MATLAB error ID, missing path, failed
+  assertion, or missing toolbox message.
 - Keep render disabled in public CI unless the runner has MATLAB available.

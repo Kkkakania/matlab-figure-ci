@@ -580,3 +580,58 @@ matlab:
 
     assert result.returncode == 3
     assert "MATLAB executable not found" in result.stdout
+
+
+def test_check_render_failure_preserves_matlab_output_in_results_and_report(tmp_path):
+    fake_matlab = tmp_path / "fake_matlab.py"
+    fake_matlab.write_text(
+        """#!/usr/bin/env python3
+import sys
+
+print("MATLAB_STDOUT: failed assertion in renderAll")
+print("MATLAB_STDERR: missing toolbox signal at /Users/alice/private/file.m", file=sys.stderr)
+print("contact helper@example.com", file=sys.stderr)
+raise SystemExit(42)
+""",
+        encoding="utf-8",
+    )
+    fake_matlab.chmod(0o755)
+    (tmp_path / "gallery").mkdir()
+    (tmp_path / "mfigci.yml").write_text(
+        """
+gallery:
+  expected: []
+matlab:
+  enabled: true
+  bin_env: "FAKE_MATLAB_BIN_FOR_TEST"
+  fallback_bin: "definitely-not-a-matlab-binary"
+  batch_command: "run_all_figures"
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(
+        ["check", "--config", "mfigci.yml", "--report", "mfigci-report.md"],
+        tmp_path,
+        env={"FAKE_MATLAB_BIN_FOR_TEST": str(fake_matlab)},
+    )
+
+    assert result.returncode == 3
+    assert "MATLAB render failed with exit code 42" in result.stdout
+
+    payload = json.loads((tmp_path / ".mfigci-results.json").read_text(encoding="utf-8"))
+    render = payload["render"]
+    assert render["status"] == "error"
+    assert render["process_exit_code"] == 42
+    assert "MATLAB_STDOUT: failed assertion in renderAll" in render["stdout_excerpt"]
+    assert "MATLAB_STDERR: missing toolbox signal" in render["stderr_excerpt"]
+    assert "/Users/alice/private/file.m" not in json.dumps(render)
+    assert "helper@example.com" not in json.dumps(render)
+
+    report = (tmp_path / "mfigci-report.md").read_text(encoding="utf-8")
+    assert "MATLAB render failed with exit code 42" in report
+    assert "MATLAB_STDOUT: failed assertion in renderAll" in report
+    assert "MATLAB_STDERR: missing toolbox signal" in report
+    assert "<redacted>" in report
+    assert "/Users/alice/private/file.m" not in report
+    assert "helper@example.com" not in report

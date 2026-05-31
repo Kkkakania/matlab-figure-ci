@@ -55,6 +55,8 @@
   `matlab-scientific-figures` integration snapshot.
 - Added package metadata regression tests for the distribution name, runtime
   version, CLI entry point, dependency split, and package workflow smoke checks.
+- Preserve MATLAB render failure exit codes and redacted stdout/stderr excerpts
+  in check results and Markdown reports.
 
 ## v2.4.5 - 2026-05-30
 

@@ -100,11 +100,15 @@ Consumers should tolerate additional summary keys.
 | `status` | `skipped`, `ok`, or `error` |
 | `message` | Non-sensitive render status |
 | `exit_code` | `mfigci` render/check exit code when available |
-| `process_exit_code` | Raw MATLAB process exit code when MATLAB runs and fails |
-| `stdout_excerpt` | Truncated MATLAB stdout excerpt for failed renders |
-| `stderr_excerpt` | Truncated MATLAB stderr excerpt for failed renders |
+| `process_exit_code` | MATLAB process exit code when MATLAB was launched and failed |
+| `stdout_excerpt` | Redacted and truncated MATLAB stdout excerpt for failed renders |
+| `stderr_excerpt` | Redacted and truncated MATLAB stderr excerpt for failed renders |
 
 When MATLAB rendering is disabled, render status is `skipped`.
+When MATLAB rendering fails after launching MATLAB, the JSON and Markdown
+reports include the MATLAB exit code plus stdout/stderr excerpts. Long excerpts
+are truncated and privacy-sensitive patterns such as emails and local user paths
+are replaced with `<redacted>`.
 
 ## Redaction And Paths
 

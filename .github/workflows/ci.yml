@@ -28,6 +28,9 @@ jobs:
       - name: Check Markdown links
         run: python scripts/check_markdown_links.py
 
+      - name: Check workflow maintenance settings
+        run: python scripts/check_workflows.py
+
       - name: CLI help
         run: mfigci --help
 

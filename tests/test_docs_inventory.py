@@ -52,6 +52,8 @@ def test_ci_runs_markdown_link_check():
 
     assert (ROOT / "scripts" / "check_markdown_links.py").exists()
     assert "python scripts/check_markdown_links.py" in workflow
+    assert (ROOT / "scripts" / "check_workflows.py").exists()
+    assert "python scripts/check_workflows.py" in workflow
 
 
 def test_contributing_documents_supported_test_commands():

@@ -11,6 +11,8 @@
   release, and added roadmap coverage to the public-version regression test.
 - Added a dogfooding adoption report for the current
   `matlab-scientific-figures` integration snapshot.
+- Added package metadata regression tests for the distribution name, runtime
+  version, CLI entry point, dependency split, and package workflow smoke checks.
 
 ## v2.4.5 - 2026-05-30
 

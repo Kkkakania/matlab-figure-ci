@@ -7,10 +7,16 @@ Thank you for helping improve `matlab-figure-ci`.
 Using pip:
 
 ```bash
+python3 -m venv .venv
+. .venv/bin/activate
 python -m pip install -e ".[test]"
 pytest
 mfigci --help
 ```
+
+The virtual environment is optional when your Python installation allows direct
+package installs, but it avoids externally managed Python environment errors on
+modern macOS and Linux distributions.
 
 Using uv:
 

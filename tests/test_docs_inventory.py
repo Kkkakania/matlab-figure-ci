@@ -62,3 +62,14 @@ def test_contributing_documents_supported_test_commands():
     assert "uv run --extra test pytest" in contributing
     assert "uv run --extra test pytest" in pr_template
     assert "v0.1.x" not in contributing
+
+
+def test_docs_cover_externally_managed_python_installs():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    contributing = (ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
+
+    assert "externally managed Python" in readme
+    assert "python3 -m venv .venv" in readme
+    assert ". .venv/bin/activate" in readme
+    assert "python3 -m venv .venv" in contributing
+    assert 'python -m pip install -e ".[test]"' in contributing

@@ -57,6 +57,16 @@ Install from the GitHub release tag:
 python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
 ```
 
+If your Python installation reports an externally managed Python environment
+error, install inside a virtual environment instead of forcing a system install:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+```
+
 Create a starter configuration and GitHub Actions workflow:
 
 ```bash

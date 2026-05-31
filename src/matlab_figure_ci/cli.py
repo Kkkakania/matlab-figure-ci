@@ -290,7 +290,10 @@ def _update_gitignore(path: Path) -> str:
     else:
         text = ""
 
-    if all(entry in text.splitlines() for entry in entries):
+    existing_lines = text.splitlines()
+    missing_entries = [entry for entry in entries if entry not in existing_lines]
+
+    if not missing_entries:
         return "already contains mfigci report artifacts in .gitignore"
 
     prefix = text
@@ -298,7 +301,7 @@ def _update_gitignore(path: Path) -> str:
         prefix += "\n"
     if prefix:
         prefix += "\n"
-    path.write_text(prefix + header + "\n" + "\n".join(entries) + "\n", encoding="utf-8")
+    path.write_text(prefix + header + "\n" + "\n".join(missing_entries) + "\n", encoding="utf-8")
     return "updated .gitignore with mfigci report artifacts"
 
 

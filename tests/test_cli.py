@@ -349,6 +349,18 @@ def test_init_can_append_report_artifacts_to_gitignore(tmp_path):
     assert gitignore.read_text(encoding="utf-8").count("mfigci-report.md") == 1
 
 
+def test_init_gitignore_only_appends_missing_report_artifacts(tmp_path):
+    gitignore = tmp_path / ".gitignore"
+    gitignore.write_text("dist/\nmfigci-report.md\n", encoding="utf-8")
+
+    result = run_cli(["init", "--gitignore"], tmp_path)
+
+    assert result.returncode == 0
+    text = gitignore.read_text(encoding="utf-8")
+    assert text.count("mfigci-report.md") == 1
+    assert text.count(".mfigci-results.json") == 1
+
+
 def test_doctor_shows_safe_defaults_without_config(tmp_path):
     result = run_cli(["doctor"], tmp_path)
 

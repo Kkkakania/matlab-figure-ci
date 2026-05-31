@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Made `mfigci init --gitignore` append only missing report artifacts when a
+  repository already ignores one of the generated report files.
 - Added explicit empty-path validation for `--config` across config-backed
   commands so users see a CLI error instead of a directory traceback.
 - Added explicit empty-path validation for `release-preflight --output`.

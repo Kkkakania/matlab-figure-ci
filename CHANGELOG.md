@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Planned: post-v2 packaging and adoption hardening.
+- Added JSON output for `mfigci release-preflight` so release workflows can
+  consume structured preflight summaries and check items.
 - Added a grouped documentation index and a regression test that keeps every
   documentation Markdown file discoverable from it.
 - Added a lightweight CI Markdown link check for repository-local documentation

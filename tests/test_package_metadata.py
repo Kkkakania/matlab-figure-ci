@@ -80,5 +80,6 @@ def test_pypi_release_checklist_uses_name_helper():
     text = read_text("docs/pypi-release-checklist.md")
 
     assert "mfigci release-preflight" in text
+    assert "mfigci release-preflight --format json" in text
     assert "python scripts/check_pypi_name.py matlab-figure-ci" in text
     assert "exits `0` when PyPI returns `404`" in text

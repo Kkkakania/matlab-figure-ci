@@ -90,4 +90,5 @@ def test_readme_lists_release_preflight_command():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
     assert "mfigci release-preflight" in readme
+    assert "mfigci release-preflight --format json" in readme
     assert "mfigci release-preflight --require-dist" in readme

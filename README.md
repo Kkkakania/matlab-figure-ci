@@ -98,6 +98,7 @@ mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci rules --config mfigci.yml
 mfigci release-preflight
+mfigci release-preflight --format json
 mfigci release-preflight --require-dist
 ```
 
@@ -192,7 +193,8 @@ publish anything. By default it checks repository files, `pyproject.toml`,
 `CHANGELOG.md`, and the package workflow. Add `--require-dist` after running
 `python -m build` to require `dist/*.whl` and `dist/*.tar.gz`. Add
 `--check-pypi-name` only when you intentionally want the command to query the
-PyPI JSON API.
+PyPI JSON API. Add `--format json` when a release workflow needs structured
+preflight items and summary counts.
 
 ## GitHub Actions
 

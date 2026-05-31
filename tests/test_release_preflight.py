@@ -5,6 +5,8 @@ from matlab_figure_ci.release import (
     PreflightItem,
     classify_pypi_status,
     release_preflight_exit_code,
+    release_preflight_payload,
+    release_preflight_summary,
     run_release_preflight,
 )
 
@@ -82,6 +84,24 @@ def test_release_preflight_exit_code_can_fail_on_warnings():
 
     assert release_preflight_exit_code(items) == 0
     assert release_preflight_exit_code(items, fail_on_warnings=True) == 1
+
+
+def test_release_preflight_payload_is_machine_readable():
+    items = [
+        PreflightItem("ok", "required-file", "README.md present"),
+        PreflightItem("warning", "pypi-name", "network unavailable"),
+    ]
+
+    assert release_preflight_summary(items) == {"errors": 0, "warnings": 1, "checks": 2}
+    payload = release_preflight_payload(items, exit_code=0)
+
+    assert payload["summary"]["warnings"] == 1
+    assert payload["exitCode"] == 0
+    assert payload["items"][0] == {
+        "status": "ok",
+        "check": "required-file",
+        "message": "README.md present",
+    }
 
 
 def test_classify_pypi_status_codes():

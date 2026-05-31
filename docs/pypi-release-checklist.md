@@ -27,11 +27,14 @@ Run the local release preflight before building:
 
 ```bash
 mfigci release-preflight
+mfigci release-preflight --format json
 ```
 
 This checks required release files, `pyproject.toml` metadata, the matching
 `CHANGELOG.md` entry, the console script entry point, and the package workflow.
-It does not publish anything and does not query PyPI by default.
+It does not publish anything and does not query PyPI by default. Use the JSON
+format in release workflows that need machine-readable `summary`, `exitCode`,
+and per-check `items`.
 
 Use the helper script immediately before publishing:
 

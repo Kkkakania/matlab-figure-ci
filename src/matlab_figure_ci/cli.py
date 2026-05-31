@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from . import __version__
@@ -10,7 +11,12 @@ from .config import ConfigError, load_config
 from .gallery import run_gallery_check
 from .matlab import run_matlab_render
 from .report import load_results, save_json_report, save_markdown, save_results
-from .release import release_preflight_exit_code, run_release_preflight
+from .release import (
+    release_preflight_exit_code,
+    release_preflight_payload,
+    release_preflight_summary,
+    run_release_preflight,
+)
 from .result import CheckResults, Finding
 from .scanners import run_scan
 
@@ -345,12 +351,16 @@ def command_release_preflight(args) -> int:
         check_pypi_name=args.check_pypi_name,
         require_dist=args.require_dist,
     )
+    exit_code = release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
+    if args.format == "json":
+        print(json.dumps(release_preflight_payload(items, exit_code=exit_code), indent=2))
+        return exit_code
+
     for item in items:
         print(f"{item.status.upper()} {item.check} {item.message}")
-    errors = sum(1 for item in items if item.status == "error")
-    warnings = sum(1 for item in items if item.status == "warning")
-    print(f"{errors} error(s), {warnings} warning(s), {len(items)} preflight check(s).")
-    return release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
+    summary = release_preflight_summary(items)
+    print(f"{summary['errors']} error(s), {summary['warnings']} warning(s), {summary['checks']} preflight check(s).")
+    return exit_code
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -399,6 +409,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     release_preflight = subparsers.add_parser("release-preflight", help="check packaging readiness before a release")
     release_preflight.add_argument("--name", default="matlab-figure-ci", help="expected package/project name")
+    release_preflight.add_argument("--format", choices=["text", "json"], default="text", help="output format")
     release_preflight.add_argument(
         "--check-pypi-name",
         action="store_true",

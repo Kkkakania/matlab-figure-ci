@@ -410,6 +410,18 @@ def test_release_preflight_can_require_dist_outputs(tmp_path):
     assert "ERROR dist dist/*.tar.gz missing" in result.stdout
 
 
+def test_release_preflight_can_emit_json():
+    result = run_cli(["release-preflight", "--format", "json"], Path(__file__).resolve().parents[1])
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    assert payload["summary"]["errors"] == 0
+    assert payload["summary"]["warnings"] == 0
+    assert payload["exitCode"] == 0
+    assert any(item["check"] == "pyproject" for item in payload["items"])
+    assert "OK pyproject" not in result.stdout
+
+
 def test_invalid_config_returns_usage_error_without_traceback(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

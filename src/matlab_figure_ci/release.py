@@ -18,6 +18,33 @@ class PreflightItem:
     message: str
 
 
+def release_preflight_summary(items: list[PreflightItem]) -> dict[str, int]:
+    """Return counts for a release preflight result set."""
+
+    return {
+        "errors": sum(1 for item in items if item.status == "error"),
+        "warnings": sum(1 for item in items if item.status == "warning"),
+        "checks": len(items),
+    }
+
+
+def release_preflight_payload(items: list[PreflightItem], *, exit_code: int) -> dict:
+    """Return a machine-readable release preflight payload."""
+
+    return {
+        "summary": release_preflight_summary(items),
+        "exitCode": exit_code,
+        "items": [
+            {
+                "status": item.status,
+                "check": item.check,
+                "message": item.message,
+            }
+            for item in items
+        ],
+    }
+
+
 def _read_text(root: Path, relative_path: str) -> str:
     return (root / relative_path).read_text(encoding="utf-8")
 

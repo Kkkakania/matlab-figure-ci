@@ -95,6 +95,9 @@ The companion repository `matlab-scientific-figures` uses the staged approach:
 This is a maintenance signal: the tool is exercised by a real public repository.
 It should not be described as download volume, external adoption, or guaranteed program eligibility.
 
+The current dogfooding snapshot is maintained in
+[`adoption-report-matlab-scientific-figures.md`](adoption-report-matlab-scientific-figures.md).
+
 ## Maintainer Checklist
 
 - Use relative paths in reports and issue examples.

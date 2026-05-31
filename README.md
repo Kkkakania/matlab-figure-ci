@@ -33,6 +33,10 @@ provenance traces, risky file extensions, and the `matlab-figures` preset. This
 is a maintenance signal, not a usage metric: it shows the CLI is exercised by a
 real public repository without claiming external adoption or downloads.
 
+See the current [dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
+for the exact downstream configuration, latest check summary, and known
+boundaries.
+
 ## Quick Start
 
 Install from the GitHub release tag:
@@ -193,6 +197,7 @@ jobs:
 - [Documentation index](docs/README.md)
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
 - [Adoption playbook](docs/adoption-playbook.md)
+- [Dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Rule design](docs/rule-design.md)

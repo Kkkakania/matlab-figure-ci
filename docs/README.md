@@ -9,6 +9,8 @@ This directory collects the public maintainer and user documentation for
   repositories, optional MATLAB batch rendering, and CI runners.
 - [Adoption playbook](adoption-playbook.md): roll out static scans, gallery
   checks, release gates, and optional render checks in stages.
+- [Dogfooding adoption report](adoption-report-matlab-scientific-figures.md):
+  current `matlab-scientific-figures` integration snapshot and check results.
 
 ## Reports And Rules
 

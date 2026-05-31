@@ -9,6 +9,8 @@
   links.
 - Fixed roadmap and version-plan release metadata ordering after the `v2.4.5`
   release, and added roadmap coverage to the public-version regression test.
+- Added a dogfooding adoption report for the current
+  `matlab-scientific-figures` integration snapshot.
 
 ## v2.4.5 - 2026-05-30
 

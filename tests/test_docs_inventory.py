@@ -91,4 +91,5 @@ def test_readme_lists_release_preflight_command():
 
     assert "mfigci release-preflight" in readme
     assert "mfigci release-preflight --format json" in readme
+    assert "mfigci release-preflight --output release-preflight.json" in readme
     assert "mfigci release-preflight --require-dist" in readme

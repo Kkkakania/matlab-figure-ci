@@ -352,8 +352,11 @@ def command_release_preflight(args) -> int:
         require_dist=args.require_dist,
     )
     exit_code = release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
+    payload = release_preflight_payload(items, exit_code=exit_code)
+    if args.output:
+        Path(args.output).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     if args.format == "json":
-        print(json.dumps(release_preflight_payload(items, exit_code=exit_code), indent=2))
+        print(json.dumps(payload, indent=2))
         return exit_code
 
     for item in items:
@@ -410,6 +413,7 @@ def build_parser() -> argparse.ArgumentParser:
     release_preflight = subparsers.add_parser("release-preflight", help="check packaging readiness before a release")
     release_preflight.add_argument("--name", default="matlab-figure-ci", help="expected package/project name")
     release_preflight.add_argument("--format", choices=["text", "json"], default="text", help="output format")
+    release_preflight.add_argument("--output", help="write machine-readable JSON preflight results to this file")
     release_preflight.add_argument(
         "--check-pypi-name",
         action="store_true",

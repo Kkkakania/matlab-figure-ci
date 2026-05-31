@@ -422,6 +422,21 @@ def test_release_preflight_can_emit_json():
     assert "OK pyproject" not in result.stdout
 
 
+def test_release_preflight_can_write_json_output(tmp_path):
+    output = tmp_path / "release-preflight.json"
+    result = run_cli(
+        ["release-preflight", "--output", str(output)],
+        Path(__file__).resolve().parents[1],
+    )
+
+    assert result.returncode == 0
+    assert "0 error(s), 0 warning(s)" in result.stdout
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["summary"]["errors"] == 0
+    assert payload["exitCode"] == 0
+    assert any(item["check"] == "package-workflow" for item in payload["items"])
+
+
 def test_invalid_config_returns_usage_error_without_traceback(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

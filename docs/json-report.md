@@ -95,7 +95,10 @@ Consumers should tolerate additional summary keys.
 |---|---|
 | `status` | `skipped`, `ok`, or `error` |
 | `message` | Non-sensitive render status |
-| `exit_code` | Render process exit code when available |
+| `exit_code` | `mfigci` render/check exit code when available |
+| `process_exit_code` | Raw MATLAB process exit code when MATLAB runs and fails |
+| `stdout_excerpt` | Truncated MATLAB stdout excerpt for failed renders |
+| `stderr_excerpt` | Truncated MATLAB stderr excerpt for failed renders |
 
 When MATLAB rendering is disabled, render status is `skipped`.
 
@@ -200,6 +203,22 @@ When MATLAB rendering is disabled, render status is `skipped`.
     "status": "error",
     "message": "MATLAB executable not found",
     "exit_code": 3
+  }
+}
+```
+
+When MATLAB starts but the batch command fails, the render object also includes
+the raw MATLAB process exit code and short stdout/stderr excerpts:
+
+```json
+{
+  "render": {
+    "status": "error",
+    "message": "MATLAB render failed.",
+    "exit_code": 3,
+    "process_exit_code": 7,
+    "stdout_excerpt": "Undefined function or variable 'run_all_figures'.",
+    "stderr_excerpt": "Error using run_all_figures"
   }
 }
 ```

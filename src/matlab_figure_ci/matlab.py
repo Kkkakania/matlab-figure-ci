@@ -7,6 +7,15 @@ import shutil
 import subprocess
 from pathlib import Path
 
+MAX_RENDER_EXCERPT_CHARS = 4000
+
+
+def _excerpt(text: str, limit: int = MAX_RENDER_EXCERPT_CHARS) -> str:
+    cleaned = text.strip()
+    if len(cleaned) <= limit:
+        return cleaned
+    return cleaned[: limit - 40].rstrip() + "\n... truncated by matlab-figure-ci ..."
+
 
 def run_matlab_render(root: str | Path, config: dict) -> dict:
     matlab_config = config.get("matlab", {})
@@ -35,5 +44,8 @@ def run_matlab_render(root: str | Path, config: dict) -> dict:
             "status": "error",
             "message": "MATLAB render failed.",
             "exit_code": 3,
+            "process_exit_code": completed.returncode,
+            "stdout_excerpt": _excerpt(completed.stdout),
+            "stderr_excerpt": _excerpt(completed.stderr),
         }
     return {"status": "ok", "message": "MATLAB render completed.", "exit_code": 0}

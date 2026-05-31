@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -6,10 +7,14 @@ from pathlib import Path
 from matlab_figure_ci import __version__
 
 
-def run_cli(args, cwd):
+def run_cli(args, cwd, env=None):
+    process_env = os.environ.copy()
+    if env:
+        process_env.update(env)
     return subprocess.run(
         [sys.executable, "-m", "matlab_figure_ci.cli", *args],
         cwd=cwd,
+        env=process_env,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -89,6 +94,48 @@ gallery:
     assert (tmp_path / ".mfigci-results.json").exists()
     payload = json.loads((tmp_path / ".mfigci-results.json").read_text(encoding="utf-8"))
     assert payload["summary"]["errors"] == 0
+
+
+def test_check_preserves_failed_matlab_output_excerpts(tmp_path):
+    fake_matlab = tmp_path / "fake-matlab"
+    fake_matlab.write_text(
+        "#!/usr/bin/env bash\n"
+        "echo \"Undefined function or variable 'run_all_figures'.\"\n"
+        "echo \"Error using run_all_figures\" >&2\n"
+        "exit 7\n",
+        encoding="utf-8",
+    )
+    fake_matlab.chmod(0o755)
+    (tmp_path / "gallery").mkdir()
+    (tmp_path / "mfigci.yml").write_text(
+        """
+gallery:
+  expected: []
+matlab:
+  enabled: true
+  bin_env: "MFIGCI_TEST_MATLAB"
+  batch_command: "run_all_figures"
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(
+        ["check", "--config", "mfigci.yml", "--report", "mfigci-report.md"],
+        tmp_path,
+        env={"MFIGCI_TEST_MATLAB": str(fake_matlab)},
+    )
+
+    report = (tmp_path / "mfigci-report.md").read_text(encoding="utf-8")
+    payload = json.loads((tmp_path / ".mfigci-results.json").read_text(encoding="utf-8"))
+    render = payload["render"]
+    assert result.returncode == 3
+    assert render["status"] == "error"
+    assert render["process_exit_code"] == 7
+    assert "Undefined function" in render["stdout_excerpt"]
+    assert "Error using run_all_figures" in render["stderr_excerpt"]
+    assert "MATLAB stdout excerpt" in report
+    assert "Undefined function" in report
+    assert "MATLAB process exit code: 7" in result.stdout
 
 
 def test_check_can_fail_on_warnings_when_requested(tmp_path):

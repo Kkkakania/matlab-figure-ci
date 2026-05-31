@@ -14,6 +14,12 @@ def _format_location(path: str, line: int | None) -> str:
     return f"{path}:{line}"
 
 
+def _append_render_excerpt(lines: list[str], label: str, content: str | None) -> None:
+    if not content:
+        return
+    lines.extend(["", f"### {label}", "", "```text", content, "```"])
+
+
 def build_markdown_report(results: CheckResults) -> str:
     summary = results.summary
     lines = [
@@ -47,6 +53,10 @@ def build_markdown_report(results: CheckResults) -> str:
         lines.append("- No gallery entries checked.")
 
     lines.extend(["", "## Render", "", f"- {results.render.get('status', 'skipped')}: {results.render.get('message', 'disabled')}"])
+    if "process_exit_code" in results.render:
+        lines.append(f"- Process exit code: {results.render.get('process_exit_code')}")
+    _append_render_excerpt(lines, "MATLAB stdout excerpt", results.render.get("stdout_excerpt"))
+    _append_render_excerpt(lines, "MATLAB stderr excerpt", results.render.get("stderr_excerpt"))
     lines.extend(["", "## Next steps", ""])
     if summary.get("errors", 0):
         lines.append("- Fix error findings before releasing or merging.")
@@ -94,6 +104,13 @@ def build_pr_comment_report(results: CheckResults) -> str:
         lines.append("")
     else:
         lines.extend(["No findings.", ""])
+
+    if results.render.get("status") == "error":
+        lines.append(f"Render error: {results.render.get('message', 'MATLAB render failed.')}")
+        if "process_exit_code" in results.render:
+            lines.append(f"MATLAB process exit code: {results.render.get('process_exit_code')}")
+        lines.append("See the full report artifact for stdout/stderr excerpts.")
+        lines.append("")
 
     if errors:
         lines.append("Next step: fix error findings before merging or releasing.")

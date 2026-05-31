@@ -189,6 +189,15 @@ def command_render(args) -> int:
     config = load_config(args.config)
     result = run_matlab_render(Path.cwd(), config)
     print(f"{result['status'].upper()} {result['message']}")
+    if result.get("status") == "error":
+        if "process_exit_code" in result:
+            print(f"MATLAB process exit code: {result['process_exit_code']}")
+        if result.get("stdout_excerpt"):
+            print("MATLAB stdout excerpt:")
+            print(result["stdout_excerpt"])
+        if result.get("stderr_excerpt"):
+            print("MATLAB stderr excerpt:")
+            print(result["stderr_excerpt"])
     return int(result.get("exit_code", 0))
 
 
@@ -205,6 +214,14 @@ def command_check(args) -> int:
     print(f"Results written to {args.results}")
     if results.render.get("status") == "error":
         print(f"ERROR render {results.render.get('message')}")
+        if "process_exit_code" in results.render:
+            print(f"MATLAB process exit code: {results.render['process_exit_code']}")
+        if results.render.get("stdout_excerpt"):
+            print("MATLAB stdout excerpt:")
+            print(results.render["stdout_excerpt"])
+        if results.render.get("stderr_excerpt"):
+            print("MATLAB stderr excerpt:")
+            print(results.render["stderr_excerpt"])
         return 3
     return _policy_exit_code(
         int(results.summary.get("errors", 0)),

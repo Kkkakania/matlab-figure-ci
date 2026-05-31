@@ -63,6 +63,9 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert 'pip install -e ".[build]"' in text
     assert "python -m build" in text
     assert "python -m twine check dist/*" in text
+    assert "twine upload" not in text
+    assert "pypa/gh-action-pypi-publish" not in text
+    assert "id-token: write" not in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in text
     assert "actions/upload-artifact@v5" in text
@@ -89,4 +92,5 @@ def test_pypi_release_checklist_uses_name_helper():
     assert "mfigci release-preflight --output release-preflight.json" in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "python scripts/check_pypi_name.py matlab-figure-ci" in text
+    assert "package workflow does not publish" in text
     assert "exits `0` when PyPI returns `404`" in text

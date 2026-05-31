@@ -24,6 +24,9 @@ change.
 6. Confirm no PyPI token is committed to the repository.
 7. Confirm the Package workflow uploaded `release-preflight.json` for the
    release candidate commit.
+8. Confirm the Package workflow still builds, checks, smoke-installs, and
+   uploads a preflight artifact only. It must not contain `twine upload`,
+   `pypa/gh-action-pypi-publish`, `id-token: write`, or PyPI token variables.
 
 Run the local release preflight before building:
 
@@ -39,6 +42,9 @@ It does not publish anything and does not query PyPI by default. Use the JSON
 format in release workflows that need machine-readable `summary`, `exitCode`,
 and per-check `items`. Use `--output release-preflight.json` when the normal
 text log should stay readable but CI also needs a JSON artifact.
+The preflight also verifies that the package workflow does not publish to PyPI;
+publishing remains a deliberate manual step until the project intentionally
+changes that policy.
 
 Use the helper script immediately before publishing:
 

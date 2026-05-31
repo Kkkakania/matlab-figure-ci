@@ -84,6 +84,27 @@ def check_pypi_project_name(name: str, timeout: float = 10.0) -> PreflightItem:
     return PreflightItem("warning", "pypi-name", f"{url} returned an unexpected status")
 
 
+FORBIDDEN_PUBLISH_WORKFLOW_MARKERS = [
+    "twine upload",
+    "pypa/gh-action-pypi-publish",
+    "id-token: write",
+    "TWINE_PASSWORD",
+]
+
+
+def check_package_workflow_does_not_publish(workflow: str) -> PreflightItem:
+    """Ensure the package workflow remains a build/check workflow only."""
+
+    matches = [marker for marker in FORBIDDEN_PUBLISH_WORKFLOW_MARKERS if marker in workflow]
+    if matches:
+        return PreflightItem(
+            "error",
+            "package-workflow",
+            f"package workflow contains publish marker(s): {', '.join(matches)}",
+        )
+    return PreflightItem("ok", "package-workflow", "package workflow does not publish to PyPI")
+
+
 def run_release_preflight(
     root: str | Path,
     *,
@@ -172,6 +193,7 @@ def run_release_preflight(
                     description if ok else f"package workflow missing: {needle}",
                 )
             )
+        items.append(check_package_workflow_does_not_publish(workflow))
 
     if require_dist:
         dist_path = root_path / "dist"

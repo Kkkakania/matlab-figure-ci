@@ -3,6 +3,7 @@ from pathlib import Path
 from matlab_figure_ci import __version__
 from matlab_figure_ci.release import (
     PreflightItem,
+    check_package_workflow_does_not_publish,
     classify_pypi_status,
     release_preflight_exit_code,
     release_preflight_payload,
@@ -24,6 +25,7 @@ def test_release_preflight_passes_for_repository_metadata():
     assert release_preflight_exit_code(items) == 0
     assert any(item.check == "pyproject" and item.message == f'version = "{__version__}"' for item in items)
     assert any(item.check == "package-workflow" and "smoke installs" in item.message for item in items)
+    assert any(item.check == "package-workflow" and "does not publish to PyPI" in item.message for item in items)
 
 
 def test_release_preflight_can_require_dist_outputs(tmp_path):
@@ -108,3 +110,15 @@ def test_classify_pypi_status_codes():
     assert classify_pypi_status(404) == "available"
     assert classify_pypi_status(200) == "taken"
     assert classify_pypi_status(500) == "unknown"
+
+
+def test_package_workflow_publish_guard_rejects_upload_markers():
+    clean = check_package_workflow_does_not_publish("python -m build\npython -m twine check dist/*\n")
+    direct_upload = check_package_workflow_does_not_publish("python -m twine upload dist/*\n")
+    trusted_publish = check_package_workflow_does_not_publish("uses: pypa/gh-action-pypi-publish@release/v1\n")
+
+    assert clean.status == "ok"
+    assert direct_upload.status == "error"
+    assert "twine upload" in direct_upload.message
+    assert trusted_publish.status == "error"
+    assert "pypa/gh-action-pypi-publish" in trusted_publish.message

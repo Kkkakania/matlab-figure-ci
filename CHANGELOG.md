@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added explicit empty-path validation for `release-preflight --output`.
 - Added explicit empty-path validation for `check --report`, `check --results`,
   `report --input`, and `report --output` so CLI users see clear errors instead
   of Python directory write/read tracebacks.

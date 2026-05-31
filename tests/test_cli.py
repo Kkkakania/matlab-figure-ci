@@ -487,6 +487,13 @@ def test_release_preflight_can_write_json_output(tmp_path):
     assert any(item["check"] == "package-workflow" for item in payload["items"])
 
 
+def test_release_preflight_rejects_empty_output_path():
+    result = run_cli(["release-preflight", "--output", ""], Path(__file__).resolve().parents[1])
+
+    assert result.returncode == 2
+    assert "--output must not be empty" in result.stderr
+
+
 def test_invalid_config_returns_usage_error_without_traceback(tmp_path):
     (tmp_path / "mfigci.yml").write_text(
         """

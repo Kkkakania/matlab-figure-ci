@@ -390,6 +390,9 @@ def command_rules(args) -> int:
 
 
 def command_release_preflight(args) -> int:
+    if args.output == "":
+        print("--output must not be empty", file=sys.stderr)
+        return 2
     items = run_release_preflight(
         Path.cwd(),
         expected_name=args.name,

@@ -312,6 +312,10 @@ def test_doctor_shows_safe_defaults_without_config(tmp_path):
     assert "Project: matlab-figure-ci-project" in result.stdout
     assert "Scan include: ." in result.stdout
     assert "Gallery expected files: 0" in result.stdout
+    assert "Privacy rules: 3" in result.stdout
+    assert "Provenance rules: 3" in result.stdout
+    assert "Extension errors: 7" in result.stdout
+    assert "Extension warnings: 3" in result.stdout
     assert "MATLAB render: disabled" in result.stdout
     assert str(tmp_path) not in result.stdout
 

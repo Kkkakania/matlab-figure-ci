@@ -292,6 +292,7 @@ def command_doctor(args) -> int:
     provenance = config.get("provenance", {})
     strict = config.get("strict", {})
     gallery = config.get("gallery", {})
+    extensions = config.get("extensions", {})
     matlab = config.get("matlab", {})
     presets = config.get("presets", config.get("preset", []))
     if isinstance(presets, str):
@@ -309,11 +310,15 @@ def command_doctor(args) -> int:
     print(f"Scan include: {_format_list(scan.get('include', []))}")
     print(f"Scan exclude: {_format_list(scan.get('exclude', []))}")
     print(f"Privacy scan: {'enabled' if privacy.get('enabled', True) else 'disabled'}")
+    print(f"Privacy rules: {len(privacy.get('rules', []))}")
     print(f"Provenance scan: {'enabled' if provenance.get('enabled', True) else 'disabled'}")
+    print(f"Provenance rules: {len(provenance.get('rules', []))}")
     print(f"Fail on warnings: {'enabled' if strict.get('fail_on_warnings', False) else 'disabled'}")
     print(f"Gallery path: {gallery.get('path', 'gallery')}")
     print(f"Gallery allowed extensions: {_format_list(gallery.get('allowed_extensions', []))}")
     print(f"Gallery expected files: {len(gallery.get('expected', []))}")
+    print(f"Extension errors: {len(extensions.get('error', []))}")
+    print(f"Extension warnings: {len(extensions.get('warning', []))}")
     print(f"MATLAB render: {matlab_status}")
     return 0
 

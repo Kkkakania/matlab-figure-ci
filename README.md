@@ -186,6 +186,11 @@ config, policy, and report boundary.
 | `mfigci rules` | Inspect effective privacy, provenance, and extension rules |
 | `mfigci release-preflight` | Check package metadata, release files, and packaging workflow readiness |
 
+`mfigci doctor` summarizes include/exclude paths, rule counts, extension policy
+counts, gallery expectations, strict warning behavior, and MATLAB render status.
+Use it when reviewing a new repository configuration before running a full
+scan.
+
 By default, warnings do not fail CI. Add `--fail-on-warnings` to `scan` or
 `check` when a release gate should treat warnings as policy failures.
 

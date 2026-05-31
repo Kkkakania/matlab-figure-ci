@@ -88,6 +88,8 @@ Unknown future keys should be ignored unless they conflict with existing keys.
   `matlab-figures` preset.
 - Text scanning skips binary or undecodable files instead of crashing.
 - Paths in findings and gallery items are repository-relative.
+- `mfigci doctor` reports rule counts and extension policy counts without
+  printing regex patterns or scanned file contents.
 
 ## Stable Report Behavior
 

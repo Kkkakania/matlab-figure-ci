@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add rule-count and extension-policy summaries to `mfigci doctor` so
+  maintainers can review gate strength without printing regex patterns.
 - Escape Markdown table cells in full and PR-comment reports so pipe
   characters in paths, rule IDs, or messages do not break report tables.
 - Add finding summaries grouped by severity and rule to Markdown and PR-comment

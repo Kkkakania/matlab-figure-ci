@@ -96,6 +96,16 @@ gallery:
     assert payload["summary"]["errors"] == 0
 
 
+def test_check_rejects_empty_report_or_results_path(tmp_path):
+    empty_report = run_cli(["check", "--report", ""], tmp_path)
+    empty_results = run_cli(["check", "--results", ""], tmp_path)
+
+    assert empty_report.returncode == 2
+    assert "--report must not be empty" in empty_report.stderr
+    assert empty_results.returncode == 2
+    assert "--results must not be empty" in empty_results.stderr
+
+
 def test_check_preserves_failed_matlab_output_excerpts(tmp_path):
     fake_matlab = tmp_path / "fake-matlab"
     fake_matlab.write_text(
@@ -194,6 +204,16 @@ def test_report_reads_existing_json_and_does_not_make_empty_report(tmp_path):
 
     assert ok.returncode == 0
     assert "# matlab-figure-ci report" in (tmp_path / "report.md").read_text(encoding="utf-8")
+
+
+def test_report_rejects_empty_input_or_output_path(tmp_path):
+    empty_input = run_cli(["report", "--input", ""], tmp_path)
+    empty_output = run_cli(["report", "--output", ""], tmp_path)
+
+    assert empty_input.returncode == 2
+    assert "--input must not be empty" in empty_input.stderr
+    assert empty_output.returncode == 2
+    assert "--output must not be empty" in empty_output.stderr
 
 
 def test_report_can_write_pr_comment_style(tmp_path):

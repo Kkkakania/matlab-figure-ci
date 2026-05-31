@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from . import __version__
@@ -212,6 +213,12 @@ def command_render(args) -> int:
 
 
 def command_check(args) -> int:
+    if not args.report:
+        print("--report must not be empty", file=sys.stderr)
+        return 2
+    if not args.results:
+        print("--results must not be empty", file=sys.stderr)
+        return 2
     config_path = Path(args.config)
     config = load_config(config_path)
     include_render = bool(config.get("matlab", {}).get("enabled", False))
@@ -241,6 +248,12 @@ def command_check(args) -> int:
 
 
 def command_report(args) -> int:
+    if not args.input:
+        print("--input must not be empty", file=sys.stderr)
+        return 2
+    if not args.output:
+        print("--output must not be empty", file=sys.stderr)
+        return 2
     try:
         results = load_results(args.input)
     except FileNotFoundError as exc:

@@ -121,7 +121,7 @@ def test_readme_has_first_five_minutes_adoption_path():
     assert "4. Run the full check and read both reports." in readme
     assert "mfigci init --gitignore" in readme
     assert "The plain `mfigci init` command does not edit `.gitignore`" in readme
-    assert "Do not commit `mfigci-report.md` or `.mfigci-results.json`" in readme
+    assert "Do not commit `mfigci-report.md`, `.mfigci-results.json`, or `release-preflight.json`" in readme
 
 
 def test_readme_lists_release_preflight_command():

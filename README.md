@@ -150,9 +150,9 @@ Use this path to try the tool without changing release policy immediately:
    mfigci check --config mfigci.yml --report mfigci-report.md
    ```
 
-Do not commit `mfigci-report.md` or `.mfigci-results.json` until you have
-reviewed whether the report belongs in your repository or should stay as a CI
-artifact.
+Do not commit `mfigci-report.md`, `.mfigci-results.json`, or `release-preflight.json`
+until you have reviewed whether the report belongs in your repository or should
+stay as a CI artifact.
 
 ## Configuration
 

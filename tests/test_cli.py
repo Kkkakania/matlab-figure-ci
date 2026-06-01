@@ -359,6 +359,7 @@ def test_init_can_append_report_artifacts_to_gitignore(tmp_path):
         "# matlab-figure-ci local reports\n"
         "mfigci-report.md\n"
         ".mfigci-results.json\n"
+        "release-preflight.json\n"
     )
 
     second = run_cli(["init", "--gitignore"], tmp_path)
@@ -366,6 +367,7 @@ def test_init_can_append_report_artifacts_to_gitignore(tmp_path):
     assert second.returncode == 0
     assert "already contains mfigci report artifacts" in second.stdout
     assert gitignore.read_text(encoding="utf-8").count("mfigci-report.md") == 1
+    assert gitignore.read_text(encoding="utf-8").count("release-preflight.json") == 1
 
 
 def test_init_gitignore_only_appends_missing_report_artifacts(tmp_path):

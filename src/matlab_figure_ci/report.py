@@ -184,7 +184,8 @@ def load_results(path: str | Path) -> CheckResults:
     results_path = Path(path)
     if not results_path.exists():
         raise FileNotFoundError(
-            f"{results_path} not found. Run `mfigci check --report mfigci-report.md` before `mfigci report`."
+            f"{results_path} not found. Run `mfigci check --results .mfigci-results.json` first, "
+            "then `mfigci report --input .mfigci-results.json`."
         )
     data = json.loads(results_path.read_text(encoding="utf-8"))
     return CheckResults.from_dict(data)

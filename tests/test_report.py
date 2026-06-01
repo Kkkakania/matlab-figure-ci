@@ -38,6 +38,8 @@ def test_load_results_requires_existing_json(tmp_path):
         load_results(missing)
     except FileNotFoundError as exc:
         assert "mfigci check" in str(exc)
+        assert "--results .mfigci-results.json" in str(exc)
+        assert "--input .mfigci-results.json" in str(exc)
     else:
         raise AssertionError("expected FileNotFoundError")
 

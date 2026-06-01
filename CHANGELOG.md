@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Clarified the missing-results message for `mfigci report` so users see the
+  matching `check --results` and `report --input` commands.
 - Made report writers create parent directories for nested `--report`,
   `--results`, and `report --output` paths.
 - Made `release-preflight --output` create parent directories for nested JSON

@@ -14,6 +14,14 @@ def _rel(root: Path, path: Path) -> str:
         return path.as_posix()
 
 
+def _stays_within(base: Path, path: Path) -> bool:
+    try:
+        path.resolve().relative_to(base.resolve())
+    except (OSError, ValueError):
+        return False
+    return True
+
+
 def run_gallery_check(root: str | Path, config: dict) -> GalleryResults:
     root_path = Path(root).resolve()
     gallery_config = config.get("gallery", {})
@@ -30,6 +38,9 @@ def run_gallery_check(root: str | Path, config: dict) -> GalleryResults:
     for name in expected:
         path = gallery_path / name
         rel = _rel(root_path, path)
+        if not _stays_within(gallery_path, path):
+            result.items.append(GalleryItem("error", rel, "expected gallery path is outside the gallery directory"))
+            continue
         suffix = path.suffix.lower()
         if suffix not in allowed:
             result.items.append(GalleryItem("warning", rel, f"unexpected extension {suffix}"))

@@ -63,3 +63,15 @@ def test_gallery_reports_unexpected_extension(tmp_path):
     assert result.error_count == 0
     assert result.warning_count == 1
     assert result.items[0].status == "warning"
+
+
+def test_gallery_rejects_expected_paths_outside_gallery(tmp_path):
+    gallery = tmp_path / "gallery"
+    gallery.mkdir()
+    (tmp_path / "outside.png").write_bytes(b"123456789")
+
+    result = run_gallery_check(tmp_path, write_config(tmp_path, ["../outside.png"]))
+
+    assert result.error_count == 1
+    assert result.items[0].status == "error"
+    assert "outside the gallery directory" in result.items[0].message

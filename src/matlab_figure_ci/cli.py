@@ -416,7 +416,9 @@ def command_release_preflight(args) -> int:
     exit_code = release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
     payload = release_preflight_payload(items, exit_code=exit_code)
     if args.output:
-        Path(args.output).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     if args.format == "json":
         print(json.dumps(payload, indent=2))
         return exit_code

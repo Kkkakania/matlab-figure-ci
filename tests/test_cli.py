@@ -518,6 +518,17 @@ def test_release_preflight_can_write_json_output(tmp_path):
     assert any(item["check"] == "package-workflow" for item in payload["items"])
 
 
+def test_release_preflight_creates_parent_directory_for_output(tmp_path):
+    output = tmp_path / "reports" / "release-preflight.json"
+    result = run_cli(
+        ["release-preflight", "--output", str(output)],
+        Path(__file__).resolve().parents[1],
+    )
+
+    assert result.returncode == 0
+    assert output.exists()
+
+
 def test_release_preflight_rejects_empty_output_path():
     result = run_cli(["release-preflight", "--output", ""], Path(__file__).resolve().parents[1])
 

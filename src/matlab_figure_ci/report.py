@@ -175,7 +175,9 @@ def build_json_report(results: CheckResults) -> str:
 
 
 def save_results(results: CheckResults, path: str | Path) -> None:
-    Path(path).write_text(json.dumps(results.to_dict(), indent=2, ensure_ascii=False), encoding="utf-8")
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(results.to_dict(), indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def load_results(path: str | Path) -> CheckResults:
@@ -193,8 +195,12 @@ def save_markdown(results: CheckResults, path: str | Path, style: str = "full") 
         content = build_pr_comment_report(results)
     else:
         content = build_markdown_report(results)
-    Path(path).write_text(content, encoding="utf-8")
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(content, encoding="utf-8")
 
 
 def save_json_report(results: CheckResults, path: str | Path) -> None:
-    Path(path).write_text(build_json_report(results), encoding="utf-8")
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(build_json_report(results), encoding="utf-8")

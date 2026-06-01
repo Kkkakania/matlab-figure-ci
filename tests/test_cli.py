@@ -106,6 +106,25 @@ def test_check_rejects_empty_report_or_results_path(tmp_path):
     assert "--results must not be empty" in empty_results.stderr
 
 
+def test_check_creates_parent_directories_for_outputs(tmp_path):
+    result = run_cli(
+        [
+            "check",
+            "--report",
+            "reports/mfigci-report.md",
+            "--results",
+            "reports/results.json",
+        ],
+        tmp_path,
+    )
+
+    assert result.returncode in {0, 1}
+    assert "Traceback" not in result.stderr
+    assert "FileNotFoundError" not in result.stderr
+    assert (tmp_path / "reports" / "mfigci-report.md").exists()
+    assert (tmp_path / "reports" / "results.json").exists()
+
+
 def test_check_preserves_failed_matlab_output_excerpts(tmp_path):
     fake_matlab = tmp_path / "fake-matlab"
     fake_matlab.write_text(

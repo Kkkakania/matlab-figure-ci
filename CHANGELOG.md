@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Made report writers create parent directories for nested `--report`,
+  `--results`, and `report --output` paths.
 - Made `mfigci init --gitignore` append only missing report artifacts when a
   repository already ignores one of the generated report files.
 - Added explicit empty-path validation for `--config` across config-backed

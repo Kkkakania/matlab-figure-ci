@@ -91,6 +91,23 @@ privacy:
         load_config(config_path)
 
 
+def test_invalid_policy_regex_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+provenance:
+  rules:
+    - id: provenance.custom
+      pattern: "[unterminated"
+      severity: warning
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"provenance.rules\[0\].pattern"):
+        load_config(config_path)
+
+
 def test_invalid_strict_flag_raises_clear_error(tmp_path):
     config_path = tmp_path / "mfigci.yml"
     config_path.write_text(

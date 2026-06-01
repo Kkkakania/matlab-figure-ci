@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -170,6 +171,10 @@ def _validate_policy_rules(config: dict[str, Any], section_name: str) -> None:
             raise ConfigError(f"{rule_key}.id must be a string")
         if not isinstance(rule.get("pattern", ""), str):
             raise ConfigError(f"{rule_key}.pattern must be a string")
+        try:
+            re.compile(rule.get("pattern", ""))
+        except re.error as exc:
+            raise ConfigError(f"{rule_key}.pattern is not a valid regular expression: {exc}") from exc
         severity = rule.get("severity", "warning")
         if severity not in ALLOWED_SEVERITIES:
             allowed = ", ".join(sorted(ALLOWED_SEVERITIES))

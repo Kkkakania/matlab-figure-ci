@@ -42,6 +42,13 @@ paths, emails, phone numbers, local usernames, or unpublished data.
 
 ```
 
+## Privacy Check
+
+- [ ] I did not include private paths, private datasets, credentials, or
+      unpublished project names.
+- [ ] I redacted emails, tokens, local usernames, and organization-specific
+      identifiers from config snippets and output.
+
 ## Additional context
 
 Add any detail that helps distinguish a scanner, gallery, report, init, or

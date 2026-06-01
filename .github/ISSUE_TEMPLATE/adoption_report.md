@@ -38,6 +38,13 @@ Gallery files checked:
 Binary/skipped files:
 ```
 
+## Privacy Check
+
+- [ ] I did not include private paths, private datasets, credentials, or
+      unpublished project names.
+- [ ] I redacted emails, tokens, local usernames, and organization-specific
+      identifiers from config snippets and output.
+
 ## What Worked
 
 Which scanner, gallery, report, init, or docs behavior was immediately useful?

@@ -16,6 +16,8 @@ def test_bug_report_template_asks_for_reproducible_context():
     assert "Configuration" in text
     assert "Output" in text
     assert "Redact private paths" in text
+    assert "I did not include private paths" in text
+    assert "I redacted emails, tokens, local usernames" in text
 
 
 def test_feature_request_template_keeps_scope_small():
@@ -35,6 +37,8 @@ def test_adoption_report_template_collects_safe_downstream_feedback():
     assert "mfigci check" in text
     assert "Redact private paths" in text
     assert "Follow-Up Suggestion" in text
+    assert "I did not include private paths" in text
+    assert "I redacted emails, tokens, local usernames" in text
 
 
 def test_pull_request_template_preserves_quality_gate_checklist():

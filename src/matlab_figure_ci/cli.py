@@ -272,7 +272,7 @@ def command_report(args) -> int:
         return 2
     try:
         results = load_results(args.input)
-    except FileNotFoundError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         print(str(exc))
         return 2
     if args.format == "json":

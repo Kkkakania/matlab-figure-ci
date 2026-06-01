@@ -187,7 +187,10 @@ def load_results(path: str | Path) -> CheckResults:
             f"{results_path} not found. Run `mfigci check --results .mfigci-results.json` first, "
             "then `mfigci report --input .mfigci-results.json`."
         )
-    data = json.loads(results_path.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(results_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Could not parse {results_path}: {exc.msg}") from exc
     return CheckResults.from_dict(data)
 
 

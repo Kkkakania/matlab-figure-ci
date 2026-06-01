@@ -96,6 +96,20 @@ gallery:
     assert payload["summary"]["errors"] == 0
 
 
+def test_check_records_relative_config_path_when_called_with_absolute_path(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text("gallery:\n  expected: []\n", encoding="utf-8")
+
+    result = run_cli(["check", "--config", str(config_path)], tmp_path)
+
+    assert result.returncode in {0, 1}
+    payload = json.loads((tmp_path / ".mfigci-results.json").read_text(encoding="utf-8"))
+    report = (tmp_path / "mfigci-report.md").read_text(encoding="utf-8")
+    assert payload["config_path"] == "mfigci.yml"
+    assert str(tmp_path) not in json.dumps(payload)
+    assert str(tmp_path) not in report
+
+
 def test_check_rejects_empty_report_or_results_path(tmp_path):
     empty_report = run_cli(["check", "--report", ""], tmp_path)
     empty_results = run_cli(["check", "--results", ""], tmp_path)

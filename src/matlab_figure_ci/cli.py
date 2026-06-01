@@ -157,6 +157,15 @@ def _fail_on_warnings(args, config: dict) -> bool:
     return bool(args.fail_on_warnings or config.get("strict", {}).get("fail_on_warnings", False))
 
 
+def _public_config_path(config_path: Path, root: Path) -> str:
+    if not config_path.is_absolute():
+        return config_path.as_posix()
+    try:
+        return config_path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return config_path.name
+
+
 def _build_check_results(config_path: Path, config: dict, root: Path, include_render: bool) -> CheckResults:
     scan = run_scan(root, config)
     gallery = run_gallery_check(root, config)
@@ -184,7 +193,7 @@ def _build_check_results(config_path: Path, config: dict, root: Path, include_re
         scan=scan,
         gallery=gallery,
         render=render,
-        config_path=config_path.as_posix(),
+        config_path=_public_config_path(config_path, root),
         tool_version=__version__,
     )
 

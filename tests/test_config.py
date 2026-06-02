@@ -163,3 +163,18 @@ gallery:
 
     with pytest.raises(ConfigError, match="gallery.min_size_bytes"):
         load_config(config_path)
+
+
+def test_invalid_gallery_allowed_extension_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+gallery:
+  allowed_extensions:
+    - png
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"gallery.allowed_extensions\[0\]"):
+        load_config(config_path)

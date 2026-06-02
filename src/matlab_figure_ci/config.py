@@ -200,6 +200,7 @@ def _validate_extensions(config: dict[str, Any]) -> None:
 
 def _validate_gallery(config: dict[str, Any]) -> None:
     gallery = _require_mapping(config.get("gallery", {}), "gallery")
+    _validate_extension_list(gallery.get("allowed_extensions", []), "gallery.allowed_extensions")
     min_size = gallery.get("min_size_bytes", 1024)
     if not isinstance(min_size, int) or min_size < 0:
         raise ConfigError("gallery.min_size_bytes must be a non-negative integer")

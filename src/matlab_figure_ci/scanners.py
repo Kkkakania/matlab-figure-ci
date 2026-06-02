@@ -132,7 +132,11 @@ def _extension_is_allowed(relative_path: str, suffix: str, allow_rules: list[dic
         allowed_extensions = {str(item).lower() for item in rule.get("extensions", [])}
         if not base_path or suffix not in allowed_extensions:
             continue
-        if relative_path == base_path or relative_path.startswith(f"{base_path}/"):
+        if (
+            relative_path == base_path
+            or relative_path.startswith(f"{base_path}/")
+            or fnmatch(relative_path, base_path)
+        ):
             return True
     return False
 

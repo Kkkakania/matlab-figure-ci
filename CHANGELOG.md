@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Expanded the default local-path privacy rule to catch common WSL, lowercase
+  Windows drive, `%USERPROFILE%`, Codespaces, and mounted-volume path variants.
+- Allowed `extensions.allow.path` rules to use shell-style globs for nested
+  gallery layouts while preserving existing directory-prefix behavior.
 - Added explicit privacy checkboxes to bug and adoption issue templates and
   covered them with GitHub template tests.
 - Clarified the missing-results message for `mfigci report` so users see the

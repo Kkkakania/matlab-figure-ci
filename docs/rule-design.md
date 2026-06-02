@@ -89,6 +89,27 @@ or risky MATLAB binaries from CI. If a directory contains material that should
 not be published, remove it from the repository or keep it outside the public
 tree instead of masking it with `scan.exclude`.
 
+## Extension Allow Rules
+
+`extensions.allow` entries are narrow exceptions for reviewed file types that
+remain risky elsewhere. Each entry combines a repository-relative `path` with
+one or more extensions.
+
+The path may be a directory prefix, such as `gallery`, or a shell-style glob,
+such as `gallery/**/*.pdf`, for nested gallery layouts:
+
+```yaml
+extensions:
+  allow:
+    - path: gallery/**/*.pdf
+      extensions:
+        - .pdf
+```
+
+Keep allow rules specific. Prefer allowing rendered gallery outputs over broad
+exceptions such as `**/*.pdf`, which can hide papers, source packs, or unclear
+third-party materials outside the reviewed gallery tree.
+
 ## Presets
 
 Presets are named bundles of conservative defaults. They reduce configuration

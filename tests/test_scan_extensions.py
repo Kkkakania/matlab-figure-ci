@@ -43,6 +43,35 @@ def test_matlab_figures_preset_allows_gallery_pdf_but_warns_elsewhere(tmp_path):
     assert result.error_count == 0
 
 
+def test_extension_allow_path_accepts_globs_for_nested_gallery_layouts(tmp_path):
+    project = tmp_path / "project"
+    (project / "gallery" / "paper-a").mkdir(parents=True)
+    (project / "gallery" / "paper-b" / "nested").mkdir(parents=True)
+    (project / "gallery" / "paper-a" / "figure.pdf").write_bytes(b"%PDF-1.7")
+    (project / "gallery" / "paper-b" / "nested" / "figure.pdf").write_bytes(b"%PDF-1.7")
+    (project / "drafts").mkdir()
+    (project / "drafts" / "figure.pdf").write_bytes(b"%PDF-1.7")
+    config_path = project / "mfigci.yml"
+    config_path.write_text(
+        """
+extensions:
+  allow:
+    - path: gallery/**/*.pdf
+      extensions:
+        - .pdf
+""".lstrip(),
+        encoding="utf-8",
+    )
+
+    result = run_scan(project, load_config(config_path))
+
+    warning_paths = {finding.path for finding in result.findings if finding.rule_id == "extension.warning"}
+    assert "gallery/paper-a/figure.pdf" not in warning_paths
+    assert "gallery/paper-b/nested/figure.pdf" not in warning_paths
+    assert "drafts/figure.pdf" in warning_paths
+    assert result.error_count == 0
+
+
 def test_binary_files_are_skipped_for_text_scans_without_traceback(tmp_path):
     project = tmp_path / "project"
     project.mkdir()

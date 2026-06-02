@@ -165,6 +165,20 @@ def _validate_extension_list(values: Any, key: str) -> None:
             raise ConfigError(f"{key}[{index}] must be an extension string such as .png")
 
 
+def _validate_string_list(values: Any, key: str, label: str) -> None:
+    if not isinstance(values, list):
+        raise ConfigError(f"{key} must be a list of {label}")
+    for index, value in enumerate(values):
+        if not isinstance(value, str) or not value:
+            raise ConfigError(f"{key}[{index}] must be a non-empty {label}")
+
+
+def _validate_scan(config: dict[str, Any]) -> None:
+    scan = _require_mapping(config.get("scan", {}), "scan")
+    _validate_string_list(scan.get("include", []), "scan.include", "path string")
+    _validate_string_list(scan.get("exclude", []), "scan.exclude", "path or glob string")
+
+
 def _validate_policy_rules(config: dict[str, Any], section_name: str) -> None:
     section = _require_mapping(config.get(section_name, {}), section_name)
     _require_bool(section.get("enabled", True), f"{section_name}.enabled")
@@ -218,14 +232,11 @@ def _validate_gallery(config: dict[str, Any]) -> None:
     if not isinstance(min_size, int) or min_size < 0:
         raise ConfigError("gallery.min_size_bytes must be a non-negative integer")
     expected = gallery.get("expected", [])
-    if not isinstance(expected, list):
-        raise ConfigError("gallery.expected must be a list of paths")
-    for index, value in enumerate(expected):
-        if not isinstance(value, str) or not value:
-            raise ConfigError(f"gallery.expected[{index}] must be a non-empty path string")
+    _validate_string_list(expected, "gallery.expected", "path string")
 
 
 def _validate_config(config: dict[str, Any]) -> None:
+    _validate_scan(config)
     _validate_policy_rules(config, "privacy")
     _validate_policy_rules(config, "provenance")
     _validate_extensions(config)

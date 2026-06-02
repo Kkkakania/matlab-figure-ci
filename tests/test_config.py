@@ -122,6 +122,49 @@ strict:
         load_config(config_path)
 
 
+def test_invalid_scan_include_shape_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+scan:
+  include: "."
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="scan.include"):
+        load_config(config_path)
+
+
+def test_invalid_scan_include_entry_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+scan:
+  include:
+    - ""
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"scan.include\[0\]"):
+        load_config(config_path)
+
+
+def test_invalid_scan_exclude_shape_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+scan:
+  exclude: ".git"
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="scan.exclude"):
+        load_config(config_path)
+
+
 def test_invalid_extension_policy_raises_clear_error(tmp_path):
     config_path = tmp_path / "mfigci.yml"
     config_path.write_text(

@@ -42,7 +42,15 @@ DEFAULT_CONFIG: dict[str, Any] = {
             },
             {
                 "id": "privacy.local_absolute_path",
-                "pattern": r"(/Users/[^\s'\"]+|C:\\Users\\[^\s'\"]+|/home/[^\s'\"]+)",
+                "pattern": (
+                    r"((?i:/users/)[^\s'\"<>]+"
+                    r"|(?i:/home/)[^\s'\"<>]+"
+                    r"|(?i:/mnt/[a-z]/)[^\s'\"<>]+"
+                    r"|(?i:[a-z]:\\users\\)[^\s'\"<>]+"
+                    r"|(?i:%USERPROFILE%[\\/])[^\s'\"<>]+"
+                    r"|/workspaces/[^\s'\"<>]+"
+                    r"|/Volumes/[^\s'\"<>]+)"
+                ),
                 "severity": "error",
             },
             {

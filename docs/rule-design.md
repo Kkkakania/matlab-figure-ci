@@ -15,7 +15,8 @@ terminal output, Markdown reports, and JSON results.
 Default privacy checks include:
 
 - email-like strings
-- local absolute paths
+- local absolute paths, including common macOS, Linux, Windows, WSL,
+  Codespaces, and external-volume development paths
 - sensitive personal-information keywords
 
 ## Provenance Rules

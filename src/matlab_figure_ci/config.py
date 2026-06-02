@@ -235,12 +235,18 @@ def _validate_gallery(config: dict[str, Any]) -> None:
     _validate_string_list(expected, "gallery.expected", "path string")
 
 
+def _validate_matlab(config: dict[str, Any]) -> None:
+    matlab = _require_mapping(config.get("matlab", {}), "matlab")
+    _require_bool(matlab.get("enabled", False), "matlab.enabled")
+
+
 def _validate_config(config: dict[str, Any]) -> None:
     _validate_scan(config)
     _validate_policy_rules(config, "privacy")
     _validate_policy_rules(config, "provenance")
     _validate_extensions(config)
     _validate_gallery(config)
+    _validate_matlab(config)
 
     strict = _require_mapping(config.get("strict", {}), "strict")
     _require_bool(strict.get("fail_on_warnings", False), "strict.fail_on_warnings")

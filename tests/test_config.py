@@ -294,3 +294,17 @@ matlab:
 
     with pytest.raises(ConfigError, match="matlab.enabled"):
         load_config(config_path)
+
+
+def test_empty_matlab_batch_command_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+matlab:
+  batch_command: ""
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="matlab.batch_command"):
+        load_config(config_path)

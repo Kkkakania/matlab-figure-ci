@@ -238,6 +238,10 @@ def _validate_gallery(config: dict[str, Any]) -> None:
 def _validate_matlab(config: dict[str, Any]) -> None:
     matlab = _require_mapping(config.get("matlab", {}), "matlab")
     _require_bool(matlab.get("enabled", False), "matlab.enabled")
+    for key in ("bin_env", "fallback_bin", "batch_command"):
+        value = matlab.get(key, "")
+        if not isinstance(value, str) or not value:
+            raise ConfigError(f"matlab.{key} must be a non-empty string")
 
 
 def _validate_config(config: dict[str, Any]) -> None:

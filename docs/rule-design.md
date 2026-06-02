@@ -72,6 +72,22 @@ start with `.` return exit code 2 with a configuration error. This keeps CI
 failures focused on the mistake in `mfigci.yml` instead of producing confusing
 scan output.
 
+## Scan Include And Exclude Rules
+
+`scan.include` and `scan.exclude` are repository-relative path lists. Exclude
+entries may be exact names, path prefixes, or simple shell-style globs such as
+`.venv*`.
+
+Use excludes for generated local environments, build output, cache directories,
+and reviewed repository-maintenance exceptions. Examples include `.git`,
+`.venv`, `.venv*`, `dist`, `build`, `.pytest_cache`, and
+`.ipynb_checkpoints`.
+
+Do not use broad excludes to hide raw source packs, copied third-party files,
+or risky MATLAB binaries from CI. If a directory contains material that should
+not be published, remove it from the repository or keep it outside the public
+tree instead of masking it with `scan.exclude`.
+
 ## Presets
 
 Presets are named bundles of conservative defaults. They reduce configuration

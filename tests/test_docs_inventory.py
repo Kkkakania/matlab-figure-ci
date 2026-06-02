@@ -100,6 +100,15 @@ def test_docs_cover_externally_managed_python_installs():
     assert 'python -m pip install -e ".[test]"' in contributing
 
 
+def test_rule_design_documents_scan_exclude_globs():
+    text = (ROOT / "docs" / "rule-design.md").read_text(encoding="utf-8")
+
+    assert "Scan Include And Exclude Rules" in text
+    assert "simple shell-style globs" in text
+    assert ".venv*" in text
+    assert "Do not use broad excludes to hide raw source packs" in text
+
+
 def test_readme_explains_version_and_distribution_status():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     tag = f"v{__version__}"

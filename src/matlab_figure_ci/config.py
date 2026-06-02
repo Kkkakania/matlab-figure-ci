@@ -18,7 +18,18 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "project": {"name": "matlab-figure-ci-project"},
     "scan": {
         "include": ["."],
-        "exclude": [".git", ".venv", "venv", "__pycache__", "pycache", "dist", "build", ".pytest_cache"],
+        "exclude": [
+            ".git",
+            ".venv",
+            ".venv*",
+            "venv",
+            "__pycache__",
+            "pycache",
+            "dist",
+            "build",
+            ".pytest_cache",
+            ".ipynb_checkpoints",
+        ],
     },
     "privacy": {
         "enabled": True,

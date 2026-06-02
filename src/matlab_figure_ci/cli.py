@@ -31,12 +31,14 @@ scan:
   exclude:
     - ".git"
     - ".venv"
+    - ".venv*"
     - "venv"
     - "__pycache__"
     - "pycache"
     - "dist"
     - "build"
     - ".pytest_cache"
+    - ".ipynb_checkpoints"
     - "LICENSE"
 
 privacy:

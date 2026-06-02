@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from fnmatch import fnmatch
 from pathlib import Path
 from typing import Iterable
 
@@ -41,11 +42,17 @@ def _relative(root: Path, path: Path) -> str:
 
 
 def _is_excluded(relative_path: Path, excludes: Iterable[str]) -> bool:
-    parts = set(relative_path.parts)
+    parts = relative_path.parts
     rel = _as_posix(relative_path)
     for pattern in excludes:
         pattern = pattern.strip("/")
-        if pattern in parts or rel == pattern or rel.startswith(f"{pattern}/"):
+        if (
+            pattern in parts
+            or any(fnmatch(part, pattern) for part in parts)
+            or rel == pattern
+            or rel.startswith(f"{pattern}/")
+            or fnmatch(rel, pattern)
+        ):
             return True
     return False
 

@@ -43,3 +43,27 @@ def test_privacy_scan_matches_chinese_sensitive_keywords(tmp_path):
     assert result.error_count == 1
     assert result.findings[0].rule_id == "privacy.sensitive_keywords"
     assert result.findings[0].message == "<redacted>"
+
+
+def test_default_scan_excludes_globbed_local_venv_directories(tmp_path):
+    project = tmp_path / "project"
+    hidden = project / ".venv-mfigci"
+    hidden.mkdir(parents=True)
+    (hidden / "script.m").write_text("person@example.com\n", encoding="utf-8")
+
+    result = run_scan(project, load_config(project / "missing.yml"))
+
+    assert result.error_count == 0
+    assert result.files_scanned == 0
+
+
+def test_default_scan_excludes_notebook_checkpoint_directories(tmp_path):
+    project = tmp_path / "project"
+    hidden = project / ".ipynb_checkpoints"
+    hidden.mkdir(parents=True)
+    (hidden / "notes.md").write_text("person@example.com\n", encoding="utf-8")
+
+    result = run_scan(project, load_config(project / "missing.yml"))
+
+    assert result.error_count == 0
+    assert result.files_scanned == 0

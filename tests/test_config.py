@@ -308,3 +308,17 @@ matlab:
 
     with pytest.raises(ConfigError, match="matlab.batch_command"):
         load_config(config_path)
+
+
+def test_matlab_batch_command_with_control_character_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+matlab:
+  batch_command: "run_all_figures\\nsecond_command"
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="matlab.batch_command"):
+        load_config(config_path)

@@ -242,6 +242,8 @@ def _validate_matlab(config: dict[str, Any]) -> None:
         value = matlab.get(key, "")
         if not isinstance(value, str) or not value:
             raise ConfigError(f"matlab.{key} must be a non-empty string")
+        if any(character.isspace() and character not in {" "} for character in value):
+            raise ConfigError(f"matlab.{key} must not contain control characters")
 
 
 def _validate_config(config: dict[str, Any]) -> None:

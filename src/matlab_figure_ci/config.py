@@ -198,10 +198,18 @@ def _validate_extensions(config: dict[str, Any]) -> None:
         _validate_extension_list(rule.get("extensions", []), f"{rule_key}.extensions")
 
 
+def _validate_gallery(config: dict[str, Any]) -> None:
+    gallery = _require_mapping(config.get("gallery", {}), "gallery")
+    min_size = gallery.get("min_size_bytes", 1024)
+    if not isinstance(min_size, int) or min_size < 0:
+        raise ConfigError("gallery.min_size_bytes must be a non-negative integer")
+
+
 def _validate_config(config: dict[str, Any]) -> None:
     _validate_policy_rules(config, "privacy")
     _validate_policy_rules(config, "provenance")
     _validate_extensions(config)
+    _validate_gallery(config)
 
     strict = _require_mapping(config.get("strict", {}), "strict")
     _require_bool(strict.get("fail_on_warnings", False), "strict.fail_on_warnings")

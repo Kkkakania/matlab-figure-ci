@@ -178,3 +178,47 @@ gallery:
 
     with pytest.raises(ConfigError, match=r"gallery.allowed_extensions\[0\]"):
         load_config(config_path)
+
+
+def test_invalid_gallery_path_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+gallery:
+  path:
+    - gallery
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="gallery.path"):
+        load_config(config_path)
+
+
+def test_non_list_gallery_expected_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+gallery:
+  expected: example.png
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="gallery.expected"):
+        load_config(config_path)
+
+
+def test_invalid_gallery_expected_entry_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+gallery:
+  expected:
+    - ""
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"gallery.expected\[0\]"):
+        load_config(config_path)

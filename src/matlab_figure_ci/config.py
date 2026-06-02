@@ -200,10 +200,18 @@ def _validate_extensions(config: dict[str, Any]) -> None:
 
 def _validate_gallery(config: dict[str, Any]) -> None:
     gallery = _require_mapping(config.get("gallery", {}), "gallery")
+    if not isinstance(gallery.get("path", "gallery"), str):
+        raise ConfigError("gallery.path must be a string")
     _validate_extension_list(gallery.get("allowed_extensions", []), "gallery.allowed_extensions")
     min_size = gallery.get("min_size_bytes", 1024)
     if not isinstance(min_size, int) or min_size < 0:
         raise ConfigError("gallery.min_size_bytes must be a non-negative integer")
+    expected = gallery.get("expected", [])
+    if not isinstance(expected, list):
+        raise ConfigError("gallery.expected must be a list of paths")
+    for index, value in enumerate(expected):
+        if not isinstance(value, str) or not value:
+            raise ConfigError(f"gallery.expected[{index}] must be a non-empty path string")
 
 
 def _validate_config(config: dict[str, Any]) -> None:

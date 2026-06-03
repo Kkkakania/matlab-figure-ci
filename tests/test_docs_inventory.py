@@ -12,6 +12,16 @@ def test_adoption_playbook_is_discoverable_from_readme():
     assert "docs/adoption-playbook.md" in readme
 
 
+def test_readme_links_to_chinese_version():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+
+    assert "[简体中文](README.zh-CN.md)" in readme
+    assert "[English](README.md)" in chinese
+    assert "不是版权清洗工具" in chinese
+    assert "核心 scan、gallery、report 和 check 不依赖 MATLAB" in chinese
+
+
 def test_adoption_playbook_keeps_staged_rollout_guidance():
     text = (ROOT / "docs" / "adoption-playbook.md").read_text(encoding="utf-8")
 

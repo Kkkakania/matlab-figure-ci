@@ -5,6 +5,8 @@
 [![Release](https://img.shields.io/github/v/release/Kkkakania/matlab-figure-ci)](https://github.com/Kkkakania/matlab-figure-ci/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+Languages: English | [简体中文](README.zh-CN.md)
+
 `matlab-figure-ci` is a small CI/CLI quality gate for MATLAB scientific figure
 repositories. It helps maintainers catch missing gallery outputs, risky binary
 files, privacy traces, unclear provenance markers, and optional MATLAB batch

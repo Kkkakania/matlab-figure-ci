@@ -7,43 +7,48 @@
 
 语言： [English](README.md) | 简体中文
 
-`matlab-figure-ci` 是给 MATLAB 科研绘图仓库用的质量检查工具。它不负责画图，而是帮维护者在提交、合并或发布前检查这些常见问题：示例图有没有丢，图片文件是不是空的，仓库里有没有 `.fig`、`.mat`、`.p` 这类不适合直接公开的文件，文档和代码里有没有本地路径、邮箱、来源不明的作者或平台痕迹。
+`matlab-figure-ci` 是一个面向 MATLAB 科研绘图仓库的 CI/CLI 质量门工具。它帮助维护者在公开发布前检查 gallery 输出缺失、风险二进制文件、隐私痕迹、来源不明的材料线索，以及可选 MATLAB 批量渲染失败。
 
-这个工具适合已经有 MATLAB 绘图代码、示例 gallery 或科研图表模板的仓库。对于刚开始整理图表模板的人，它也可以作为一个保守的公开发布检查清单。
+它设计上和 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures) 配套：
 
-## 它解决什么问题
+- `matlab-scientific-figures` 负责生成出版级 MATLAB 科研图表。
+- `matlab-figure-ci` 检查图表仓库是否保持干净、可复现，并适合公开发布。
 
-科研绘图仓库容易出现几类发布风险。代码本身能运行，但 gallery 图没有重新生成；示例图存在，但尺寸为 0 或格式不在预期范围；历史素材里混进 `.fig`、`.mat`、Office 文档、压缩包或 PDF；文档里残留本机路径、邮箱或个人环境信息；复制来的片段保留了作者、版权、许可证或平台来源线索。
+## 项目生态
 
-`matlab-figure-ci` 把这些检查做成 CLI 和 GitHub Actions 可以调用的质量门。它的默认策略偏保守，隐私问题默认是 error，来源问题默认是 warning，MATLAB 渲染默认关闭。
+`matlab-figure-ci` 是一个小型 MATLAB 绘图生态里的质量门组件：
 
-## 和其他仓库的关系
+- [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures) 是主要的 clean-room gallery 和模板库。
+- [`matlab-figure-ci`](https://github.com/Kkkakania/matlab-figure-ci) 检查图表仓库的 gallery、来源、隐私和 release gate 漂移。
+- [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill) 把 MATLAB 绘图工作流接到 agent/Codex 风格的数据到图表任务。
 
-这个仓库是 MATLAB 绘图开源生态里的检查层：
+## Dogfooding 状态
 
-- [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures) 提供 clean-room 科研图表模板和 gallery。
-- `matlab-figure-ci` 检查图表仓库的 gallery、隐私、来源、危险文件和 release 准备状态。
-- [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill) 把 MATLAB 绘图流程接到 agent/Codex 风格的数据到图表任务。
-
-目前 `matlab-scientific-figures` 已经在 CI 中 dogfood 这个工具。它会从 release tag 安装 `matlab-figure-ci`，然后运行：
+这个工具已经被配套 MATLAB gallery 仓库 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures) dogfood。该仓库的 workflow 会从 release tag 安装 `matlab-figure-ci`，然后运行：
 
 ```bash
 mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
-这说明工具在一个真实公开仓库里持续使用，但这不是下载量、外部采用量或申请项目通过率的证明。
+下游配置会检查 PNG/SVG gallery 输出、隐私和来源痕迹、风险扩展名，以及 `matlab-figures` preset。这是维护信号，含义是 CLI 正在一个真实公开仓库中被持续运行；它不是使用量指标，也不声称外部采用量或下载量。
 
-## 当前版本
+当前的 [dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md) 记录了下游配置、最近检查摘要和已知边界。
 
-当前公开 release 是 `v2.4.5`。推荐安装方式仍然是 GitHub release tag：
+## 版本和发布状态
+
+当前公开 release 是 `v2.4.5`。目前支持的安装路径仍然是 GitHub release tag，项目尚未发布到 PyPI。
+
+`v2` 系列定义了 CLI 命令、配置键、退出码和报告字段的兼容边界。相关说明见 [v2 compatibility](docs/v2-compatibility.md)。未来 PyPI 发布会单独推进，这样用户可以把当前 GitHub tag 当作公开 release 使用，同时让打包发布保持审慎节奏。
+
+## 快速开始
+
+从 GitHub release tag 安装：
 
 ```bash
 python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
 ```
 
-项目还没有发布到 PyPI。`v2` 系列的 CLI 命令、配置键、退出码和报告字段边界记录在 [v2 compatibility](docs/v2-compatibility.md)。
-
-如果系统 Python 提示 externally managed Python，不建议强行安装到系统环境。使用虚拟环境更稳妥：
+如果你的 Python 安装提示 externally managed Python environment，不要强行写入系统环境。建议使用虚拟环境：
 
 ```bash
 python3 -m venv .venv
@@ -52,69 +57,83 @@ python -m pip install --upgrade pip
 python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
 ```
 
-## 最小接入流程
-
-先在临时分支或测试仓库中生成配置：
+生成 starter 配置和 GitHub Actions workflow：
 
 ```bash
 mfigci init
-```
-
-查看实际生效的配置和规则：
-
-```bash
 mfigci doctor --config mfigci.yml
-mfigci rules --config mfigci.yml
-```
-
-运行完整检查：
-
-```bash
 mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
-`check` 会生成两个文件：
-
-```text
-mfigci-report.md
-.mfigci-results.json
-```
-
-这两个文件通常适合作为 CI artifact。除非你确认报告本身应该被版本管理，否则不要直接提交到仓库。
-
-## 常用命令
-
-| 命令 | 用途 |
-|---|---|
-| `mfigci scan` | 扫描隐私痕迹、来源风险和危险文件扩展名 |
-| `mfigci gallery` | 检查 gallery 文件是否存在、非空，并符合允许格式 |
-| `mfigci check` | 一次运行 scan、gallery、可选 render，并生成报告 |
-| `mfigci report` | 从 `.mfigci-results.json` 生成 Markdown、PR comment Markdown 或 JSON |
-| `mfigci init` | 生成 starter 配置和 GitHub Actions workflow |
-| `mfigci render` | 可选调用 MATLAB `-batch` |
-| `mfigci doctor` | 查看不会泄露隐私的配置摘要 |
-| `mfigci rules` | 查看生效的隐私、来源和扩展名规则 |
-| `mfigci release-preflight` | 检查打包、release 文件和 workflow 准备状态 |
-
-默认情况下，warning 不会让 CI 失败。如果你想在 release gate 中把 warning 也当作失败，可以使用：
+运行质量门：
 
 ```bash
+mfigci scan --config mfigci.yml
 mfigci scan --config mfigci.yml --fail-on-warnings
+mfigci scan --config mfigci.yml --paths src/plot.m docs/usage.md
+mfigci gallery --config mfigci.yml
+mfigci check --config mfigci.yml --report mfigci-report.md
 mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
-```
-
-`release-preflight` 只检查发布准备情况，不会发布 PyPI，也不会创建 GitHub Release：
-
-```bash
+mfigci report --input .mfigci-results.json --output mfigci-report.md
+mfigci report --style pr-comment --output mfigci-pr-comment.md
+mfigci report --format json --output mfigci-report.json
+mfigci doctor --config mfigci.yml
+mfigci rules --config mfigci.yml
 mfigci release-preflight
 mfigci release-preflight --format json
 mfigci release-preflight --output release-preflight.json
 mfigci release-preflight --require-dist
 ```
 
-## 配置示例
+`mfigci check` 会同时写出 Markdown 报告和机器可读 JSON：
 
-`mfigci.yml` 是主要配置文件。如果没有这个文件，工具会使用安全默认值：可以运行 scan，gallery 没有默认 expected 文件，MATLAB render 关闭。
+```text
+mfigci-report.md
+.mfigci-results.json
+```
+
+## 前 5 分钟
+
+如果只是试用工具，先不要改变 release 策略。推荐用这个路径：
+
+1. 从当前 release tag 安装。
+
+   ```bash
+   python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+   ```
+
+2. 在临时分支或 scratch 仓库中生成 starter 文件。
+
+   ```bash
+   mfigci init
+   ```
+
+   只有当你希望 CLI 管理报告产物的 ignore 条目时，才添加：
+
+   ```bash
+   mfigci init --gitignore
+   ```
+
+   普通的 `mfigci init` 不会编辑 `.gitignore`。
+
+3. 在真正执行策略前查看生成结果。
+
+   ```bash
+   mfigci doctor --config mfigci.yml
+   mfigci rules --config mfigci.yml
+   ```
+
+4. 运行完整检查，并阅读 Markdown 和 JSON 两份报告。
+
+   ```bash
+   mfigci check --config mfigci.yml --report mfigci-report.md
+   ```
+
+在确认报告是否应该进入仓库之前，不要提交 `mfigci-report.md`、`.mfigci-results.json` 或 `release-preflight.json`。这些文件通常更适合作为 CI artifact。
+
+## 配置
+
+`mfigci` 默认读取 `mfigci.yml`。如果配置文件不存在，会使用安全默认值：scan 可以运行，gallery 没有 expected 文件，MATLAB rendering 关闭。配置中的规则级别、扩展名列表或字段形状如果写错，会在扫描文件前给出配置错误。
 
 ```yaml
 project:
@@ -158,11 +177,37 @@ matlab:
   batch_command: "run_all_figures"
 ```
 
-真实项目里要把 `example.png` 换成自己的 gallery 文件名。`matlab.enabled` 默认是 `false`，因为公开 GitHub runner 通常没有 MATLAB。只有在本机或自托管 runner 已经配置好 MATLAB 时，再启用 render。
+真实仓库需要把 `example.png` 换成实际 gallery 输出。 [MATLAB CI guide](docs/matlab-ci-guide.md) 包含 PNG/SVG/PDF manifest 示例，以及本机和自托管 runner 的可选 MATLAB render 示例。可复用 starter 配置位于 [examples/configs](examples/configs/)。
 
-## GitHub Actions 示例
+[Adoption playbook](docs/adoption-playbook.md) 给出从静态扫描、gallery manifest、release gate 到可选 MATLAB render 的分阶段接入方式。如果你在其他仓库中尝试这套流程，可以通过 adoption report issue template 反馈哪些步骤顺利，哪些地方增加了配置成本。
 
-`mfigci init` 会生成一个 starter workflow。核心步骤是安装当前 release tag，展示规则，然后运行完整检查：
+[Rule design](docs/rule-design.md) 解释 `matlab-figures` preset，包括 gallery 范围内 PDF 的处理方式。[JSON report](docs/json-report.md) 定义稳定报告字段、redaction 保证和路径保证。[v2 compatibility](docs/v2-compatibility.md) 说明长期 CLI、配置、策略和报告边界。
+
+## 命令
+
+| 命令 | 用途 |
+|---|---|
+| `mfigci scan` | 扫描隐私、来源和风险文件扩展名 |
+| `mfigci gallery` | 检查 expected gallery 文件是否存在、非空，并使用允许格式 |
+| `mfigci check` | 执行 scan、gallery、可选 render，并写出报告 |
+| `mfigci report` | 从 `.mfigci-results.json` 生成完整 Markdown、PR comment Markdown 或 JSON |
+| `mfigci init` | 生成 starter 配置和 GitHub Actions workflow |
+| `mfigci render` | 可选使用 MATLAB `-batch` 执行渲染命令 |
+| `mfigci doctor` | 输出隐私安全的有效配置摘要 |
+| `mfigci rules` | 查看生效的隐私、来源和扩展名规则 |
+| `mfigci release-preflight` | 检查套件元数据、release 文件和打包 workflow 准备状态 |
+
+`mfigci doctor` 会汇总 include/exclude 路径、规则数量、扩展名策略数量、gallery expected 数量、warning 严格模式和 MATLAB render 状态。审查新仓库配置时，先运行它再做完整扫描。
+
+`mfigci scan --paths <file...>` 适合 pre-commit 或 staged-file 工作流。它只扫描指定文件，但仍然遵守配置中的 exclude 规则和 symlink 安全检查。
+
+默认情况下，warning 不会让 CI 失败。需要在 release gate 中把 warning 当作策略失败时，对 `scan` 或 `check` 添加 `--fail-on-warnings`。
+
+`mfigci release-preflight` 是本地打包准备检查，不会发布任何内容。默认检查仓库文件、`pyproject.toml`、`CHANGELOG.md` 和 package workflow。运行 `python -m build` 后可以添加 `--require-dist`，要求存在 wheel 和 source distribution。只有在你明确需要查询 PyPI JSON API 时，才添加 `--check-pypi-name`。需要结构化 stdout 时使用 `--format json`；需要把结构化 payload 作为 CI artifact 上传时使用 `--output release-preflight.json`。更多说明见 [Release artifacts](docs/release-artifacts.md)。
+
+## GitHub Actions
+
+`mfigci init` 会写入 starter workflow：
 
 ```yaml
 name: figure-quality
@@ -195,13 +240,15 @@ jobs:
           path: mfigci-report.md
 ```
 
-## 使用边界
+## 当前限制
 
-`matlab-figure-ci` 不是版权清洗工具。它只能提醒你仓库里可能存在来源不明、授权不明、隐私残留或不适合公开发布的材料。维护者仍然需要自己判断文件是否可以公开。
+- 尚未发布到 PyPI。
+- 没有 Web UI、云服务、PR comment bot 或 Marketplace action。
+- MATLAB rendering 是可选能力，因为公开 GitHub runner 通常不包含 MATLAB。
+- 来源规则默认是 warning。它们用于提示维护者复核。`matlab-figure-ci` 不是版权清洗工具，也不能替维护者判断材料是否可以公开。
+- 核心 scan、gallery、report 和 check 不依赖 MATLAB。
 
-项目目前没有 Web UI、云服务、PR comment bot 或 Marketplace action。MATLAB render 是可选能力，核心 scan、gallery、report 和 check 不依赖 MATLAB。
-
-## 延伸文档
+## 文档
 
 - [Documentation index](docs/README.md)
 - [MATLAB CI guide](docs/matlab-ci-guide.md)

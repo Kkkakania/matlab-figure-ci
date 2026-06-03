@@ -18,8 +18,24 @@ def test_readme_links_to_chinese_version():
 
     assert "[简体中文](README.zh-CN.md)" in readme
     assert "[English](README.md)" in chinese
+
+
+def test_chinese_readme_covers_core_user_flow():
+    chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+
+    assert "Dogfooding 状态" in chinese
+    assert "版本和发布状态" in chinese
+    assert "快速开始" in chinese
+    assert "前 5 分钟" in chinese
+    assert "配置" in chinese
+    assert "GitHub Actions" in chinese
+    assert "当前限制" in chinese
     assert "不是版权清洗工具" in chinese
     assert "核心 scan、gallery、report 和 check 不依赖 MATLAB" in chinese
+    assert "mfigci scan --config mfigci.yml --paths" in chinese
+    assert "mfigci release-preflight --require-dist" in chinese
+    assert "docs/adoption-report-matlab-scientific-figures.md" in chinese
+    assert "docs/v2-compatibility.md" in chinese
 
 
 def test_adoption_playbook_keeps_staged_rollout_guidance():

@@ -65,9 +65,9 @@ def _stays_within_root(path: Path, root: Path) -> bool:
     return True
 
 
-def iter_files(root: Path, config: dict) -> Iterable[Path]:
+def iter_files(root: Path, config: dict, selected_paths: Iterable[str | Path] | None = None) -> Iterable[Path]:
     scan = config.get("scan", {})
-    includes = scan.get("include", ["."])
+    includes = [str(path) for path in selected_paths] if selected_paths is not None else scan.get("include", ["."])
     excludes = scan.get("exclude", [])
     seen: set[Path] = set()
 
@@ -158,11 +158,11 @@ def _rule_findings(root: Path, path: Path, text: str, rules: list[dict], redact:
     return findings
 
 
-def run_scan(root: str | Path, config: dict) -> ScanResults:
+def run_scan(root: str | Path, config: dict, paths: Iterable[str | Path] | None = None) -> ScanResults:
     root_path = Path(root).resolve()
     result = ScanResults()
 
-    for path in iter_files(root_path, config):
+    for path in iter_files(root_path, config, paths):
         result.files_scanned += 1
         result.findings.extend(_extension_findings(root_path, path, config))
 

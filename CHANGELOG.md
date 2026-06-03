@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `mfigci scan --paths` for pre-commit and staged-file workflows that
+  need to scan only selected repository-relative files.
 - Expanded the default local-path privacy rule to catch common WSL, lowercase
   Windows drive, `%USERPROFILE%`, Codespaces, and mounted-volume path variants.
 - Allowed `extensions.allow.path` rules to use shell-style globs for nested

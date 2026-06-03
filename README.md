@@ -91,6 +91,7 @@ Run the quality gate:
 ```bash
 mfigci scan --config mfigci.yml
 mfigci scan --config mfigci.yml --fail-on-warnings
+mfigci scan --config mfigci.yml --paths src/plot.m docs/usage.md
 mfigci gallery --config mfigci.yml
 mfigci check --config mfigci.yml --report mfigci-report.md
 mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
@@ -236,6 +237,11 @@ config, policy, and report boundary.
 counts, gallery expectations, strict warning behavior, and MATLAB render status.
 Use it when reviewing a new repository configuration before running a full
 scan.
+
+Use `mfigci scan --paths <file...>` in pre-commit or staged-file workflows when
+you want privacy, provenance, and extension checks for selected files without
+running the full repository scan. The selected paths still respect configured
+excludes and symlink safety checks.
 
 By default, warnings do not fail CI. Add `--fail-on-warnings` to `scan` or
 `check` when a release gate should treat warnings as policy failures.

@@ -13,6 +13,15 @@ cp examples/configs/minimal-static-scan.yml mfigci.yml
 mfigci scan --config mfigci.yml
 ```
 
+For pre-commit or staged-file checks, scan only the files being reviewed:
+
+```bash
+mfigci scan --config mfigci.yml --paths src/plot.m docs/usage.md
+```
+
+The selected paths still respect configured excludes, missing files are ignored,
+and symlinks that resolve outside the project root are skipped.
+
 Use this stage when a repository has source code and documentation but no stable
 gallery output yet.
 

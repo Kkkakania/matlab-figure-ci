@@ -202,7 +202,7 @@ def _build_check_results(config_path: Path, config: dict, root: Path, include_re
 
 def command_scan(args) -> int:
     config = _load_config_arg(args)
-    result = run_scan(Path.cwd(), config)
+    result = run_scan(Path.cwd(), config, getattr(args, "paths", None))
     _print_scan(result)
     return _policy_exit_code(result.error_count, result.warning_count, _fail_on_warnings(args, config))
 
@@ -449,6 +449,7 @@ def build_parser() -> argparse.ArgumentParser:
     scan = subparsers.add_parser("scan", help="scan privacy, provenance, and risky file extensions")
     scan.add_argument("--config", default="mfigci.yml")
     scan.add_argument("--fail-on-warnings", action="store_true", help="return exit code 1 when warnings are present")
+    scan.add_argument("--paths", nargs="+", help="scan only these repository-relative paths")
     scan.set_defaults(func=command_scan)
 
     gallery = subparsers.add_parser("gallery", help="check expected gallery outputs")

@@ -45,6 +45,43 @@ def test_scan_risky_project_returns_nonzero_and_redacts(tmp_path):
     assert secret not in result.stderr
 
 
+def test_scan_paths_limits_scan_to_named_files(tmp_path):
+    secret = "person@example.com"
+    (tmp_path / "selected.m").write_text(secret, encoding="utf-8")
+    (tmp_path / "ignored.m").write_text("% Author: ignored maintainer\n", encoding="utf-8")
+
+    result = run_cli(["scan", "--paths", "selected.m"], tmp_path)
+
+    assert result.returncode == 1
+    assert "1 file(s) scanned" in result.stdout
+    assert "selected.m" in result.stdout
+    assert "ignored.m" not in result.stdout
+    assert "<redacted>" in result.stdout
+    assert secret not in result.stdout
+
+
+def test_scan_paths_still_respects_excludes(tmp_path):
+    hidden = tmp_path / ".venv"
+    hidden.mkdir()
+    (hidden / "selected.m").write_text("person@example.com\n", encoding="utf-8")
+
+    result = run_cli(["scan", "--paths", ".venv/selected.m"], tmp_path)
+
+    assert result.returncode == 0
+    assert "0 file(s) scanned" in result.stdout
+
+
+def test_scan_paths_ignores_missing_and_directory_paths(tmp_path):
+    (tmp_path / "folder").mkdir()
+    (tmp_path / "script.m").write_text("plot(1:10)\n", encoding="utf-8")
+
+    result = run_cli(["scan", "--paths", "folder", "missing.m"], tmp_path)
+
+    assert result.returncode == 0
+    assert "0 file(s) scanned" in result.stdout
+    assert "script.m" not in result.stdout
+
+
 def test_scan_can_fail_on_warnings_when_requested(tmp_path):
     (tmp_path / "script.m").write_text("% Author: example maintainer\nplot(1:10)\n", encoding="utf-8")
 

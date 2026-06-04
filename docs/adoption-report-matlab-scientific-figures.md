@@ -1,6 +1,6 @@
 # Adoption Report: matlab-scientific-figures
 
-Snapshot date: 2026-05-31
+Snapshot date: 2026-06-04
 
 This report records how the companion repository
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
@@ -17,6 +17,7 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
+| Latest checked downstream commit | `262431b` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -53,7 +54,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md --results .mfigci-res
 Result:
 
 ```text
-0 error(s), 0 warning(s), 198 file(s) scanned, 30 binary/skipped.
+0 error(s), 0 warning(s), 260 file(s) scanned, 30 binary/skipped.
 0 error(s), 0 warning(s), 60 gallery file(s) ok.
 ```
 
@@ -67,6 +68,9 @@ Result:
   and redacts privacy-sensitive findings.
 - Keeping MATLAB render disabled in public CI matches the reality that public
   runners usually do not have MATLAB installed.
+- The downstream repository now also checks GitHub Project-board documentation
+  and keeps the live board setup pending until GitHub Projects scopes or a
+  verified web-created board are available.
 
 ## Current Boundaries
 

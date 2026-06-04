@@ -64,6 +64,20 @@ def test_adoption_playbook_keeps_staged_rollout_guidance():
     assert "guaranteed program eligibility" in text
 
 
+def test_dogfooding_adoption_report_is_current_and_bounded():
+    text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
+
+    assert "Snapshot date: 2026-06-04" in text
+    assert "Latest checked downstream commit | `262431b`" in text
+    assert "260 file(s) scanned" in text
+    assert "not a" in text
+    assert "download metric" in text
+    assert "external adoption claim" in text
+    assert "program eligibility claim" in text
+    assert "GitHub Project-board documentation" in text
+    assert "198 file(s) scanned" not in text
+
+
 def test_public_version_references_match_package_version():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     roadmap = (ROOT / "ROADMAP.md").read_text(encoding="utf-8")

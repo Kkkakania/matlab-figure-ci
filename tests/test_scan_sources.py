@@ -38,3 +38,18 @@ def test_provenance_scan_flags_international_platform_traces_as_warning(tmp_path
     assert {f.rule_id for f in result.findings} >= {
         "provenance.platform_trace.intl",
     }
+
+
+def test_provenance_scan_does_not_flag_medium_risk_level_text(tmp_path):
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "audit.md").write_text(
+        "| Template | Color Risk |\n|---|---|\n| line_plot | Medium |\n",
+        encoding="utf-8",
+    )
+
+    result = run_scan(project, load_config(project / "missing.yml"))
+
+    assert result.error_count == 0
+    assert result.warning_count == 0
+    assert result.exit_code == 0

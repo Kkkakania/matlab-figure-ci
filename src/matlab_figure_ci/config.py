@@ -81,7 +81,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
             {
                 "id": "provenance.platform_trace.intl",
                 "pattern": (
-                    r"(Medium|Substack|Reddit|Stack Overflow|StackExchange|"
+                    r"(medium\.com|Substack|Reddit|Stack Overflow|StackExchange|"
                     r"GitHub Gist|gist\.github\.com|Kaggle|MathWorks File Exchange)"
                 ),
                 "severity": "warning",

@@ -1,5 +1,7 @@
 # Documentation
 
+[简体中文文档索引](README.zh-CN.md)
+
 This directory collects the public maintainer and user documentation for
 `matlab-figure-ci`. Start with the guide that matches the job you are doing.
 
@@ -20,6 +22,8 @@ This directory collects the public maintainer and user documentation for
   manual pull request review.
 - [Rule design](rule-design.md): privacy, provenance, extension, and preset
   policy choices.
+- [Chinese rule design](rule-design.zh-CN.md): Chinese-language explanation of
+  privacy, provenance, extension, and gallery PDF boundaries.
 - [v2 compatibility](v2-compatibility.md): stable CLI, config, report, and
   policy boundaries for the v2 line.
 

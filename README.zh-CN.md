@@ -260,6 +260,8 @@ jobs:
 
 ## 文档
 
+- [中文文档索引](docs/README.zh-CN.md)
+- [中文规则设计说明](docs/rule-design.zh-CN.md)
 - [Documentation index](docs/README.md)
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
 - [Adoption playbook](docs/adoption-playbook.md)

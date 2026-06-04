@@ -74,8 +74,16 @@ DEFAULT_CONFIG: dict[str, Any] = {
                 "severity": "warning",
             },
             {
-                "id": "provenance.platform_trace",
+                "id": "provenance.platform_trace.cn",
                 "pattern": r"(CSDN|bilibili|知乎|小红书|公众号)",
+                "severity": "warning",
+            },
+            {
+                "id": "provenance.platform_trace.intl",
+                "pattern": (
+                    r"(Medium|Substack|Reddit|Stack Overflow|StackExchange|"
+                    r"GitHub Gist|gist\.github\.com|Kaggle|MathWorks File Exchange)"
+                ),
                 "severity": "warning",
             },
         ],

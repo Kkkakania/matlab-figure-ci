@@ -1,5 +1,7 @@
 # PyPI Release Checklist
 
+[简体中文](pypi-release-checklist.zh-CN.md)
+
 `matlab-figure-ci` is not published to PyPI yet. This checklist defines the
 gate for a future PyPI release so publishing is deliberate and reproducible.
 

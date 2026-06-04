@@ -34,6 +34,8 @@ This directory collects the public maintainer and user documentation for
   promises.
 - [PyPI release checklist](pypi-release-checklist.md): future package publishing
   readiness steps.
+- [Chinese PyPI release checklist](pypi-release-checklist.zh-CN.md):
+  Chinese-language publishing gate and non-publishing boundary.
 - [Release artifacts](release-artifacts.md): how to inspect the
   `release-preflight` JSON artifact before a release decision.
 - [Release cadence](release-cadence.md): versioning and release hygiene for the

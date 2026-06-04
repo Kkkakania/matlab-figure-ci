@@ -36,6 +36,21 @@ def test_chinese_readme_covers_core_user_flow():
     assert "mfigci release-preflight --require-dist" in chinese
     assert "docs/adoption-report-matlab-scientific-figures.md" in chinese
     assert "docs/v2-compatibility.md" in chinese
+    assert "docs/pypi-release-checklist.zh-CN.md" in chinese
+
+
+def test_chinese_pypi_checklist_preserves_publish_boundary():
+    text = (ROOT / "docs" / "pypi-release-checklist.zh-CN.md").read_text(encoding="utf-8")
+    index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
+
+    assert "当前尚未发布到 PyPI" in text
+    assert "GitHub release tag" in text
+    assert "mfigci release-preflight --require-dist" in text
+    assert "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json" in text
+    assert "pypi-name-check.json" in text
+    assert "不要为了关闭 issue 而发布 PyPI" in text
+    assert "不要在 package workflow 里加入自动上传步骤" in text
+    assert "pypi-release-checklist.zh-CN.md" in index
 
 
 def test_adoption_playbook_keeps_staged_rollout_guidance():

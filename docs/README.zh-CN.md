@@ -21,7 +21,8 @@
 ## 维护和发布
 
 - [OpenAI Codex maintainer workflow](openai-codex-maintainer-workflow.md)：如何把 Codex 用在真实 OSS 维护中，例如 issue triage、PR review 和 release notes。
-- [PyPI release checklist](pypi-release-checklist.md)：未来发布 PyPI 前需要确认的事项。
+- [中文 PyPI 发布检查清单](pypi-release-checklist.zh-CN.md)：未来发布 PyPI 前需要确认的事项，以及为什么当前不应为了关闭 issue 而发布。
+- [PyPI release checklist](pypi-release-checklist.md)：英文版 PyPI 发布检查清单。
 - [Release artifacts](release-artifacts.md)：如何查看 `release-preflight` JSON artifact。
 - [Release cadence](release-cadence.md)：当前版本线的发布节奏和避免过度 release 的原则。
 - [Version plan](version-plan.md)：版本边界和公开 release 规划。
@@ -43,3 +44,8 @@
 - provenance warning 不是让你“删掉痕迹”，而是提醒你确认材料来源和授权。
 - MATLAB render 在公共 GitHub runner 上通常不可用，第一版 CI 可以只做 scan、gallery 和 report。
 
+如果你在维护 `matlab-figure-ci` 自身：
+
+- 发布 PyPI 前先读 [中文 PyPI 发布检查清单](pypi-release-checklist.zh-CN.md)。
+- 不要为了制造活跃度或关闭 issue 而发布。
+- 先确认 release-preflight、Package workflow artifact、PyPI 名称快照和干净安装验证。

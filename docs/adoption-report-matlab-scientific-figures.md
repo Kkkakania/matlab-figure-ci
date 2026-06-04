@@ -17,7 +17,7 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `dff7929` |
+| Latest checked downstream commit | `094bf2f` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -83,6 +83,9 @@ Result:
 - The downstream Project-board docs now explicitly warn maintainers to verify
   the active browser account before using the GitHub web UI, because the `gh`
   CLI account and browser session can point to different GitHub users.
+- The downstream Project-board docs now list interim labels for the current
+  open issues, so triage remains inspectable while the live GitHub Project board
+  is still pending.
 
 ## Current Boundaries
 

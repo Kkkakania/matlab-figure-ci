@@ -17,7 +17,7 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `357fa89` |
+| Latest checked downstream commit | `dff7929` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -80,6 +80,9 @@ Result:
 - The downstream repository now also has a Chinese Project-board setup guide,
   linked from its Chinese README and documentation index, so maintainers can
   recover the same pending-board workflow without relying on the English plan.
+- The downstream Project-board docs now explicitly warn maintainers to verify
+  the active browser account before using the GitHub web UI, because the `gh`
+  CLI account and browser session can point to different GitHub users.
 
 ## Current Boundaries
 

@@ -34,6 +34,9 @@ jobs:
       - name: Run release preflight
         run: mfigci release-preflight --require-dist --output release-preflight.json
 
+      - name: Check PyPI package name
+        run: python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json
+
       - name: Smoke install wheel
         run: |
           python -m venv /tmp/mfigci-wheel-smoke
@@ -47,3 +50,10 @@ jobs:
         with:
           name: release-preflight
           path: release-preflight.json
+
+      - name: Upload PyPI name check
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: pypi-name-check
+          path: pypi-name-check.json

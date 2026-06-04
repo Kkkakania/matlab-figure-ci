@@ -22,8 +22,8 @@ change.
 4. Confirm `CHANGELOG.md` has a dated entry for the release.
 5. Confirm the package name is still available on PyPI.
 6. Confirm no PyPI token is committed to the repository.
-7. Confirm the Package workflow uploaded `release-preflight.json` for the
-   release candidate commit.
+7. Confirm the Package workflow uploaded `release-preflight.json` and
+   `pypi-name-check.json` for the release candidate commit.
 8. Confirm the Package workflow still builds, checks, smoke-installs, and
    uploads a preflight artifact only. It must not contain `twine upload`,
    `pypa/gh-action-pypi-publish`, `id-token: write`, or PyPI token variables.
@@ -49,11 +49,15 @@ changes that policy.
 Use the helper script immediately before publishing:
 
 ```bash
-python scripts/check_pypi_name.py matlab-figure-ci
+python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json
 ```
 
 The helper exits `0` when PyPI returns `404`, `1` when the project already
 exists, and `2` when the availability check could not be completed.
+The JSON file records the checked name, status, detail URL/message, and exit
+code so the Package workflow can upload it as a release-candidate artifact.
+Because PyPI state is external and time-sensitive, treat this artifact as a
+snapshot; re-run the helper immediately before an actual upload.
 
 ## Local Build
 

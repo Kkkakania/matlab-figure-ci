@@ -1,5 +1,6 @@
 import re
 import importlib.util
+import json
 from pathlib import Path
 
 from matlab_figure_ci import __version__
@@ -71,6 +72,9 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert "actions/upload-artifact@v5" in text
     assert "name: release-preflight" in text
     assert "path: release-preflight.json" in text
+    assert "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json" in text
+    assert "name: pypi-name-check" in text
+    assert "path: pypi-name-check.json" in text
     assert "/tmp/mfigci-wheel-smoke/bin/python -m pip install dist/*.whl" in text
     assert "/tmp/mfigci-wheel-smoke/bin/mfigci --version" in text
     assert "/tmp/mfigci-wheel-smoke/bin/mfigci --help" in text
@@ -84,6 +88,20 @@ def test_pypi_name_helper_classifies_api_status_codes():
     assert script.classify_status(500) == "unknown"
 
 
+def test_pypi_name_helper_payload_is_machine_readable():
+    script = load_script("scripts/check_pypi_name.py")
+
+    payload = script.name_check_payload("matlab-figure-ci", "available", "https://pypi.org/pypi/matlab-figure-ci/json")
+
+    assert payload == {
+        "name": "matlab-figure-ci",
+        "status": "available",
+        "detail": "https://pypi.org/pypi/matlab-figure-ci/json",
+        "exitCode": 0,
+    }
+    assert json.dumps(payload, sort_keys=True)
+
+
 def test_pypi_release_checklist_uses_name_helper():
     text = read_text("docs/pypi-release-checklist.md")
 
@@ -91,6 +109,7 @@ def test_pypi_release_checklist_uses_name_helper():
     assert "mfigci release-preflight --format json" in text
     assert "mfigci release-preflight --output release-preflight.json" in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
-    assert "python scripts/check_pypi_name.py matlab-figure-ci" in text
+    assert "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json" in text
+    assert "pypi-name-check.json" in text
     assert "package workflow does not publish" in text
     assert "exits `0` when PyPI returns `404`" in text

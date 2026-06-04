@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 
 def classify_status(status_code: int) -> str:
@@ -30,12 +32,35 @@ def check_name(name: str, timeout: float = 10.0) -> tuple[str, str]:
     return status, url
 
 
+def exit_code_for_status(status: str) -> int:
+    if status == "available":
+        return 0
+    if status == "taken":
+        return 1
+    return 2
+
+
+def name_check_payload(name: str, status: str, detail: str) -> dict[str, str | int]:
+    return {
+        "name": name,
+        "status": status,
+        "detail": detail,
+        "exitCode": exit_code_for_status(status),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("name", help="PyPI project name to check.")
+    parser.add_argument("--json-out", help="Write a machine-readable check result to this file.")
     args = parser.parse_args()
 
     status, detail = check_name(args.name)
+    payload = name_check_payload(args.name, status, detail)
+    if args.json_out:
+        path = Path(args.json_out)
+        path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
     if status == "available":
         print(f"available: {detail} returned 404")
         return 0

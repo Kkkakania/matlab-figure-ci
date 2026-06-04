@@ -61,6 +61,7 @@ def test_package_workflow_check_rejects_old_actions_and_publish_markers():
       - uses: actions/setup-python@v6
       - uses: actions/upload-artifact@v5
       - run: mfigci release-preflight --require-dist --output release-preflight.json
+      - run: python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json
     """
 
     bad_workflows = [

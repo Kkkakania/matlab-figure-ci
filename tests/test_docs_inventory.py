@@ -68,8 +68,8 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
     assert "Snapshot date: 2026-06-04" in text
-    assert "Latest checked downstream commit | `ec04b16`" in text
-    assert "262 file(s) scanned" in text
+    assert "Latest checked downstream commit | `357fa89`" in text
+    assert "263 file(s) scanned" in text
     assert "not a" in text
     assert "download metric" in text
     assert "external adoption claim" in text
@@ -79,9 +79,11 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "fork intake helper" in text
     assert "ahead commits to review" in text
     assert "no-Projects-scope triage" in text
+    assert "Chinese Project-board setup guide" in text
     assert "198 file(s) scanned" not in text
     assert "260 file(s) scanned" not in text
     assert "261 file(s) scanned" not in text
+    assert "262 file(s) scanned" not in text
 
 
 def test_public_version_references_match_package_version():

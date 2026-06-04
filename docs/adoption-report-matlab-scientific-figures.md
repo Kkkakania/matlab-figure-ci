@@ -17,7 +17,7 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `ec04b16` |
+| Latest checked downstream commit | `357fa89` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -54,7 +54,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md --results .mfigci-res
 Result:
 
 ```text
-0 error(s), 0 warning(s), 262 file(s) scanned, 30 binary/skipped.
+0 error(s), 0 warning(s), 263 file(s) scanned, 30 binary/skipped.
 0 error(s), 0 warning(s), 60 gallery file(s) ok.
 ```
 
@@ -77,6 +77,9 @@ Result:
 - The downstream Project-board plan now includes a no-Projects-scope triage
   helper for reviewing current open issues and pull requests while the live
   board remains pending.
+- The downstream repository now also has a Chinese Project-board setup guide,
+  linked from its Chinese README and documentation index, so maintainers can
+  recover the same pending-board workflow without relying on the English plan.
 
 ## Current Boundaries
 

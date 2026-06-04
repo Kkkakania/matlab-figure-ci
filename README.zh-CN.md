@@ -197,7 +197,7 @@ matlab:
 | `mfigci rules` | 查看生效的隐私、来源和扩展名规则 |
 | `mfigci release-preflight` | 检查套件元数据、release 文件和打包 workflow 准备状态 |
 
-`mfigci doctor` 会汇总 include/exclude 路径、规则数量、扩展名策略数量、gallery expected 数量、warning 严格模式和 MATLAB render 状态。审查新仓库配置时，先运行它再做完整扫描。
+`mfigci doctor` 会汇总 include/exclude 路径、规则数量、扩展名策略数量、gallery expected 数量、warning 严格模式和 MATLAB render 状态。审查新仓库配置时，先运行它再做完整扫描。它也会提示缺失的 scan include、gallery 路径和 expected gallery 文件，同时避免在终端输出本机绝对路径。
 
 `mfigci scan --paths <file...>` 适合 pre-commit 或 staged-file 工作流。它只扫描指定文件，但仍然遵守配置中的 exclude 规则和 symlink 安全检查。
 

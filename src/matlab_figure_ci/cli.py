@@ -338,6 +338,56 @@ def _format_list(values) -> str:
     return ", ".join(str(value) for value in values)
 
 
+def _safe_relative_label(root: Path, path: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except (OSError, ValueError):
+        return "<outside-repository>"
+
+
+def _configured_path(root: Path, value: str) -> Path:
+    path = Path(value)
+    if path.is_absolute():
+        return path
+    return root / path
+
+
+def _safe_configured_label(root: Path, value: str) -> str:
+    path = Path(value)
+    if path.is_absolute():
+        return _safe_relative_label(root, path)
+    return path.as_posix()
+
+
+def _format_path_list(root: Path, values) -> str:
+    if not values:
+        return "(none)"
+    return ", ".join(_safe_configured_label(root, str(value)) for value in values)
+
+
+def _doctor_path_warnings(root: Path, config: dict) -> list[str]:
+    warnings: list[str] = []
+    scan = config.get("scan", {})
+    gallery = config.get("gallery", {})
+
+    for include in scan.get("include", []):
+        include_path = _configured_path(root, str(include))
+        if not include_path.exists():
+            warnings.append(f"WARNING doctor.scan_include_missing {_safe_relative_label(root, include_path)}")
+
+    gallery_path = _configured_path(root, str(gallery.get("path", "gallery")))
+    if not gallery_path.exists():
+        warnings.append(f"WARNING doctor.gallery_path_missing {_safe_relative_label(root, gallery_path)}")
+        return warnings
+
+    for expected in gallery.get("expected", []):
+        expected_path = gallery_path / str(expected)
+        if not expected_path.exists():
+            warnings.append(f"WARNING doctor.gallery_expected_missing {_safe_relative_label(root, expected_path)}")
+
+    return warnings
+
+
 def command_doctor(args) -> int:
     if not args.config:
         print("--config must not be empty", file=sys.stderr)
@@ -369,19 +419,22 @@ def command_doctor(args) -> int:
     print(f"Config path: {path_label}")
     print(f"Project: {project.get('name', '(unnamed)')}")
     print(f"Presets: {_format_list(presets)}")
-    print(f"Scan include: {_format_list(scan.get('include', []))}")
+    root = Path.cwd()
+    print(f"Scan include: {_format_path_list(root, scan.get('include', []))}")
     print(f"Scan exclude: {_format_list(scan.get('exclude', []))}")
     print(f"Privacy scan: {'enabled' if privacy.get('enabled', True) else 'disabled'}")
     print(f"Privacy rules: {len(privacy.get('rules', []))}")
     print(f"Provenance scan: {'enabled' if provenance.get('enabled', True) else 'disabled'}")
     print(f"Provenance rules: {len(provenance.get('rules', []))}")
     print(f"Fail on warnings: {'enabled' if strict.get('fail_on_warnings', False) else 'disabled'}")
-    print(f"Gallery path: {gallery.get('path', 'gallery')}")
+    print(f"Gallery path: {_safe_configured_label(root, str(gallery.get('path', 'gallery')))}")
     print(f"Gallery allowed extensions: {_format_list(gallery.get('allowed_extensions', []))}")
     print(f"Gallery expected files: {len(gallery.get('expected', []))}")
     print(f"Extension errors: {len(extensions.get('error', []))}")
     print(f"Extension warnings: {len(extensions.get('warning', []))}")
     print(f"MATLAB render: {matlab_status}")
+    for warning in _doctor_path_warnings(root, config):
+        print(warning)
     return 0
 
 

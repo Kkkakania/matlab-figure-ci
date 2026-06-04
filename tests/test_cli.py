@@ -500,6 +500,79 @@ matlab:
     assert str(tmp_path) not in result.stdout
 
 
+def test_doctor_warns_about_missing_scan_and_gallery_paths(tmp_path):
+    (tmp_path / "src").mkdir()
+    (tmp_path / "gallery").mkdir()
+    (tmp_path / "gallery" / "present.png").write_bytes(b"123456789")
+    (tmp_path / "mfigci.yml").write_text(
+        """
+scan:
+  include:
+    - src
+    - missing-src
+gallery:
+  path: gallery
+  expected:
+    - present.png
+    - missing.png
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["doctor"], tmp_path)
+
+    assert result.returncode == 0
+    assert "WARNING doctor.scan_include_missing missing-src" in result.stdout
+    assert "WARNING doctor.gallery_expected_missing gallery/missing.png" in result.stdout
+    assert "present.png" not in result.stdout.split("WARNING", maxsplit=1)[-1]
+    assert str(tmp_path) not in result.stdout
+
+
+def test_doctor_warns_about_missing_gallery_path(tmp_path):
+    (tmp_path / "src").mkdir()
+    (tmp_path / "mfigci.yml").write_text(
+        """
+scan:
+  include:
+    - src
+gallery:
+  path: gallery-typo
+  expected:
+    - example.png
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["doctor"], tmp_path)
+
+    assert result.returncode == 0
+    assert "WARNING doctor.gallery_path_missing gallery-typo" in result.stdout
+    assert "doctor.gallery_expected_missing" not in result.stdout
+    assert str(tmp_path) not in result.stdout
+
+
+def test_doctor_redacts_absolute_paths_outside_repository(tmp_path):
+    outside = tmp_path.parent / "outside-mfigci-doctor-path"
+    (tmp_path / "mfigci.yml").write_text(
+        f"""
+scan:
+  include:
+    - "{outside}"
+gallery:
+  path: gallery
+  expected: []
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["doctor"], tmp_path)
+
+    assert result.returncode == 0
+    assert "WARNING doctor.scan_include_missing <outside-repository>" in result.stdout
+    assert str(outside) not in result.stdout
+    assert str(tmp_path) not in result.stdout
+
+
 def test_rules_lists_effective_policy_rules(tmp_path):
     result = run_cli(["rules"], tmp_path)
 

@@ -238,7 +238,9 @@ config, policy, and report boundary.
 `mfigci doctor` summarizes include/exclude paths, rule counts, extension policy
 counts, gallery expectations, strict warning behavior, and MATLAB render status.
 Use it when reviewing a new repository configuration before running a full
-scan.
+scan. It also warns when configured scan includes, gallery paths, or expected
+gallery files do not exist, while keeping local absolute paths out of the
+terminal output.
 
 Use `mfigci scan --paths <file...>` in pre-commit or staged-file workflows when
 you want privacy, provenance, and extension checks for selected files without

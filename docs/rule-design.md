@@ -158,3 +158,41 @@ gallery:
 
 With this preset, `gallery/line_plot.pdf` is accepted as a gallery output, but
 `docs/paper.pdf` still receives a warning.
+
+## User Presets
+
+Projects can also load repo-local YAML presets when a lab, course, or small
+team wants one shared policy across several figure repositories:
+
+```yaml
+presets:
+  - matlab-figures
+  - ./presets/lab-policy.yml
+```
+
+The path is resolved relative to `mfigci.yml`. A user preset uses the same
+configuration shape as `mfigci.yml`, so familiar sections such as `gallery`,
+`strict`, `extensions`, `privacy`, and `provenance` can be bundled in one file:
+
+```yaml
+# presets/lab-policy.yml
+gallery:
+  allowed_extensions:
+    - ".png"
+    - ".svg"
+  min_size_bytes: 4096
+
+strict:
+  fail_on_warnings: true
+```
+
+User presets are intentionally simple:
+
+- they are local files, not remote downloads
+- they cannot include nested `presets`
+- they are validated before scanning starts
+- later presets and the main `mfigci.yml` can override earlier settings
+
+This keeps organization-level policy reusable without turning `mfigci` into a
+plugin marketplace or hiding project-specific review decisions in the global
+defaults.

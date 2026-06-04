@@ -152,13 +152,55 @@ def _preset_names(loaded: dict[str, Any]) -> list[str]:
     return []
 
 
-def _apply_presets(config: dict[str, Any], names: list[str]) -> dict[str, Any]:
+def _is_preset_path(name: str) -> bool:
+    return (
+        name.startswith("./")
+        or name.startswith("../")
+        or name.startswith("/")
+        or name.endswith(".yml")
+        or name.endswith(".yaml")
+    )
+
+
+def _read_yaml_mapping(path: Path, label: str) -> dict[str, Any]:
+    try:
+        loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except FileNotFoundError as exc:
+        raise ConfigError(f"Preset file not found: {label}") from exc
+    except yaml.YAMLError as exc:
+        raise ConfigError(f"Could not parse preset {label}: {exc}") from exc
+
+    if not isinstance(loaded, dict):
+        raise ConfigError(f"Preset must be a mapping: {label}")
+    return loaded
+
+
+def _load_user_preset(name: str, base_dir: Path) -> dict[str, Any]:
+    preset_path = Path(name)
+    if not preset_path.is_absolute():
+        preset_path = base_dir / preset_path
+    loaded = _read_yaml_mapping(preset_path, name)
+    if "presets" in loaded or "preset" in loaded:
+        raise ConfigError(f"User preset {name} must not include presets")
+
+    try:
+        _validate_config(deep_merge(DEFAULT_CONFIG, loaded))
+    except ConfigError as exc:
+        raise ConfigError(f"Invalid user preset {name}: {exc}") from exc
+    return loaded
+
+
+def _apply_presets(config: dict[str, Any], names: list[str], base_dir: Path | None = None) -> dict[str, Any]:
     result = deepcopy(config)
+    preset_base_dir = base_dir or Path.cwd()
     for name in names:
-        if name not in PRESETS:
+        if name in PRESETS:
+            result = deep_merge(result, PRESETS[name])
+        elif _is_preset_path(name):
+            result = deep_merge(result, _load_user_preset(name, preset_base_dir))
+        else:
             available = ", ".join(sorted(PRESETS))
             raise ConfigError(f"Unknown preset '{name}'. Available presets: {available}")
-        result = deep_merge(result, PRESETS[name])
     return result
 
 
@@ -287,6 +329,6 @@ def load_config(path: str | Path = "mfigci.yml") -> dict[str, Any]:
     if not isinstance(loaded, dict):
         raise ConfigError(f"Configuration must be a mapping: {config_path}")
 
-    config = deep_merge(_apply_presets(DEFAULT_CONFIG, _preset_names(loaded)), loaded)
+    config = deep_merge(_apply_presets(DEFAULT_CONFIG, _preset_names(loaded), config_path.parent), loaded)
     _validate_config(config)
     return config

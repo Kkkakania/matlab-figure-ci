@@ -181,7 +181,17 @@ matlab:
 
 [Adoption playbook](docs/adoption-playbook.md) 给出从静态扫描、gallery manifest、release gate 到可选 MATLAB render 的分阶段接入方式。如果你在其他仓库中尝试这套流程，可以通过 adoption report issue template 反馈哪些步骤顺利，哪些地方增加了配置成本。
 
-[Rule design](docs/rule-design.md) 解释 `matlab-figures` preset，包括 gallery 范围内 PDF 的处理方式。[JSON report](docs/json-report.md) 定义稳定报告字段、redaction 保证和路径保证。[v2 compatibility](docs/v2-compatibility.md) 说明长期 CLI、配置、策略和报告边界。
+[Rule design](docs/rule-design.md) 解释 `matlab-figures` preset、gallery 范围内 PDF 的处理方式，以及如何用仓库内 YAML preset 承载实验室或小团队自己的规则。[JSON report](docs/json-report.md) 定义稳定报告字段、redaction 保证和路径保证。[v2 compatibility](docs/v2-compatibility.md) 说明长期 CLI、配置、策略和报告边界。
+
+如果一个课题组或小团队想复用同一套规则，可以把本地 preset 和内置 preset 一起列出来：
+
+```yaml
+presets:
+  - matlab-figures
+  - ./presets/lab-policy.yml
+```
+
+本地 preset 路径相对于 `mfigci.yml` 解析，内容使用和主配置相同的字段形状，但不能再包含 `presets`，避免递归和合并顺序变得不透明。
 
 ## 命令
 

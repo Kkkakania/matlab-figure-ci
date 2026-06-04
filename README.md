@@ -215,11 +215,23 @@ static scans to gallery manifests, release gates, and optional MATLAB render.
 If you try that rollout in another repository, use the adoption report issue
 template to share what worked and what made setup harder.
 The [rule design guide](docs/rule-design.md) explains the `matlab-figures`
-preset, including its gallery-scoped PDF allowance.
+preset, its gallery-scoped PDF allowance, and repo-local YAML presets for
+teams that want to keep lab policy outside the main `mfigci.yml`.
 The [JSON report guide](docs/json-report.md) defines the stable report fields,
 redaction guarantees, and path guarantees. The
 [v2 compatibility guide](docs/v2-compatibility.md) defines the long-term CLI,
 config, policy, and report boundary.
+
+Repo-local presets can be listed beside stock presets:
+
+```yaml
+presets:
+  - matlab-figures
+  - ./presets/lab-policy.yml
+```
+
+User preset files are resolved relative to `mfigci.yml`, use the same config
+shape as the main file, and cannot include nested `presets`.
 
 ## Commands
 

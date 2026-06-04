@@ -85,6 +85,7 @@ Create a starter configuration and GitHub Actions workflow:
 ```bash
 mfigci init
 mfigci doctor --config mfigci.yml
+mfigci doctor --config mfigci.yml --format json
 mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
@@ -101,6 +102,7 @@ mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
+mfigci doctor --config mfigci.yml --format json
 mfigci rules --config mfigci.yml
 mfigci release-preflight
 mfigci release-preflight --format json
@@ -250,9 +252,10 @@ shape as the main file, and cannot include nested `presets`.
 `mfigci doctor` summarizes include/exclude paths, rule counts, extension policy
 counts, gallery expectations, strict warning behavior, and MATLAB render status.
 Use it when reviewing a new repository configuration before running a full
-scan. It also warns when configured scan includes, gallery paths, or expected
-gallery files do not exist, while keeping local absolute paths out of the
-terminal output.
+scan. Add `--format json` when an ecosystem workflow needs a stable,
+machine-readable view of the effective configuration. Both formats warn when
+configured scan includes, gallery paths, or expected gallery files do not
+exist, while keeping local absolute paths out of the output.
 
 Use `mfigci scan --paths <file...>` in pre-commit or staged-file workflows when
 you want privacy, provenance, and extension checks for selected files without

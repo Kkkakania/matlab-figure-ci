@@ -388,16 +388,7 @@ def _doctor_path_warnings(root: Path, config: dict) -> list[str]:
     return warnings
 
 
-def command_doctor(args) -> int:
-    if not args.config:
-        print("--config must not be empty", file=sys.stderr)
-        return 2
-    config_path = Path(args.config)
-    config = load_config(config_path)
-    path_label = config_path.as_posix()
-    if not config_path.exists():
-        path_label = f"{path_label} (not found; using defaults)"
-
+def _doctor_payload(config_path: Path, config: dict, root: Path) -> dict:
     project = config.get("project", {})
     scan = config.get("scan", {})
     privacy = config.get("privacy", {})
@@ -410,30 +401,99 @@ def command_doctor(args) -> int:
     if isinstance(presets, str):
         presets = [presets]
 
-    matlab_enabled = bool(matlab.get("enabled", False))
+    config_found = config_path.exists()
+    config_label = _public_config_path(config_path, root)
+
+    scan_include = [_safe_configured_label(root, str(value)) for value in scan.get("include", [])]
+    scan_exclude = [str(value) for value in scan.get("exclude", [])]
+
+    return {
+        "schema_version": 1,
+        "tool_version": __version__,
+        "config_path": config_label,
+        "config_found": config_found,
+        "project": {
+            "name": project.get("name", "(unnamed)"),
+        },
+        "presets": list(presets),
+        "scan": {
+            "include": scan_include,
+            "exclude": scan_exclude,
+            "include_count": len(scan_include),
+            "exclude_count": len(scan_exclude),
+        },
+        "gallery": {
+            "path": _safe_configured_label(root, str(gallery.get("path", "gallery"))),
+            "allowed_extensions": list(gallery.get("allowed_extensions", [])),
+            "min_size_bytes": int(gallery.get("min_size_bytes", 0)),
+            "expected_count": len(gallery.get("expected", [])),
+        },
+        "rules": {
+            "privacy_count": len(privacy.get("rules", [])),
+            "provenance_count": len(provenance.get("rules", [])),
+            "extension_error_count": len(extensions.get("error", [])),
+            "extension_warning_count": len(extensions.get("warning", [])),
+        },
+        "privacy": {
+            "enabled": bool(privacy.get("enabled", True)),
+            "redact_matches": bool(privacy.get("redact_matches", True)),
+        },
+        "provenance": {
+            "enabled": bool(provenance.get("enabled", True)),
+        },
+        "strict": {
+            "fail_on_warnings": bool(strict.get("fail_on_warnings", False)),
+        },
+        "matlab": {
+            "enabled": bool(matlab.get("enabled", False)),
+            "bin_env": str(matlab.get("bin_env", "MATLAB_BIN")),
+            "fallback_bin": str(matlab.get("fallback_bin", "matlab")),
+            "batch_command": str(matlab.get("batch_command", "run_all_figures")),
+        },
+        "warnings": _doctor_path_warnings(root, config),
+    }
+
+
+def command_doctor(args) -> int:
+    if not args.config:
+        print("--config must not be empty", file=sys.stderr)
+        return 2
+    config_path = Path(args.config)
+    config = load_config(config_path)
+    root = Path.cwd()
+    payload = _doctor_payload(config_path, config, root)
+
+    if args.format == "json":
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0
+
+    path_label = payload["config_path"]
+    if not payload["config_found"]:
+        path_label = f"{path_label} (not found; using defaults)"
+
+    matlab_enabled = bool(payload["matlab"]["enabled"])
     matlab_status = "enabled" if matlab_enabled else "disabled"
     if matlab_enabled:
-        matlab_status = f"enabled (env: {matlab.get('bin_env', 'MATLAB_BIN')})"
+        matlab_status = f"enabled (env: {payload['matlab']['bin_env']})"
 
     print("matlab-figure-ci doctor")
     print(f"Config path: {path_label}")
-    print(f"Project: {project.get('name', '(unnamed)')}")
-    print(f"Presets: {_format_list(presets)}")
-    root = Path.cwd()
-    print(f"Scan include: {_format_path_list(root, scan.get('include', []))}")
-    print(f"Scan exclude: {_format_list(scan.get('exclude', []))}")
-    print(f"Privacy scan: {'enabled' if privacy.get('enabled', True) else 'disabled'}")
-    print(f"Privacy rules: {len(privacy.get('rules', []))}")
-    print(f"Provenance scan: {'enabled' if provenance.get('enabled', True) else 'disabled'}")
-    print(f"Provenance rules: {len(provenance.get('rules', []))}")
-    print(f"Fail on warnings: {'enabled' if strict.get('fail_on_warnings', False) else 'disabled'}")
-    print(f"Gallery path: {_safe_configured_label(root, str(gallery.get('path', 'gallery')))}")
-    print(f"Gallery allowed extensions: {_format_list(gallery.get('allowed_extensions', []))}")
-    print(f"Gallery expected files: {len(gallery.get('expected', []))}")
-    print(f"Extension errors: {len(extensions.get('error', []))}")
-    print(f"Extension warnings: {len(extensions.get('warning', []))}")
+    print(f"Project: {payload['project']['name']}")
+    print(f"Presets: {_format_list(payload['presets'])}")
+    print(f"Scan include: {_format_list(payload['scan']['include'])}")
+    print(f"Scan exclude: {_format_list(payload['scan']['exclude'])}")
+    print(f"Privacy scan: {'enabled' if payload['privacy']['enabled'] else 'disabled'}")
+    print(f"Privacy rules: {payload['rules']['privacy_count']}")
+    print(f"Provenance scan: {'enabled' if payload['provenance']['enabled'] else 'disabled'}")
+    print(f"Provenance rules: {payload['rules']['provenance_count']}")
+    print(f"Fail on warnings: {'enabled' if payload['strict']['fail_on_warnings'] else 'disabled'}")
+    print(f"Gallery path: {payload['gallery']['path']}")
+    print(f"Gallery allowed extensions: {_format_list(payload['gallery']['allowed_extensions'])}")
+    print(f"Gallery expected files: {payload['gallery']['expected_count']}")
+    print(f"Extension errors: {payload['rules']['extension_error_count']}")
+    print(f"Extension warnings: {payload['rules']['extension_warning_count']}")
     print(f"MATLAB render: {matlab_status}")
-    for warning in _doctor_path_warnings(root, config):
+    for warning in payload["warnings"]:
         print(warning)
     return 0
 
@@ -534,6 +594,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     doctor = subparsers.add_parser("doctor", help="show effective config summary")
     doctor.add_argument("--config", default="mfigci.yml")
+    doctor.add_argument("--format", choices=["text", "json"], default="text", help="output format")
     doctor.set_defaults(func=command_doctor)
 
     rules = subparsers.add_parser("rules", help="show effective privacy, provenance, and extension rules")

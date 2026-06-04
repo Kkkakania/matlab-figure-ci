@@ -573,6 +573,84 @@ gallery:
     assert str(tmp_path) not in result.stdout
 
 
+def test_doctor_json_reports_effective_config(tmp_path):
+    (tmp_path / "mfigci.yml").write_text(
+        """
+project:
+  name: demo-gallery
+presets:
+  - matlab-figures
+scan:
+  include:
+    - src
+  exclude:
+    - raw
+gallery:
+  path: gallery
+  expected:
+    - a.png
+    - b.svg
+matlab:
+  enabled: true
+  bin_env: MATLAB_BIN
+""",
+        encoding="utf-8",
+    )
+
+    first = run_cli(["doctor", "--format", "json"], tmp_path)
+    second = run_cli(["doctor", "--format", "json"], tmp_path)
+
+    assert first.returncode == 0
+    assert first.stdout == second.stdout
+    payload = json.loads(first.stdout)
+    assert payload["schema_version"] == 1
+    assert payload["tool_version"]
+    assert payload["config_path"] == "mfigci.yml"
+    assert payload["config_found"] is True
+    assert payload["project"]["name"] == "demo-gallery"
+    assert payload["presets"] == ["matlab-figures"]
+    assert payload["scan"]["include"] == ["src"]
+    assert payload["scan"]["exclude"] == ["raw"]
+    assert payload["scan"]["include_count"] == 1
+    assert payload["gallery"]["path"] == "gallery"
+    assert payload["gallery"]["expected_count"] == 2
+    assert payload["rules"]["privacy_count"] == 3
+    assert payload["rules"]["provenance_count"] == 4
+    assert payload["rules"]["extension_error_count"] == 7
+    assert payload["rules"]["extension_warning_count"] == 3
+    assert payload["strict"]["fail_on_warnings"] is False
+    assert payload["matlab"]["enabled"] is True
+    assert payload["matlab"]["bin_env"] == "MATLAB_BIN"
+    assert str(tmp_path) not in first.stdout
+
+
+def test_doctor_json_warns_without_leaking_absolute_paths(tmp_path):
+    outside = tmp_path.parent / "outside-mfigci-doctor-json-path"
+    (tmp_path / "mfigci.yml").write_text(
+        f"""
+scan:
+  include:
+    - "{outside}"
+gallery:
+  path: gallery
+  expected: []
+""",
+        encoding="utf-8",
+    )
+
+    result = run_cli(["doctor", "--format", "json"], tmp_path)
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    assert payload["scan"]["include"] == ["<outside-repository>"]
+    assert payload["warnings"] == [
+        "WARNING doctor.scan_include_missing <outside-repository>",
+        "WARNING doctor.gallery_path_missing gallery",
+    ]
+    assert str(outside) not in result.stdout
+    assert str(tmp_path) not in result.stdout
+
+
 def test_rules_lists_effective_policy_rules(tmp_path):
     result = run_cli(["rules"], tmp_path)
 

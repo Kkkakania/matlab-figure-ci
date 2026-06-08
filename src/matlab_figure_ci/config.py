@@ -89,8 +89,8 @@ DEFAULT_CONFIG: dict[str, Any] = {
         ],
     },
     "extensions": {
-        "error": [".p", ".mat", ".fig", ".doc", ".docx", ".xlsx", ".vsd"],
-        "warning": [".pdf", ".mlx", ".zip"],
+        "error": [".p", ".mat", ".fig", ".doc", ".docx", ".xlsx", ".vsd", ".opju", ".opj", ".ogwu"],
+        "warning": [".pdf", ".mlx", ".zip", ".opx", ".mltbx"],
         "allow": [],
     },
     "strict": {

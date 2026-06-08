@@ -2,15 +2,15 @@ from matlab_figure_ci.config import load_config
 from matlab_figure_ci.scanners import run_scan
 
 
-def test_extension_scan_errors_for_risky_matlab_and_office_files(tmp_path):
+def test_extension_scan_errors_for_risky_matlab_office_and_origin_files(tmp_path):
     project = tmp_path / "project"
     project.mkdir()
-    for name in ["plot.fig", "data.mat", "locked.p", "paper.docx", "table.xlsx"]:
+    for name in ["plot.fig", "data.mat", "locked.p", "paper.docx", "table.xlsx", "origin.opju", "project.opj", "sheet.ogwu"]:
         (project / name).write_bytes(b"binary")
 
     result = run_scan(project, load_config(project / "missing.yml"))
 
-    assert result.error_count == 5
+    assert result.error_count == 8
     assert all(f.rule_id == "extension.error" for f in result.findings if f.severity == "error")
 
 
@@ -24,6 +24,20 @@ def test_pdf_is_warning_not_error_by_default(tmp_path):
     assert result.error_count == 0
     assert result.warning_count == 1
     assert result.findings[0].rule_id == "extension.warning"
+
+
+def test_origin_addons_and_matlab_toolboxes_warn_by_default(tmp_path):
+    project = tmp_path / "project"
+    project.mkdir()
+    for name in ["origin-addon.opx", "toolbox.mltbx"]:
+        (project / name).write_bytes(b"binary")
+
+    result = run_scan(project, load_config(project / "missing.yml"))
+
+    warning_paths = {finding.path for finding in result.findings if finding.rule_id == "extension.warning"}
+    assert result.error_count == 0
+    assert result.warning_count == 2
+    assert warning_paths == {"origin-addon.opx", "toolbox.mltbx"}
 
 
 def test_matlab_figures_preset_allows_gallery_pdf_but_warns_elsewhere(tmp_path):

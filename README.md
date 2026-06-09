@@ -189,6 +189,27 @@ scan:
     - ".ipynb_checkpoints"
     - "LICENSE"
 
+generated_assets:
+  enabled: true
+  severity: warning
+  source_dirs:
+    - "src"
+    - "examples"
+    - "templates"
+    - "skills"
+    - "scripts"
+  extensions:
+    - ".png"
+    - ".jpg"
+    - ".jpeg"
+    - ".bmp"
+    - ".tif"
+    - ".tiff"
+    - ".gif"
+    - ".svg"
+    - ".pdf"
+  allow: []
+
 gallery:
   path: "gallery"
   allowed_extensions:

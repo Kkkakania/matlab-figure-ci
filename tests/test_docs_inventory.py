@@ -211,6 +211,20 @@ def test_readme_lists_release_preflight_command():
     assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in readme
 
 
+def test_readmes_show_generated_asset_policy():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+    example = (ROOT / "mfigci.example.yml").read_text(encoding="utf-8")
+
+    for text in (readme, chinese, example):
+        assert "generated_assets:" in text
+        assert "source_dirs:" in text
+        assert '- ".bmp"' in text
+        assert '- ".tif"' in text
+        assert '- ".gif"' in text
+        assert "allow: []" in text
+
+
 def test_release_artifacts_doc_explains_preflight_payload():
     text = (ROOT / "docs" / "release-artifacts.md").read_text(encoding="utf-8")
 

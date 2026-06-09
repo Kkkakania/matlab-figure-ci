@@ -7,10 +7,10 @@
 
 Languages: English | [简体中文](README.zh-CN.md)
 
-`matlab-figure-ci` is a small CI/CLI quality gate for MATLAB scientific figure
-repositories. It helps maintainers catch missing gallery outputs, risky binary
-files, privacy traces, unclear provenance markers, and optional MATLAB batch
-rendering failures before a public release.
+`matlab-figure-ci` is a small CI/CLI quality gate for MATLAB figure
+repositories. I use it for the dull checks that are easy to forget before a
+public release: missing gallery images, private paths, source markers, binary
+artifacts, and optional MATLAB batch-rendering failures.
 
 It is designed to pair with
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures):

@@ -7,7 +7,7 @@
 
 语言： [English](README.md) | 简体中文
 
-`matlab-figure-ci` 是一个面向 MATLAB 科研绘图仓库的 CI/CLI 质量门工具。它帮助维护者在公开发布前检查 gallery 输出缺失、风险二进制文件、隐私痕迹、来源不明的材料线索，以及可选 MATLAB 批量渲染失败。
+`matlab-figure-ci` 是一个面向 MATLAB 科研绘图仓库的 CI/CLI 质量门工具。我主要用它处理那些发布前容易忘、但出问题会很麻烦的检查：gallery 输出缺失、本地路径、来源标记、二进制产物，以及可选 MATLAB 批量渲染失败。
 
 它设计上和 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures) 配套：
 

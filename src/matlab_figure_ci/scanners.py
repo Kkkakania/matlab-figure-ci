@@ -126,6 +126,27 @@ def _extension_findings(root: Path, path: Path, config: dict) -> list[Finding]:
     return []
 
 
+def _generated_asset_findings(root: Path, path: Path, config: dict) -> list[Finding]:
+    generated_assets = config.get("generated_assets", {})
+    if not generated_assets.get("enabled", True):
+        return []
+
+    suffix = path.suffix.lower()
+    extensions = {str(item).lower() for item in generated_assets.get("extensions", [])}
+    if suffix not in extensions:
+        return []
+
+    relative = _relative(root, path)
+    if _path_is_under_any(relative, generated_assets.get("allow", [])):
+        return []
+    if not _path_is_under_any(relative, generated_assets.get("source_dirs", [])):
+        return []
+
+    severity = str(generated_assets.get("severity", "warning"))
+    message = "generated asset appears inside a source or template directory"
+    return [Finding(severity, "generated_asset.source_tree", relative, None, message)]
+
+
 def _extension_is_allowed(relative_path: str, suffix: str, allow_rules: list[dict]) -> bool:
     for rule in allow_rules:
         base_path = str(rule.get("path", "")).strip("/")
@@ -137,6 +158,17 @@ def _extension_is_allowed(relative_path: str, suffix: str, allow_rules: list[dic
             or relative_path.startswith(f"{base_path}/")
             or fnmatch(relative_path, base_path)
         ):
+            return True
+    return False
+
+
+def _path_is_under_any(relative_path: str, base_paths: list[str]) -> bool:
+    rel = relative_path.strip("/")
+    for base_path in base_paths:
+        base = str(base_path).strip("/")
+        if not base:
+            continue
+        if rel == base or rel.startswith(f"{base}/"):
             return True
     return False
 
@@ -165,6 +197,7 @@ def run_scan(root: str | Path, config: dict, paths: Iterable[str | Path] | None 
     for path in iter_files(root_path, config, paths):
         result.files_scanned += 1
         result.findings.extend(_extension_findings(root_path, path, config))
+        result.findings.extend(_generated_asset_findings(root_path, path, config))
 
         text = _read_text(path)
         if text is None:

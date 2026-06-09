@@ -13,6 +13,8 @@ def test_missing_config_uses_safe_defaults(tmp_path):
     assert config["strict"]["fail_on_warnings"] is False
     assert ".pdf" in config["extensions"]["warning"]
     assert ".pdf" not in config["extensions"]["error"]
+    assert config["generated_assets"]["enabled"] is True
+    assert "templates" in config["generated_assets"]["source_dirs"]
 
 
 def test_reads_mfigci_yml(tmp_path):
@@ -321,4 +323,18 @@ matlab:
     )
 
     with pytest.raises(ConfigError, match="matlab.batch_command"):
+        load_config(config_path)
+
+
+def test_invalid_generated_asset_severity_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+generated_assets:
+  severity: critical
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="generated_assets.severity"):
         load_config(config_path)

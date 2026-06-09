@@ -496,6 +496,7 @@ matlab:
     assert "Gallery expected files: 2" in result.stdout
     assert "Privacy scan: enabled" in result.stdout
     assert "Provenance scan: enabled" in result.stdout
+    assert "Generated asset scan: enabled" in result.stdout
     assert "MATLAB render: enabled (env: MATLAB_BIN)" in result.stdout
     assert str(tmp_path) not in result.stdout
 
@@ -662,6 +663,10 @@ def test_rules_lists_effective_policy_rules(tmp_path):
     assert "provenance.author_marker warning pattern matched" in result.stdout
     assert "Extension errors: .p, .mat, .fig, .doc, .docx, .xlsx, .vsd, .opju, .opj, .ogwu, .exe, .dll, .mexmaci, .mexmaci64, .mexglx, .mexa64, .mexsol, .mexlx, .mexhp7, .mex4" in result.stdout
     assert "Extension warnings: .pdf, .mlx, .zip, .opx, .mltbx, .mpp, .psd, .c4d, .mp4, .ipynb, .pyc, .rds, .cas, .msh, .db, .ogs, .bmp, .jpg, .jpeg, .tif, .tiff, .gif" in result.stdout
+    assert "Generated asset scan: enabled" in result.stdout
+    assert "Generated asset severity: warning" in result.stdout
+    assert "Generated asset source dirs: src, examples, templates, skills, scripts" in result.stdout
+    assert "Generated asset extensions: .png, .jpg, .jpeg, .svg, .pdf" in result.stdout
     assert str(tmp_path) not in result.stdout
 
 

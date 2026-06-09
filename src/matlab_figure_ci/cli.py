@@ -393,6 +393,7 @@ def _doctor_payload(config_path: Path, config: dict, root: Path) -> dict:
     scan = config.get("scan", {})
     privacy = config.get("privacy", {})
     provenance = config.get("provenance", {})
+    generated_assets = config.get("generated_assets", {})
     strict = config.get("strict", {})
     gallery = config.get("gallery", {})
     extensions = config.get("extensions", {})
@@ -433,6 +434,10 @@ def _doctor_payload(config_path: Path, config: dict, root: Path) -> dict:
             "provenance_count": len(provenance.get("rules", [])),
             "extension_error_count": len(extensions.get("error", [])),
             "extension_warning_count": len(extensions.get("warning", [])),
+            "generated_asset_enabled": bool(generated_assets.get("enabled", True)),
+            "generated_asset_severity": str(generated_assets.get("severity", "warning")),
+            "generated_asset_source_dirs": list(generated_assets.get("source_dirs", [])),
+            "generated_asset_extensions": list(generated_assets.get("extensions", [])),
         },
         "privacy": {
             "enabled": bool(privacy.get("enabled", True)),
@@ -492,6 +497,7 @@ def command_doctor(args) -> int:
     print(f"Gallery expected files: {payload['gallery']['expected_count']}")
     print(f"Extension errors: {payload['rules']['extension_error_count']}")
     print(f"Extension warnings: {payload['rules']['extension_warning_count']}")
+    print(f"Generated asset scan: {'enabled' if payload['rules']['generated_asset_enabled'] else 'disabled'}")
     print(f"MATLAB render: {matlab_status}")
     for warning in payload["warnings"]:
         print(warning)
@@ -517,12 +523,17 @@ def command_rules(args) -> int:
     privacy = config.get("privacy", {})
     provenance = config.get("provenance", {})
     extensions = config.get("extensions", {})
+    generated_assets = config.get("generated_assets", {})
 
     print("matlab-figure-ci rules")
     _print_rule_group("Privacy rules", privacy, privacy=True)
     _print_rule_group("Provenance rules", provenance)
     print(f"Extension errors: {_format_list(extensions.get('error', []))}")
     print(f"Extension warnings: {_format_list(extensions.get('warning', []))}")
+    print(f"Generated asset scan: {'enabled' if generated_assets.get('enabled', True) else 'disabled'}")
+    print(f"Generated asset severity: {generated_assets.get('severity', 'warning')}")
+    print(f"Generated asset source dirs: {_format_list(generated_assets.get('source_dirs', []))}")
+    print(f"Generated asset extensions: {_format_list(generated_assets.get('extensions', []))}")
     return 0
 
 

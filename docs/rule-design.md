@@ -218,3 +218,35 @@ User presets are intentionally simple:
 This keeps organization-level policy reusable without turning `mfigci` into a
 plugin marketplace or hiding project-specific review decisions in the global
 defaults.
+
+## Generated Asset Placement
+
+Rendered figure assets are useful as gallery outputs, but they should not drift
+into source or template directories. By default, `mfigci` reports
+`generated_asset.source_tree` when image or vector outputs such as `.png`,
+`.jpg`, `.svg`, or `.pdf` appear under source-like directories:
+
+- `src/`
+- `examples/`
+- `templates/`
+- `skills/`
+- `scripts/`
+
+This catches a common local-library failure mode: running a render script from a
+template folder and accidentally committing generated images beside reusable
+code. Keep outputs in `gallery/`, `outputs/`, or another reviewed artifact
+directory instead.
+
+Projects can tune this policy:
+
+```yaml
+generated_assets:
+  enabled: true
+  severity: warning
+  source_dirs:
+    - src
+    - examples
+    - templates
+  allow:
+    - examples/assets
+```

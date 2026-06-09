@@ -159,3 +159,34 @@ def test_symlink_to_internal_file_is_scanned(tmp_path):
 
     assert result.files_scanned == 2
     assert result.error_count == 0
+
+
+def test_generated_assets_in_source_tree_are_warned(tmp_path):
+    project = tmp_path / "project"
+    (project / "templates" / "python").mkdir(parents=True)
+    (project / "gallery").mkdir()
+    (project / "templates" / "python" / "line_plot.png").write_bytes(b"fake png")
+    (project / "gallery" / "line_plot.png").write_bytes(b"fake png")
+
+    result = run_scan(project, load_config(project / "missing.yml"))
+
+    generated_paths = {finding.path for finding in result.findings if finding.rule_id == "generated_asset.source_tree"}
+    assert generated_paths == {"templates/python/line_plot.png"}
+    assert result.error_count == 0
+
+
+def test_generated_assets_can_be_allowed(tmp_path):
+    project = tmp_path / "project"
+    (project / "templates" / "python").mkdir(parents=True)
+    (project / "templates" / "python" / "line_plot.png").write_bytes(b"fake png")
+    config_path = project / "mfigci.yml"
+    config_path.write_text(
+        "generated_assets:\n"
+        "  allow:\n"
+        "    - templates/python\n",
+        encoding="utf-8",
+    )
+
+    result = run_scan(project, load_config(config_path))
+
+    assert all(finding.rule_id != "generated_asset.source_tree" for finding in result.findings)

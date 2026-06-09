@@ -137,6 +137,13 @@ DEFAULT_CONFIG: dict[str, Any] = {
         ],
         "allow": [],
     },
+    "generated_assets": {
+        "enabled": True,
+        "severity": "warning",
+        "source_dirs": ["src", "examples", "templates", "skills", "scripts"],
+        "extensions": [".png", ".jpg", ".jpeg", ".svg", ".pdf"],
+        "allow": [],
+    },
     "strict": {
         "fail_on_warnings": False,
     },
@@ -348,6 +355,22 @@ def _validate_matlab(config: dict[str, Any]) -> None:
             raise ConfigError(f"matlab.{key} must not contain control characters")
 
 
+def _validate_generated_assets(config: dict[str, Any]) -> None:
+    generated_assets = _require_mapping(config.get("generated_assets", {}), "generated_assets")
+    _require_bool(generated_assets.get("enabled", True), "generated_assets.enabled")
+    severity = generated_assets.get("severity", "warning")
+    if severity not in ALLOWED_SEVERITIES:
+        allowed = ", ".join(sorted(ALLOWED_SEVERITIES))
+        raise ConfigError(f"generated_assets.severity must be one of: {allowed}")
+    source_dirs = generated_assets.get("source_dirs", [])
+    if not isinstance(source_dirs, list) or not all(isinstance(item, str) for item in source_dirs):
+        raise ConfigError("generated_assets.source_dirs must be a list of paths")
+    _validate_extension_list(generated_assets.get("extensions", []), "generated_assets.extensions")
+    allow = generated_assets.get("allow", [])
+    if not isinstance(allow, list) or not all(isinstance(item, str) for item in allow):
+        raise ConfigError("generated_assets.allow must be a list of paths")
+
+
 def _validate_config(config: dict[str, Any]) -> None:
     _validate_scan(config)
     _validate_policy_rules(config, "privacy")
@@ -355,6 +378,7 @@ def _validate_config(config: dict[str, Any]) -> None:
     _validate_extensions(config)
     _validate_gallery(config)
     _validate_matlab(config)
+    _validate_generated_assets(config)
 
     strict = _require_mapping(config.get("strict", {}), "strict")
     _require_bool(strict.get("fail_on_warnings", False), "strict.fail_on_warnings")

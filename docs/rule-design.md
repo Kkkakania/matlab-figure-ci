@@ -224,7 +224,8 @@ defaults.
 Rendered figure assets are useful as gallery outputs, but they should not drift
 into source or template directories. By default, `mfigci` reports
 `generated_asset.source_tree` when image or vector outputs such as `.png`,
-`.jpg`, `.svg`, or `.pdf` appear under source-like directories:
+`.jpg`, `.bmp`, `.tif`, `.gif`, `.svg`, or `.pdf` appear under source-like
+directories:
 
 - `src/`
 - `examples/`
@@ -234,8 +235,9 @@ into source or template directories. By default, `mfigci` reports
 
 This catches a common local-library failure mode: running a render script from a
 template folder and accidentally committing generated images beside reusable
-code. Keep outputs in `gallery/`, `outputs/`, or another reviewed artifact
-directory instead.
+code. It also catches raw preview exports from older plotting tools before they
+become part of a source package. Keep outputs in `gallery/`, `outputs/`, or
+another reviewed artifact directory instead.
 
 Projects can tune this policy:
 

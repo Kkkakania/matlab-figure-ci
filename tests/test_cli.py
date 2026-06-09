@@ -666,7 +666,7 @@ def test_rules_lists_effective_policy_rules(tmp_path):
     assert "Generated asset scan: enabled" in result.stdout
     assert "Generated asset severity: warning" in result.stdout
     assert "Generated asset source dirs: src, examples, templates, skills, scripts" in result.stdout
-    assert "Generated asset extensions: .png, .jpg, .jpeg, .svg, .pdf" in result.stdout
+    assert "Generated asset extensions: .png, .jpg, .jpeg, .bmp, .tif, .tiff, .gif, .svg, .pdf" in result.stdout
     assert str(tmp_path) not in result.stdout
 
 

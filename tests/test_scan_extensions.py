@@ -164,14 +164,17 @@ def test_symlink_to_internal_file_is_scanned(tmp_path):
 def test_generated_assets_in_source_tree_are_warned(tmp_path):
     project = tmp_path / "project"
     (project / "templates" / "python").mkdir(parents=True)
+    (project / "examples").mkdir()
     (project / "gallery").mkdir()
     (project / "templates" / "python" / "line_plot.png").write_bytes(b"fake png")
+    (project / "examples" / "raw_preview.bmp").write_bytes(b"fake bmp")
     (project / "gallery" / "line_plot.png").write_bytes(b"fake png")
+    (project / "gallery" / "raw_preview.bmp").write_bytes(b"fake bmp")
 
     result = run_scan(project, load_config(project / "missing.yml"))
 
     generated_paths = {finding.path for finding in result.findings if finding.rule_id == "generated_asset.source_tree"}
-    assert generated_paths == {"templates/python/line_plot.png"}
+    assert generated_paths == {"examples/raw_preview.bmp", "templates/python/line_plot.png"}
     assert result.error_count == 0
 
 

@@ -141,7 +141,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "enabled": True,
         "severity": "warning",
         "source_dirs": ["src", "examples", "templates", "skills", "scripts"],
-        "extensions": [".png", ".jpg", ".jpeg", ".svg", ".pdf"],
+        "extensions": [".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".gif", ".svg", ".pdf"],
         "allow": [],
     },
     "strict": {

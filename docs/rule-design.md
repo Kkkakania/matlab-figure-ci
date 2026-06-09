@@ -66,6 +66,8 @@ Default warnings:
 - `.mltbx`
 - project, media, design, notebook, and simulation artifacts such as `.mpp`,
   `.psd`, `.c4d`, `.mp4`, `.ipynb`, `.rds`, `.cas`, `.msh`, and `.db`
+- Origin/LabTalk scripts and raw raster images such as `.ogs`, `.bmp`, `.jpg`,
+  `.jpeg`, `.tif`, `.tiff`, and `.gif`
 
 PDF is a warning, not an error, because scientific figure repositories often
 export legitimate vector PDFs.
@@ -75,6 +77,11 @@ Origin binary formats should not slip into a public source tree, and compiled
 MEX/executable artifacts deserve a hard stop. Heavier project or media files
 are warnings because a maintainer may decide to keep them elsewhere, but they
 should not be invisible in a release review.
+
+Generated PNG/SVG/PDF gallery files are still handled by the gallery policy and
+the `matlab-figures` preset. The warning list focuses on raw or review-heavy
+formats that often arrive from local prototype folders, Origin workflows, or
+manual screenshot exports.
 
 Use `mfigci rules --config mfigci.yml` to inspect the effective rules before
 running a scan. The command prints rule ids, severities, and extension policies,

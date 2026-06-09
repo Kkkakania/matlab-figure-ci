@@ -41,15 +41,41 @@ def test_pdf_is_warning_not_error_by_default(tmp_path):
 def test_origin_addons_and_matlab_toolboxes_warn_by_default(tmp_path):
     project = tmp_path / "project"
     project.mkdir()
-    for name in ["origin-addon.opx", "toolbox.mltbx", "plan.mpp", "image.psd", "scene.c4d", "movie.mp4", "notebook.ipynb"]:
+    for name in [
+        "origin-addon.opx",
+        "toolbox.mltbx",
+        "plan.mpp",
+        "image.psd",
+        "scene.c4d",
+        "movie.mp4",
+        "notebook.ipynb",
+        "origin-script.ogs",
+        "raw.bmp",
+        "photo.jpg",
+        "scan.tif",
+        "loop.gif",
+    ]:
         (project / name).write_bytes(b"binary")
 
     result = run_scan(project, load_config(project / "missing.yml"))
 
     warning_paths = {finding.path for finding in result.findings if finding.rule_id == "extension.warning"}
     assert result.error_count == 0
-    assert result.warning_count == 7
-    assert warning_paths == {"origin-addon.opx", "toolbox.mltbx", "plan.mpp", "image.psd", "scene.c4d", "movie.mp4", "notebook.ipynb"}
+    assert result.warning_count == 12
+    assert warning_paths == {
+        "origin-addon.opx",
+        "toolbox.mltbx",
+        "plan.mpp",
+        "image.psd",
+        "scene.c4d",
+        "movie.mp4",
+        "notebook.ipynb",
+        "origin-script.ogs",
+        "raw.bmp",
+        "photo.jpg",
+        "scan.tif",
+        "loop.gif",
+    }
 
 
 def test_matlab_figures_preset_allows_gallery_pdf_but_warns_elsewhere(tmp_path):

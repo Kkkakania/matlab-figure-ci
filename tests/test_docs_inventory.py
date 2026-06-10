@@ -67,9 +67,9 @@ def test_adoption_playbook_keeps_staged_rollout_guidance():
 def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
-    assert "Snapshot date: 2026-06-04" in text
-    assert "Latest checked downstream commit | `094bf2f`" in text
-    assert "263 file(s) scanned" in text
+    assert "Snapshot date: 2026-06-10" in text
+    assert "Latest checked downstream commit | `12beba3`" in text
+    assert "270 file(s) scanned" in text
     assert "not a" in text
     assert "download metric" in text
     assert "external adoption claim" in text
@@ -84,10 +84,13 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "browser session can point to different GitHub users" in text
     assert "interim labels" in text
     assert "triage remains inspectable" in text
+    assert "public `v2.5.0` tag" in text
+    assert "version guard" in text
     assert "198 file(s) scanned" not in text
     assert "260 file(s) scanned" not in text
     assert "261 file(s) scanned" not in text
     assert "262 file(s) scanned" not in text
+    assert "263 file(s) scanned" not in text
 
 
 def test_codex_workflow_documents_review_packet_boundaries():

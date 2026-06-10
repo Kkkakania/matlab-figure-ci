@@ -1,6 +1,6 @@
 # Adoption Report: matlab-scientific-figures
 
-Snapshot date: 2026-06-04
+Snapshot date: 2026-06-10
 
 This report records how the companion repository
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
@@ -13,11 +13,11 @@ download metric, external adoption claim, or program eligibility claim.
 |---|---|
 | Repository type | MATLAB scientific figure gallery |
 | Visibility | Public |
-| Tool version | `mfigci 2.4.5` |
+| Tool version | `mfigci 2.5.0` |
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `094bf2f` |
+| Latest checked downstream commit | `12beba3` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -54,9 +54,13 @@ mfigci check --config mfigci.yml --report mfigci-report.md --results .mfigci-res
 Result:
 
 ```text
-0 error(s), 0 warning(s), 263 file(s) scanned, 30 binary/skipped.
+0 error(s), 0 warning(s), 270 file(s) scanned, 30 binary/skipped.
 0 error(s), 0 warning(s), 60 gallery file(s) ok.
 ```
+
+The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
+also completed successfully for commit `12beba3` after the repository pinned
+`matlab-figure-ci` to the public `v2.5.0` tag.
 
 ## What Worked
 
@@ -86,6 +90,9 @@ Result:
 - The downstream Project-board docs now list interim labels for the current
   open issues, so triage remains inspectable while the live GitHub Project board
   is still pending.
+- The downstream workflow now pins `matlab-figure-ci` to `v2.5.0`, keeping the
+  README, maintainer dashboard, quality-gate documentation, and version guard
+  script aligned with the current public checker release.
 
 ## Current Boundaries
 

@@ -5,6 +5,10 @@
 maintainers who need a short review note, release note attachment, or public
 application summary without pasting raw findings.
 
+Unreleased on main after v2.5.0: this report style is available from a source
+checkout on `main` until the next release tag includes it. The current `v2.5.0`
+GitHub tag does not include this style.
+
 Run the checks first:
 
 ```bash

@@ -42,6 +42,10 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 
 当前公开 release 是 `v2.5.0`。目前支持的安装路径仍然是 GitHub release tag，项目尚未发布到 PyPI。
 
+Unreleased on main after v2.5.0：`mfigci report --style evidence` 可以从
+`.mfigci-results.json` 生成一份 review/application 证据包草稿。这个能力目前在
+`main` 分支，等下一个 release tag 才会进入 tag 安装路径。
+
 `v2` 系列定义了 CLI 命令、配置键、退出码和报告字段的兼容边界。相关说明见 [v2 compatibility](docs/v2-compatibility.md)。未来 PyPI 发布会单独推进，这样用户可以把当前 GitHub tag 当作公开 release 使用，同时让打包发布保持审慎节奏。
 
 ## 快速开始

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Evidence packet report style for `mfigci report --style evidence`, available
+  on `main` until the next release tag.
+
 ## v2.5.0 - 2026-06-10
 
 - Added `mfigci scan --paths` for pre-commit and staged-file workflows.

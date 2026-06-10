@@ -130,13 +130,17 @@ def test_evidence_packet_template_is_documented():
     docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
     chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     text = (ROOT / "docs" / "evidence-packet-template.md").read_text(encoding="utf-8")
 
     assert "evidence-packet-template.md" in docs_index
     assert "evidence-packet-template.md" in chinese_index
     assert "mfigci report --style evidence --output mfigci-evidence.md" in readme
+    assert "Unreleased on main after v2.5.0" in readme
+    assert "Evidence packet report style" in changelog.split("## v2.5.0", maxsplit=1)[0]
     assert "# Evidence Packet Template" in text
     assert "mfigci report --style evidence --output mfigci-evidence.md" in text
+    assert "Unreleased on main after v2.5.0" in text
     assert "workflow run URL" in text
     assert "redacted issue or PR link" in text
     assert "not an approval argument" in text

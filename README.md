@@ -59,6 +59,10 @@ and `mfigci` review reports.
 The current public release is `v2.5.0`. The supported install path is still a
 GitHub release tag install, and the package is not published on PyPI yet.
 
+Unreleased on main after v2.5.0: `mfigci report --style evidence` can format a
+small review/application evidence packet from `.mfigci-results.json`. Use it
+from a source checkout until the next release tag includes it.
+
 The `v2` line marks the v2 compatibility boundary for the CLI commands,
 configuration keys, exit codes, and report fields documented in
 [v2 compatibility](docs/v2-compatibility.md). Future PyPI publishing is tracked

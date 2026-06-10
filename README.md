@@ -54,7 +54,7 @@ boundaries.
 
 ## Version And Distribution Status
 
-The current public release is `v2.4.5`. The supported install path is still a
+The current public release is `v2.5.0`. The supported install path is still a
 GitHub release tag install, and the package is not published on PyPI yet.
 
 The `v2` line marks the v2 compatibility boundary for the CLI commands,
@@ -68,7 +68,7 @@ tag as the public release while packaging work remains deliberate.
 Install from the GitHub release tag:
 
 ```bash
-python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
 ```
 
 If your Python installation reports an externally managed Python environment
@@ -78,7 +78,7 @@ error, install inside a virtual environment instead of forcing a system install:
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
 ```
 
 Create a starter configuration and GitHub Actions workflow:
@@ -125,7 +125,7 @@ Use this path to try the tool without changing release policy immediately:
 1. Install from the current release tag.
 
    ```bash
-   python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+   python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
    ```
 
 2. Create starter files in a throwaway branch or scratch repository.
@@ -325,7 +325,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
-      - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+      - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
       - run: mfigci rules --config mfigci.yml
       - run: mfigci check --config mfigci.yml --report mfigci-report.md
       - uses: actions/upload-artifact@v5

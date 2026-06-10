@@ -5,7 +5,7 @@ CHANGELOG, and the latest GitHub release.
 
 ## Current State
 
-- Latest release: `v2.4.5`.
+- Latest release: `v2.5.0`.
 - Supported install path: GitHub release tag.
 - Dogfooded by `matlab-scientific-figures`.
 - PyPI is planned but not published yet.
@@ -121,6 +121,16 @@ Delivered:
 - README workflow snippet mirrors the policy diagnostics step.
 - CLI tests assert the generated workflow exposes effective policy rules before
   enforcement.
+
+### v2.5.0: Source-Tree and Adoption Workflow Hardening
+
+Delivered:
+
+- Selected-path scanning for pre-commit and staged-file workflows.
+- Generated-asset warnings for rendered previews committed beside reusable
+  source or template files.
+- Broader local prototype, Origin, compiled artifact, and privacy-path checks.
+- Cleaner release-preflight, report output, and first-5-minutes adoption flow.
 
 ## Next Candidates
 

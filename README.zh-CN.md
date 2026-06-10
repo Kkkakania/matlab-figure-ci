@@ -36,7 +36,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 
 ## 版本和发布状态
 
-当前公开 release 是 `v2.4.5`。目前支持的安装路径仍然是 GitHub release tag，项目尚未发布到 PyPI。
+当前公开 release 是 `v2.5.0`。目前支持的安装路径仍然是 GitHub release tag，项目尚未发布到 PyPI。
 
 `v2` 系列定义了 CLI 命令、配置键、退出码和报告字段的兼容边界。相关说明见 [v2 compatibility](docs/v2-compatibility.md)。未来 PyPI 发布会单独推进，这样用户可以把当前 GitHub tag 当作公开 release 使用，同时让打包发布保持审慎节奏。
 
@@ -45,7 +45,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 从 GitHub release tag 安装：
 
 ```bash
-python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
 ```
 
 如果你的 Python 安装提示 externally managed Python environment，不要强行写入系统环境。建议使用虚拟环境：
@@ -54,7 +54,7 @@ python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
 ```
 
 生成 starter 配置和 GitHub Actions workflow：
@@ -99,7 +99,7 @@ mfigci-report.md
 1. 从当前 release tag 安装。
 
    ```bash
-   python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+   python -m pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
    ```
 
 2. 在临时分支或 scratch 仓库中生成 starter 文件。
@@ -261,7 +261,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
-      - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.4.5
+      - run: pip install git+https://github.com/Kkkakania/matlab-figure-ci.git@v2.5.0
       - run: mfigci rules --config mfigci.yml
       - run: mfigci check --config mfigci.yml --report mfigci-report.md
       - uses: actions/upload-artifact@v5

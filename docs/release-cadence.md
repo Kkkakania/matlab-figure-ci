@@ -8,11 +8,11 @@ Going forward, releases should slow down.
 
 ## Current Policy
 
-- Keep `v2.4.5` as the current public release until a user-visible reason
+- Keep `v2.5.0` as the current public release until a user-visible reason
   justifies another tag.
-- Use patch releases, such as `v2.4.6`, for documentation, CI template, or
+- Use patch releases, such as `v2.5.1`, for documentation, CI template, or
   packaging maintenance.
-- Use minor releases, such as `v2.5.0`, only when users get a new command,
+- Use minor releases, such as `v2.6.0`, only when users get a new command,
   policy option, report field, or documented workflow.
 - Do not use another major release unless the public CLI, config, report, or
   policy compatibility boundary changes.

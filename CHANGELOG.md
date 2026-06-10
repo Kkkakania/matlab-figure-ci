@@ -2,67 +2,18 @@
 
 ## Unreleased
 
-- Added `mfigci scan --paths` for pre-commit and staged-file workflows that
-  need to scan only selected repository-relative files.
-- Expanded the default local-path privacy rule to catch common WSL, lowercase
-  Windows drive, `%USERPROFILE%`, Codespaces, and mounted-volume path variants.
-- Allowed `extensions.allow.path` rules to use shell-style globs for nested
-  gallery layouts while preserving existing directory-prefix behavior.
-- Added explicit privacy checkboxes to bug and adoption issue templates and
-  covered them with GitHub template tests.
-- Clarified the missing-results message for `mfigci report` so users see the
-  matching `check --results` and `report --input` commands.
-- Made report writers create parent directories for nested `--report`,
-  `--results`, and `report --output` paths.
-- Made `release-preflight --output` create parent directories for nested JSON
-  report paths.
-- Made `mfigci init --gitignore` append only missing report artifacts when a
-  repository already ignores one of the generated report files.
-- Added explicit empty-path validation for `--config` across config-backed
-  commands so users see a CLI error instead of a directory traceback.
-- Added explicit empty-path validation for `release-preflight --output`.
-- Added explicit empty-path validation for `check --report`, `check --results`,
-  `report --input`, and `report --output` so CLI users see clear errors instead
-  of Python directory write/read tracebacks.
-- Updated `mfigci init` output to point users at `mfigci init --gitignore`
-  instead of giving a manual `.gitignore` reminder.
-- Added `mfigci init --gitignore` so users can explicitly append local report
-  artifacts to `.gitignore` without making plain `mfigci init` modify that
-  file.
-- Added a README `First 5 Minutes` adoption path that guides new users through
-  release-tag installation, `mfigci init`, policy inspection, and report review
-  before committing generated artifacts.
-- Print `doctor` and `check` next-step commands after `mfigci init` so a new
-  repository can verify the generated configuration immediately.
-- Add rule-count and extension-policy summaries to `mfigci doctor` so
-  maintainers can review gate strength without printing regex patterns.
-- Escape Markdown table cells in full and PR-comment reports so pipe
-  characters in paths, rule IDs, or messages do not break report tables.
-- Add finding summaries grouped by severity and rule to Markdown and PR-comment
-  reports for faster maintainer triage.
-- Skip symlinks that resolve outside the scanned project root so local privacy
-  and provenance scans do not inspect external workspace files.
-- Tightened post-v2 packaging and adoption documentation so public notes stay
-  factual instead of reading like pending release promises.
-- Added a documentation inventory test that keeps ROADMAP status language
-  aligned with the current release, PyPI posture, and slower release cadence.
-- Added JSON stdout and `--output` file support for `mfigci release-preflight`
-  so release workflows can consume structured preflight summaries and check
-  items.
-- The Package workflow now runs `release-preflight --require-dist --output`
-  and uploads the JSON preflight report as a workflow artifact.
-- Added a grouped documentation index and a regression test that keeps every
-  documentation Markdown file discoverable from it.
-- Added a lightweight CI Markdown link check for repository-local documentation
-  links.
-- Fixed roadmap and version-plan release metadata ordering after the `v2.4.5`
-  release, and added roadmap coverage to the public-version regression test.
-- Added a dogfooding adoption report for the current
-  `matlab-scientific-figures` integration snapshot.
-- Added package metadata regression tests for the distribution name, runtime
-  version, CLI entry point, dependency split, and package workflow smoke checks.
-- Preserve MATLAB render failure exit codes and redacted stdout/stderr excerpts
-  in check results and Markdown reports.
+## v2.5.0 - 2026-06-10
+
+- Added `mfigci scan --paths` for pre-commit and staged-file workflows.
+- Added generated-asset/source-tree warnings so rendered previews do not drift
+  into source, example, template, skill, or script directories.
+- Hardened source-material and privacy checks for local prototype artifacts,
+  Origin-style files, compiled plotting artifacts, and additional local-path
+  patterns.
+- Improved release-preflight, report writing, `mfigci init --gitignore`, and
+  config-backed command validation for cleaner adoption workflows.
+- Added first-5-minutes onboarding and documentation inventory checks so release
+  metadata stays aligned with the current public tag.
 
 ## v2.4.5 - 2026-05-30
 

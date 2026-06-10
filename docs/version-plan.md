@@ -4,7 +4,7 @@ This project uses version numbers to mark verified behavior, not momentum.
 
 ## Current State
 
-- Current public release: `v2.4.5`.
+- Current public release: `v2.5.0`.
 - Distribution: GitHub release tag install.
 - Maturity: small public CLI, dogfooded by the companion
   `matlab-scientific-figures` repository, not yet claiming broad adoption.
@@ -115,6 +115,21 @@ Delivered:
   before `mfigci check`.
 - README GitHub Actions snippet mirrors the generated workflow.
 - CLI tests assert the generated workflow exposes policy diagnostics.
+
+## v2.5.0 Released
+
+Goal met: publish the source-tree hardening and adoption-flow improvements as a
+minor release because users get new scan policy and workflow behavior.
+
+Delivered:
+
+- `mfigci scan --paths` for selected-file checks.
+- Generated-asset placement policy for source and template directories.
+- Broader risky local prototype, Origin, compiled artifact, and privacy-path
+  detection.
+- Cleaner release-preflight/report output handling and `mfigci init --gitignore`
+  adoption path.
+- First-5-minutes onboarding docs and release metadata regression coverage.
 
 ## What Version Numbers Do Not Mean
 

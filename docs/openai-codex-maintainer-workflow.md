@@ -66,3 +66,20 @@ to facts that can be linked or reproduced:
 Avoid metrics that are not present yet. If there are no external users,
 downloads, or stars, say the project is early and dogfooded by the companion
 repository instead of inventing adoption.
+
+## Review Packet For Maintainers
+
+For a release candidate, issue update, or application note, collect a compact
+review packet:
+
+- the release tag or commit under review;
+- the `CI` and `Package` workflow results for that commit;
+- the `mfigci release-preflight --require-dist --output release-preflight.json`
+  artifact when packaging readiness matters;
+- the downstream `matlab-scientific-figures` dogfooding workflow result when a
+  rule or report change affects figure repositories;
+- the exact issue or adoption report that motivated the change;
+- the command output summary, never raw private paths or unredacted findings.
+
+This packet is evidence for maintainership and repeatability. It is not proof of broad adoption.
+It is also not proof of download volume or eligibility for any external program.

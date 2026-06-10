@@ -90,6 +90,16 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "262 file(s) scanned" not in text
 
 
+def test_codex_workflow_documents_review_packet_boundaries():
+    text = (ROOT / "docs" / "openai-codex-maintainer-workflow.md").read_text(encoding="utf-8")
+
+    assert "## Review Packet For Maintainers" in text
+    assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
+    assert "downstream `matlab-scientific-figures` dogfooding workflow" in text
+    assert "never raw private paths or unredacted findings" in text
+    assert "not proof of broad adoption" in text
+
+
 def test_public_version_references_match_package_version():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     roadmap = (ROOT / "ROADMAP.md").read_text(encoding="utf-8")

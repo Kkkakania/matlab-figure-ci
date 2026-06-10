@@ -9,3 +9,5 @@ mfigci-report.md
 mfigci-report.json
 mfigci-pr-comment.md
 .mfigci-results.json
+release-preflight.json
+pypi-name-check.json

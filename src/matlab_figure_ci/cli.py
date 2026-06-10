@@ -294,7 +294,7 @@ def _write_if_allowed(path: Path, content: str, force: bool) -> str:
 
 
 def _update_gitignore(path: Path) -> str:
-    entries = ["mfigci-report.md", ".mfigci-results.json", "release-preflight.json"]
+    entries = ["mfigci-report.md", ".mfigci-results.json", "release-preflight.json", "pypi-name-check.json"]
     header = "# matlab-figure-ci local reports"
     if path.exists():
         text = path.read_text(encoding="utf-8")

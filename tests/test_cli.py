@@ -422,6 +422,7 @@ def test_init_can_append_report_artifacts_to_gitignore(tmp_path):
         "mfigci-report.md\n"
         ".mfigci-results.json\n"
         "release-preflight.json\n"
+        "pypi-name-check.json\n"
     )
 
     second = run_cli(["init", "--gitignore"], tmp_path)
@@ -430,6 +431,7 @@ def test_init_can_append_report_artifacts_to_gitignore(tmp_path):
     assert "already contains mfigci report artifacts" in second.stdout
     assert gitignore.read_text(encoding="utf-8").count("mfigci-report.md") == 1
     assert gitignore.read_text(encoding="utf-8").count("release-preflight.json") == 1
+    assert gitignore.read_text(encoding="utf-8").count("pypi-name-check.json") == 1
 
 
 def test_init_gitignore_only_appends_missing_report_artifacts(tmp_path):
@@ -442,6 +444,7 @@ def test_init_gitignore_only_appends_missing_report_artifacts(tmp_path):
     text = gitignore.read_text(encoding="utf-8")
     assert text.count("mfigci-report.md") == 1
     assert text.count(".mfigci-results.json") == 1
+    assert text.count("pypi-name-check.json") == 1
 
 
 def test_doctor_shows_safe_defaults_without_config(tmp_path):

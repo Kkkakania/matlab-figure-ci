@@ -68,7 +68,7 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
     assert "Snapshot date: 2026-06-10" in text
-    assert "Latest checked downstream commit | `ab942df`" in text
+    assert "Latest checked downstream commit | `9cb87e9`" in text
     assert "270 file(s) scanned" in text
     assert "not a" in text
     assert "download metric" in text
@@ -86,6 +86,9 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "triage remains inspectable" in text
     assert "public `v2.5.0` tag" in text
     assert "version guard" in text
+    assert "synthetic 5 MW PV example" in text
+    assert "% of fundamental" in text
+    assert "without expanding the domain pack" in text
     assert "198 file(s) scanned" not in text
     assert "260 file(s) scanned" not in text
     assert "261 file(s) scanned" not in text

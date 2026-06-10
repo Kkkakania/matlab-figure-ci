@@ -17,7 +17,7 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `ab942df` |
+| Latest checked downstream commit | `9cb87e9` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -59,7 +59,7 @@ Result:
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `ab942df` after the repository pinned
+also completed successfully for commit `9cb87e9` after the repository pinned
 `matlab-figure-ci` to the public `v2.5.0` tag.
 
 ## What Worked
@@ -93,6 +93,9 @@ also completed successfully for commit `ab942df` after the repository pinned
 - The downstream workflow now pins `matlab-figure-ci` to `v2.5.0`, keeping the
   README, maintainer dashboard, quality-gate documentation, and version guard
   script aligned with the current public checker release.
+- The downstream domain examples now carry the accepted issue-feedback unit
+  refinements for the synthetic 5 MW PV example and harmonic magnitudes in
+  `% of fundamental`, without expanding the domain pack before more feedback.
 
 ## Current Boundaries
 

@@ -83,3 +83,21 @@ review packet:
 
 This packet is evidence for maintainership and repeatability. It is not proof of broad adoption.
 It is also not proof of download volume or eligibility for any external program.
+
+## Application Evidence Packet
+
+When `matlab-figure-ci` is mentioned outside the repository, keep the packet
+short enough that another maintainer can verify it:
+
+- repository URL, current release tag, and the workflow run URL for the commit
+  being discussed;
+- `mfigci-report.md and .mfigci-results.json` as CI artifacts or redacted
+  summaries, not pasted raw findings;
+- `release-preflight.json` when packaging readiness is part of the claim;
+- downstream `matlab-scientific-figures` dogfooding workflow result when the
+  change affects figure repositories;
+- one redacted issue or PR link that shows why the change was made.
+
+This is not an approval argument. It is a maintenance receipt. Do not add usage
+numbers, download claims, broad adoption language, or statements that any
+external program will approve the project.

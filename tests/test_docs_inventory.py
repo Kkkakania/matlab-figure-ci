@@ -114,6 +114,12 @@ def test_codex_workflow_documents_review_packet_boundaries():
     text = (ROOT / "docs" / "openai-codex-maintainer-workflow.md").read_text(encoding="utf-8")
 
     assert "## Review Packet For Maintainers" in text
+    assert "## Application Evidence Packet" in text
+    assert "workflow run URL" in text
+    assert "mfigci-report.md and .mfigci-results.json" in text
+    assert "release-preflight.json" in text
+    assert "redacted issue or PR link" in text
+    assert "not an approval argument" in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "downstream `matlab-scientific-figures` dogfooding workflow" in text
     assert "never raw private paths or unredacted findings" in text

@@ -107,6 +107,26 @@ It should not be described as download volume, external adoption, or guaranteed 
 The current dogfooding snapshot is maintained in
 [`adoption-report-matlab-scientific-figures.md`](adoption-report-matlab-scientific-figures.md).
 
+## Ecosystem Handoff Contract
+
+Use `matlab-figure-ci` as the review checkpoint between figure-producing work
+and public maintenance decisions. The tool should make the handoff boring and
+auditable: a small configuration, a Markdown report, a JSON report, and clear
+exit codes.
+
+| Producer | Producer artifact | Next consumer | `matlab-figure-ci` responsibility |
+|---|---|---|---|
+| `matlab-scientific-figures` | `gallery/*.png and gallery/*.svg`, `mfigci.yml`, template docs | Gallery/API maintainer | Check expected outputs, risky extensions, privacy, provenance, generated-asset placement, and release-gate drift |
+| `matlab-plotting-skill` | `render_report.md and render_report.json`, generated PNG/SVG outputs, selected scheme explanation | First-use feedback or future template request | Check exported figures and reports before a maintainer copies conclusions into public issue triage |
+| `matlab-figure-ci` | `mfigci-report.md and .mfigci-results.json` | Maintainer review, release notes, PR review packets | Preserve relative paths, redact privacy findings, and separate warnings from policy errors |
+
+Do not use `matlab-figure-ci` as a laundering step. A clean scan does not prove
+that copied material is licensed, original, or appropriate for release. It only
+shows that the configured checks did not find the risks they know how to detect.
+Private datasets, source packs, local absolute paths, screenshots from papers,
+and unclear third-party helper code should be removed from the handoff before
+the report is shared.
+
 ## Maintainer Checklist
 
 - Use relative paths in reports and issue examples.

@@ -64,6 +64,20 @@ def test_adoption_playbook_keeps_staged_rollout_guidance():
     assert "guaranteed program eligibility" in text
 
 
+def test_adoption_playbook_documents_ecosystem_handoff_contract():
+    text = (ROOT / "docs" / "adoption-playbook.md").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    assert "## Ecosystem Handoff Contract" in text
+    assert "Producer artifact" in text
+    assert "Next consumer" in text
+    assert "gallery/*.png and gallery/*.svg" in text
+    assert "render_report.md and render_report.json" in text
+    assert "mfigci-report.md and .mfigci-results.json" in text
+    assert "Do not use `matlab-figure-ci` as a laundering step" in text
+    assert "handoff contract" in readme
+
+
 def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 

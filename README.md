@@ -50,7 +50,9 @@ real public repository without claiming external adoption or downloads.
 
 See the current [dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
 for the exact downstream configuration, latest check summary, and known
-boundaries.
+boundaries. The staged [adoption playbook](docs/adoption-playbook.md) also
+documents the handoff contract between gallery artifacts, agent render reports,
+and `mfigci` review reports.
 
 ## Version And Distribution Status
 

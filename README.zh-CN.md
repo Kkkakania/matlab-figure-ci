@@ -138,7 +138,7 @@ mfigci-report.md
    mfigci check --config mfigci.yml --report mfigci-report.md
    ```
 
-在确认报告是否应该进入仓库之前，不要提交 `mfigci-report.md`、`.mfigci-results.json` 或 `release-preflight.json`。这些文件通常更适合作为 CI artifact。
+在确认报告是否应该进入仓库之前，不要提交 `mfigci-report.md`、`.mfigci-results.json`、`mfigci-evidence.md` 或 `release-preflight.json`。这些文件通常更适合作为 CI artifact。
 
 ## 配置
 

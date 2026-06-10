@@ -8,6 +8,7 @@ build/
 mfigci-report.md
 mfigci-report.json
 mfigci-pr-comment.md
+mfigci-evidence.md
 .mfigci-results.json
 release-preflight.json
 pypi-name-check.json

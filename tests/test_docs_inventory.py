@@ -140,6 +140,7 @@ def test_evidence_packet_template_is_documented():
     assert "Evidence packet report style" in changelog.split("## v2.5.0", maxsplit=1)[0]
     assert "# Evidence Packet Template" in text
     assert "mfigci report --style evidence --output mfigci-evidence.md" in text
+    assert "Do not commit `mfigci-evidence.md` by default" in text
     assert "Unreleased on main after v2.5.0" in text
     assert "workflow run URL" in text
     assert "redacted issue or PR link" in text
@@ -254,7 +255,7 @@ def test_readme_has_first_five_minutes_adoption_path():
     assert "mfigci init --gitignore" in readme
     assert "The plain `mfigci init` command does not edit `.gitignore`" in readme
     assert "Do not commit `mfigci-report.md`, `.mfigci-results.json`," in readme
-    assert "`release-preflight.json`, or `pypi-name-check.json`" in readme
+    assert "`mfigci-evidence.md`, `release-preflight.json`, or `pypi-name-check.json`" in readme
 
 
 def test_readme_lists_release_preflight_command():

@@ -164,8 +164,9 @@ Use this path to try the tool without changing release policy immediately:
    ```
 
 Do not commit `mfigci-report.md`, `.mfigci-results.json`,
-`release-preflight.json`, or `pypi-name-check.json` until you have reviewed
-whether the report belongs in your repository or should stay as a CI artifact.
+`mfigci-evidence.md`, `release-preflight.json`, or `pypi-name-check.json` until
+you have reviewed whether the report belongs in your repository or should stay
+as a CI artifact.
 
 ## Configuration
 

@@ -21,6 +21,10 @@ Then generate the packet:
 mfigci report --style evidence --output mfigci-evidence.md
 ```
 
+Do not commit `mfigci-evidence.md` by default. Keep it as a local review note
+or CI artifact unless the repository has a clear reason to version the filled
+packet.
+
 The output includes:
 
 - summary counts for errors, warnings, files scanned, gallery checks, and

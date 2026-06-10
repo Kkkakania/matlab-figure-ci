@@ -430,6 +430,8 @@ def test_init_workflow_uses_current_release_tag(tmp_path):
     assert "actions/setup-python@v6" in workflow
     assert "actions/upload-artifact@v5" in workflow
     assert "actions/upload-artifact@v4" not in workflow
+    assert "include-hidden-files: true" in workflow
+    assert "mfigci-report.md\n            .mfigci-results.json" in workflow
     assert "Show effective mfigci policy" in workflow
     assert "mfigci rules --config mfigci.yml" in workflow
 

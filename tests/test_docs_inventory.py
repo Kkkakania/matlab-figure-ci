@@ -288,6 +288,8 @@ def test_readme_has_first_five_minutes_adoption_path():
     assert "The plain `mfigci init` command does not edit `.gitignore`" in readme
     assert "Do not commit `mfigci-report.md`, `.mfigci-results.json`," in readme
     assert "`mfigci-evidence.md`, `release-preflight.json`, or `pypi-name-check.json`" in readme
+    assert "include-hidden-files: true" in readme
+    assert "mfigci-report.md\n            .mfigci-results.json" in readme
 
 
 def test_readme_lists_release_preflight_command():

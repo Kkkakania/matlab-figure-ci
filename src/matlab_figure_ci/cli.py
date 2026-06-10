@@ -120,7 +120,10 @@ jobs:
         if: always()
         with:
           name: mfigci-report
-          path: mfigci-report.md
+          include-hidden-files: true
+          path: |
+            mfigci-report.md
+            .mfigci-results.json
 """
 
 

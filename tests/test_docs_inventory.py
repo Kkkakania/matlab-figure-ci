@@ -68,7 +68,7 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
     assert "Snapshot date: 2026-06-10" in text
-    assert "Latest checked downstream commit | `12beba3`" in text
+    assert "Latest checked downstream commit | `ab942df`" in text
     assert "270 file(s) scanned" in text
     assert "not a" in text
     assert "download metric" in text

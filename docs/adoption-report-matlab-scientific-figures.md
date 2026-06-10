@@ -17,7 +17,7 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `12beba3` |
+| Latest checked downstream commit | `ab942df` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads the Markdown report artifact:
@@ -59,7 +59,7 @@ Result:
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `12beba3` after the repository pinned
+also completed successfully for commit `ab942df` after the repository pinned
 `matlab-figure-ci` to the public `v2.5.0` tag.
 
 ## What Worked

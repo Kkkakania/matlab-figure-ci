@@ -32,7 +32,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 
 下游配置会检查 PNG/SVG gallery 输出、隐私和来源痕迹、风险扩展名，以及 `matlab-figures` preset。这是维护信号，含义是 CLI 正在一个真实公开仓库中被持续运行；它不是使用量指标，也不声称外部采用量或下载量。
 
-当前的 [dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md) 记录了下游配置、最近检查摘要和已知边界。
+当前的 [`matlab-scientific-figures` dogfooding report](docs/adoption-report-matlab-scientific-figures.md) 和 [`matlab-plotting-skill` dogfooding report](docs/adoption-report-matlab-plotting-skill.md) 分别记录两个下游仓库的配置、最近检查摘要和已知边界。
 
 实际维护时，我把它当作交接检查点使用：`matlab-scientific-figures` 交出 gallery 图和配置，`matlab-plotting-skill` 交出渲染报告和导出图，`matlab-figure-ci` 交出 `mfigci-report.md` 与 `.mfigci-results.json`。扫描通过不等于授权通过，也不等于材料来源可靠；它只说明当前配置能识别的风险没有触发。更完整的交接说明见 [Adoption playbook](docs/adoption-playbook.md)。
 
@@ -296,6 +296,7 @@ jobs:
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
 - [Adoption playbook](docs/adoption-playbook.md)
 - [Dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
+- [Plotting-skill adoption report](docs/adoption-report-matlab-plotting-skill.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Evidence packet template](docs/evidence-packet-template.md)

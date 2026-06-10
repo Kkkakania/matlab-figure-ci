@@ -13,6 +13,8 @@ This directory collects the public maintainer and user documentation for
   checks, release gates, and optional render checks in stages.
 - [Dogfooding adoption report](adoption-report-matlab-scientific-figures.md):
   current `matlab-scientific-figures` integration snapshot and check results.
+- [Plotting-skill adoption report](adoption-report-matlab-plotting-skill.md):
+  current `matlab-plotting-skill` integration snapshot and check results.
 
 ## Reports And Rules
 

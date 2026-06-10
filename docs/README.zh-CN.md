@@ -9,6 +9,7 @@
 - [MATLAB CI 指南](matlab-ci-guide.md)：了解 `mfigci` 在 GitHub Actions、本地机器和可选 MATLAB render 中分别负责什么。
 - [Adoption playbook](adoption-playbook.md)：按阶段接入静态扫描、gallery 检查、release gate 和可选 render，适合不想一开始就把 CI 做得太重的仓库。
 - [Dogfooding adoption report](adoption-report-matlab-scientific-figures.md)：查看 `matlab-scientific-figures` 当前如何实际使用本工具。
+- [Plotting-skill adoption report](adoption-report-matlab-plotting-skill.md)：查看 `matlab-plotting-skill` 当前如何实际使用本工具。
 
 ## 规则和报告
 

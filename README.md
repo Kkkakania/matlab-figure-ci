@@ -48,8 +48,11 @@ provenance traces, risky file extensions, and the `matlab-figures` preset. This
 is a maintenance signal, not a usage metric: it shows the CLI is exercised by a
 real public repository without claiming external adoption or downloads.
 
-See the current [dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
-for the exact downstream configuration, latest check summary, and known
+See the current
+[`matlab-scientific-figures` dogfooding report](docs/adoption-report-matlab-scientific-figures.md)
+and
+[`matlab-plotting-skill` dogfooding report](docs/adoption-report-matlab-plotting-skill.md)
+for exact downstream configurations, latest check summaries, and known
 boundaries. The staged [adoption playbook](docs/adoption-playbook.md) also
 documents the handoff contract between gallery artifacts, agent render reports,
 and `mfigci` review reports.
@@ -358,6 +361,7 @@ jobs:
 - [MATLAB CI guide](docs/matlab-ci-guide.md)
 - [Adoption playbook](docs/adoption-playbook.md)
 - [Dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
+- [Plotting-skill adoption report](docs/adoption-report-matlab-plotting-skill.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Evidence packet template](docs/evidence-packet-template.md)

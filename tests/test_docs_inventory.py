@@ -112,6 +112,33 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "263 file(s) scanned" not in text
 
 
+def test_plotting_skill_adoption_report_is_current_and_bounded():
+    report = ROOT / "docs" / "adoption-report-matlab-plotting-skill.md"
+    text = report.read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
+
+    assert "docs/adoption-report-matlab-plotting-skill.md" in readme
+    assert "adoption-report-matlab-plotting-skill.md" in docs_index
+    assert "adoption-report-matlab-plotting-skill.md" in chinese_index
+    assert "Snapshot date: 2026-06-11" in text
+    assert "Latest checked downstream commit | `0a880a9`" in text
+    assert "Quality workflow" in text
+    assert "27293977420" in text
+    assert "public `v2.5.0` tag" in text
+    assert "92 file(s) scanned" in text
+    assert "13 binary/skipped" in text
+    assert "13 gallery file(s) ok" in text
+    assert "MATLAB render in public CI | Disabled" in text
+    assert "render reports are producer evidence, not source material" in text
+    assert "download metric" in text
+    assert "external adoption claim" in text
+    assert "program eligibility claim" in text
+    assert "not proof that MATLAB rendered on GitHub-hosted runners" in text
+    assert "raw private data" not in text
+
+
 def test_codex_workflow_documents_review_packet_boundaries():
     text = (ROOT / "docs" / "openai-codex-maintainer-workflow.md").read_text(encoding="utf-8")
 

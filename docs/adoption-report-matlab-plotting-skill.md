@@ -17,12 +17,12 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed preview check |
-| Latest checked downstream commit | `0a880a9` |
-| Latest checked workflow | Quality workflow, run `27293977420` |
+| Latest checked downstream commit | `a23411a` |
+| Latest checked workflow | Quality workflow, run `27294667935` |
 
 The downstream workflow installs `matlab-figure-ci` from the public `v2.5.0` tag,
-prints the effective rules, runs the full check, and uploads the Markdown report
-artifact:
+prints the effective rules, runs the full check, and uploads Markdown report and
+`.mfigci-results.json` artifacts:
 
 ```bash
 mfigci rules --config mfigci.yml
@@ -30,7 +30,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
 Run URL:
-<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27293977420>
+<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27294667935>
 
 ## Configuration Summary
 
@@ -65,7 +65,7 @@ Result:
 ```
 
 The downstream `Quality` GitHub Actions workflow also completed successfully
-for commit `0a880a9`.
+for commit `a23411a`.
 
 ## What Worked
 
@@ -73,8 +73,12 @@ for commit `0a880a9`.
   summaries are reused in public issue triage.
 - `mfigci rules` exposes the active privacy, provenance, extension, and gallery
   policy before the full check runs.
-- The Markdown report works as a CI artifact, while `mfigci-report.md`,
-  `.mfigci-results.json`, and `mfigci-evidence.md` stay ignored locally.
+- The Markdown report and `.mfigci-results.json` artifacts work together: the
+  Markdown is readable in a review, and the JSON can feed later triage or
+  release-note tooling without scraping prose.
+- `mfigci-report.md`, `.mfigci-results.json`, and `mfigci-evidence.md` stay
+  ignored locally unless a maintainer deliberately reviews and commits a
+  redacted report.
 - The no-render public CI boundary matches the repository's first-use story:
   metadata, docs, manifests, and committed previews can be checked without
   requiring MATLAB on GitHub-hosted runners.

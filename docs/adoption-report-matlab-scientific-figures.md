@@ -1,6 +1,6 @@
 # Adoption Report: matlab-scientific-figures
 
-Snapshot date: 2026-06-10
+Snapshot date: 2026-06-11
 
 This report records how the companion repository
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
@@ -17,10 +17,11 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `9cb87e9` |
+| Latest checked downstream commit | `545f6ed` |
+| Latest checked workflow | Figure quality workflow, run `27294668185` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
-runs the full check, and uploads the Markdown report artifact:
+runs the full check, and uploads Markdown report and `.mfigci-results.json` artifacts:
 
 ```bash
 mfigci rules --config mfigci.yml
@@ -54,12 +55,12 @@ mfigci check --config mfigci.yml --report mfigci-report.md --results .mfigci-res
 Result:
 
 ```text
-0 error(s), 0 warning(s), 270 file(s) scanned, 30 binary/skipped.
+0 error(s), 0 warning(s), 271 file(s) scanned, 30 binary/skipped.
 0 error(s), 0 warning(s), 60 gallery file(s) ok.
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `9cb87e9` after the repository pinned
+also completed successfully for commit `545f6ed` after the repository pinned
 `matlab-figure-ci` to the public `v2.5.0` tag.
 
 ## What Worked
@@ -70,6 +71,9 @@ also completed successfully for commit `9cb87e9` after the repository pinned
   visible in CI logs before the full check runs.
 - The Markdown report is useful as a CI artifact because it uses relative paths
   and redacts privacy-sensitive findings.
+- The machine-readable `.mfigci-results.json` artifact is uploaded beside the
+  Markdown report, so later PR review or release-note tooling can inspect the
+  same redacted result without scraping Markdown.
 - Keeping MATLAB render disabled in public CI matches the reality that public
   runners usually do not have MATLAB installed.
 - The downstream repository now also checks GitHub Project-board documentation

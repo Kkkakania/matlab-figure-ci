@@ -83,9 +83,10 @@ def test_adoption_playbook_documents_ecosystem_handoff_contract():
 def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
-    assert "Snapshot date: 2026-06-10" in text
-    assert "Latest checked downstream commit | `9cb87e9`" in text
-    assert "270 file(s) scanned" in text
+    assert "Snapshot date: 2026-06-11" in text
+    assert "Latest checked downstream commit | `545f6ed`" in text
+    assert "27294668185" in text
+    assert "271 file(s) scanned" in text
     assert "not a" in text
     assert "download metric" in text
     assert "external adoption claim" in text
@@ -102,6 +103,7 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "triage remains inspectable" in text
     assert "public `v2.5.0` tag" in text
     assert "version guard" in text
+    assert "Markdown report and `.mfigci-results.json` artifacts" in text
     assert "synthetic 5 MW PV example" in text
     assert "% of fundamental" in text
     assert "without expanding the domain pack" in text
@@ -123,14 +125,15 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "adoption-report-matlab-plotting-skill.md" in docs_index
     assert "adoption-report-matlab-plotting-skill.md" in chinese_index
     assert "Snapshot date: 2026-06-11" in text
-    assert "Latest checked downstream commit | `0a880a9`" in text
+    assert "Latest checked downstream commit | `a23411a`" in text
     assert "Quality workflow" in text
-    assert "27293977420" in text
+    assert "27294667935" in text
     assert "public `v2.5.0` tag" in text
     assert "92 file(s) scanned" in text
     assert "13 binary/skipped" in text
     assert "13 gallery file(s) ok" in text
     assert "MATLAB render in public CI | Disabled" in text
+    assert "Markdown report and `.mfigci-results.json` artifacts" in text
     assert "render reports are producer evidence, not source material" in text
     assert "download metric" in text
     assert "external adoption claim" in text

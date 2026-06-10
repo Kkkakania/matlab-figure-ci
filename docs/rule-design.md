@@ -54,8 +54,9 @@ Default errors:
 - `.opju`
 - `.opj`
 - `.ogwu`
-- compiled executables and MATLAB MEX binaries such as `.exe`, `.dll`,
-  `.mexmaci64`, `.mexglx`, and `.mexa64`
+- compiled executables, shared libraries, object files, static libraries, and
+  MATLAB MEX binaries such as `.exe`, `.dll`, `.so`, `.dylib`, `.a`, `.o`,
+  `.obj`, `.lib`, `.mexmaci64`, `.mexglx`, and `.mexa64`
 
 Default warnings:
 
@@ -74,14 +75,21 @@ export legitimate vector PDFs.
 
 The newer defaults are based on real figure-repository intake work: MATLAB and
 Origin binary formats should not slip into a public source tree, and compiled
-MEX/executable artifacts deserve a hard stop. Heavier project or media files
-are warnings because a maintainer may decide to keep them elsewhere, but they
-should not be invisible in a release review.
+MEX/executable/library artifacts deserve a hard stop. Heavier project or media
+files are warnings because a maintainer may decide to keep them elsewhere, but
+they should not be invisible in a release review.
 
 Generated PNG/SVG/PDF gallery files are still handled by the gallery policy and
 the `matlab-figures` preset. The warning list focuses on raw or review-heavy
 formats that often arrive from local prototype folders, Origin workflows, or
 manual screenshot exports.
+
+`mfigci` does not ban a project because it has helper scripts in another
+language. Python, MATLAB, shell, or Go source can all be legitimate when the
+maintainer owns and reviews them. The default policy targets the harder-to-audit
+outputs of those toolchains: compiled libraries, object files, generated
+figures in source folders, binary workbooks, and local audit artifacts that
+should stay out of public source packages.
 
 Use `mfigci rules --config mfigci.yml` to inspect the effective rules before
 running a scan. The command prints rule ids, severities, and extension policies,

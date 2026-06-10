@@ -454,7 +454,7 @@ def test_doctor_shows_safe_defaults_without_config(tmp_path):
     assert "Gallery expected files: 0" in result.stdout
     assert "Privacy rules: 3" in result.stdout
     assert "Provenance rules: 4" in result.stdout
-    assert "Extension errors: 20" in result.stdout
+    assert "Extension errors: 26" in result.stdout
     assert "Extension warnings: 22" in result.stdout
     assert "MATLAB render: disabled" in result.stdout
     assert str(tmp_path) not in result.stdout
@@ -617,7 +617,7 @@ matlab:
     assert payload["gallery"]["expected_count"] == 2
     assert payload["rules"]["privacy_count"] == 3
     assert payload["rules"]["provenance_count"] == 4
-    assert payload["rules"]["extension_error_count"] == 20
+    assert payload["rules"]["extension_error_count"] == 26
     assert payload["rules"]["extension_warning_count"] == 22
     assert payload["strict"]["fail_on_warnings"] is False
     assert payload["matlab"]["enabled"] is True
@@ -661,7 +661,7 @@ def test_rules_lists_effective_policy_rules(tmp_path):
     assert "privacy.email error redacted" in result.stdout
     assert "Provenance rules: enabled" in result.stdout
     assert "provenance.author_marker warning pattern matched" in result.stdout
-    assert "Extension errors: .p, .mat, .fig, .doc, .docx, .xlsx, .vsd, .opju, .opj, .ogwu, .exe, .dll, .mexmaci, .mexmaci64, .mexglx, .mexa64, .mexsol, .mexlx, .mexhp7, .mex4" in result.stdout
+    assert "Extension errors: .p, .mat, .fig, .doc, .docx, .xlsx, .vsd, .opju, .opj, .ogwu, .exe, .dll, .so, .dylib, .a, .o, .obj, .lib, .mexmaci, .mexmaci64, .mexglx, .mexa64, .mexsol, .mexlx, .mexhp7, .mex4" in result.stdout
     assert "Extension warnings: .pdf, .mlx, .zip, .opx, .mltbx, .mpp, .psd, .c4d, .mp4, .ipynb, .pyc, .rds, .cas, .msh, .db, .ogs, .bmp, .jpg, .jpeg, .tif, .tiff, .gif" in result.stdout
     assert "Generated asset scan: enabled" in result.stdout
     assert "Generated asset severity: warning" in result.stdout

@@ -16,13 +16,19 @@ def test_extension_scan_errors_for_risky_matlab_office_origin_and_binary_files(t
         "sheet.ogwu",
         "helper.exe",
         "plugin.dll",
+        "plugin.so",
+        "plugin.dylib",
+        "static.a",
+        "object.o",
+        "object.obj",
+        "import.lib",
         "fast.mexmaci64",
     ]:
         (project / name).write_bytes(b"binary")
 
     result = run_scan(project, load_config(project / "missing.yml"))
 
-    assert result.error_count == 11
+    assert result.error_count == 17
     assert all(f.rule_id == "extension.error" for f in result.findings if f.severity == "error")
 
 

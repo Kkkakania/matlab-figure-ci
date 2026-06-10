@@ -80,6 +80,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
 mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
+mfigci report --style evidence --output mfigci-evidence.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci rules --config mfigci.yml
@@ -225,7 +226,7 @@ presets:
 | `mfigci scan` | 扫描隐私、来源和风险文件扩展名 |
 | `mfigci gallery` | 检查 expected gallery 文件是否存在、非空，并使用允许格式 |
 | `mfigci check` | 执行 scan、gallery、可选 render，并写出报告 |
-| `mfigci report` | 从 `.mfigci-results.json` 生成完整 Markdown、PR comment Markdown 或 JSON |
+| `mfigci report` | 从 `.mfigci-results.json` 生成完整 Markdown、PR comment Markdown、证据包 Markdown 或 JSON |
 | `mfigci init` | 生成 starter 配置和 GitHub Actions workflow |
 | `mfigci render` | 可选使用 MATLAB `-batch` 执行渲染命令 |
 | `mfigci doctor` | 输出隐私安全的有效配置摘要 |
@@ -293,6 +294,7 @@ jobs:
 - [Dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
+- [Evidence packet template](docs/evidence-packet-template.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)

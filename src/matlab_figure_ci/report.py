@@ -160,6 +160,70 @@ def build_pr_comment_report(results: CheckResults) -> str:
     return "\n".join(lines)
 
 
+def build_evidence_packet_report(results: CheckResults) -> str:
+    summary = results.summary
+    errors = int(summary.get("errors", 0))
+    warnings = int(summary.get("warnings", 0))
+    status = "needs attention" if errors else "ready for maintainer review"
+    lines = [
+        "### matlab-figure-ci evidence packet",
+        "",
+        f"Status: **{status}**",
+        "",
+        "Generated from `.mfigci-results.json`. Fill the placeholders before sharing.",
+        "",
+        "Verification summary:",
+        "",
+        f"- Errors: {errors}",
+        f"- Warnings: {warnings}",
+        f"- Files scanned: {summary.get('files_scanned', 0)}",
+        f"- Gallery checks: {summary.get('gallery_checks', 0)}",
+        f"- MATLAB render: {results.render.get('status', 'skipped')}",
+        f"- Config: `{results.config_path or 'mfigci.yml'}`",
+        f"- Tool version: `{results.tool_version or 'unknown'}`",
+        "",
+        "Artifacts to attach or link:",
+        "",
+        "- `mfigci-report.md`",
+        "- `.mfigci-results.json`",
+        "- workflow run URL: `<paste GitHub Actions run URL>`",
+        "- commit: `<paste commit SHA>`",
+        "- redacted issue or PR link: `<paste public issue/PR URL>`",
+        "",
+    ]
+
+    counts = _finding_counts_by_rule(results)
+    if counts:
+        lines.extend(["Finding summary:", "", "| Severity | Rule | Count |", "|---|---|---:|"])
+        for severity, rule_id, count in counts[:8]:
+            lines.append(f"| {_markdown_table_cell(severity)} | {_markdown_table_cell(rule_id)} | {count} |")
+        if len(counts) > 8:
+            lines.append(f"| info | truncated | {len(counts) - 8} more rule group(s) in the full report |")
+        lines.append("")
+    else:
+        lines.extend(["Finding summary: no findings.", ""])
+
+    lines.extend(
+        [
+            "Review packet:",
+            "",
+            "- Check the changed files against the findings above.",
+            "- Confirm privacy findings are redacted and paths are relative.",
+            "- Fix policy errors before merge or release.",
+            "- Review warnings as provenance or maintenance prompts, not as license-cleaning proof.",
+            "",
+            "Application packet:",
+            "",
+            "- Use the repository URL, release tag or commit, workflow run URL, and redacted issue or PR link.",
+            "- Mention dogfooding only when the downstream workflow is linked.",
+            "- Keep `mfigci-report.md` and `.mfigci-results.json` as artifacts or summaries.",
+            "- This is not an approval argument, usage metric, download claim, or adoption claim.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def build_json_report(results: CheckResults) -> str:
     payload = results.to_dict()
     public_payload = {
@@ -197,6 +261,8 @@ def load_results(path: str | Path) -> CheckResults:
 def save_markdown(results: CheckResults, path: str | Path, style: str = "full") -> None:
     if style == "pr-comment":
         content = build_pr_comment_report(results)
+    elif style == "evidence":
+        content = build_evidence_packet_report(results)
     else:
         content = build_markdown_report(results)
     output_path = Path(path)

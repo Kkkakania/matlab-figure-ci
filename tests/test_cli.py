@@ -329,6 +329,40 @@ def test_report_can_write_pr_comment_style(tmp_path):
     assert "| error | privacy.email | src/example.m:1 | <redacted> |" in output
 
 
+def test_report_can_write_evidence_packet_style(tmp_path):
+    (tmp_path / ".mfigci-results.json").write_text(
+        json.dumps(
+            {
+                "summary": {"errors": 0, "warnings": 1, "files_scanned": 3, "gallery_checks": 1},
+                "findings": [
+                    {
+                        "severity": "warning",
+                        "rule_id": "provenance.author_marker",
+                        "path": "README.md",
+                        "line": 2,
+                        "message": "pattern matched",
+                    }
+                ],
+                "scan": {"files_scanned": 3},
+                "gallery": {"items": [{"status": "ok", "path": "gallery/example.png", "message": "present"}]},
+                "render": {"status": "skipped", "message": "disabled"},
+                "config_path": "mfigci.yml",
+                "tool_version": "2.5.0",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_cli(["report", "--style", "evidence", "--output", "mfigci-evidence.md"], tmp_path)
+
+    output = (tmp_path / "mfigci-evidence.md").read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert output.startswith("### matlab-figure-ci evidence packet")
+    assert "workflow run URL" in output
+    assert "redacted issue or PR link" in output
+    assert "not an approval argument" in output
+
+
 def test_report_can_write_public_json_format(tmp_path):
     secret = "person@example.com"
     (tmp_path / ".mfigci-results.json").write_text(

@@ -126,6 +126,22 @@ def test_codex_workflow_documents_review_packet_boundaries():
     assert "not proof of broad adoption" in text
 
 
+def test_evidence_packet_template_is_documented():
+    docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    text = (ROOT / "docs" / "evidence-packet-template.md").read_text(encoding="utf-8")
+
+    assert "evidence-packet-template.md" in docs_index
+    assert "evidence-packet-template.md" in chinese_index
+    assert "mfigci report --style evidence --output mfigci-evidence.md" in readme
+    assert "# Evidence Packet Template" in text
+    assert "mfigci report --style evidence --output mfigci-evidence.md" in text
+    assert "workflow run URL" in text
+    assert "redacted issue or PR link" in text
+    assert "not an approval argument" in text
+
+
 def test_public_version_references_match_package_version():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     roadmap = (ROOT / "ROADMAP.md").read_text(encoding="utf-8")

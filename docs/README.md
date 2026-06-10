@@ -20,6 +20,8 @@ This directory collects the public maintainer and user documentation for
   relative path guarantees.
 - [PR comment report](pr-comment-template.md): compact Markdown output for
   manual pull request review.
+- [Evidence packet template](evidence-packet-template.md): copyable review and
+  application evidence packet generated from `.mfigci-results.json`.
 - [Rule design](rule-design.md): privacy, provenance, extension, and preset
   policy choices.
 - [Chinese rule design](rule-design.zh-CN.md): Chinese-language explanation of

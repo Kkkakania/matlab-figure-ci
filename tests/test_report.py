@@ -1,6 +1,12 @@
 import json
 
-from matlab_figure_ci.report import build_json_report, build_markdown_report, build_pr_comment_report, load_results
+from matlab_figure_ci.report import (
+    build_evidence_packet_report,
+    build_json_report,
+    build_markdown_report,
+    build_pr_comment_report,
+    load_results,
+)
 from matlab_figure_ci.result import CheckResults, Finding, GalleryItem, GalleryResults, ScanResults
 
 
@@ -113,6 +119,48 @@ def test_pr_comment_report_is_compact_and_redacted():
     assert "| error | privacy.email | src/example.m:3 | <redacted> |" in comment
     assert secret not in comment
     assert len(comment) < 1500
+
+
+def test_evidence_packet_report_is_copyable_and_bounded():
+    secret = "person@example.com"
+    results = CheckResults(
+        summary={"errors": 0, "warnings": 2, "files_scanned": 12, "gallery_checks": 3},
+        findings=[
+            Finding(
+                severity="warning",
+                rule_id="provenance.author_marker",
+                path="docs/notes.md",
+                line=4,
+                message="pattern matched",
+            ),
+            Finding(
+                severity="warning",
+                rule_id="generated_asset.source_tree",
+                path="src/preview.png",
+                line=None,
+                message="generated asset in source tree",
+            ),
+        ],
+        scan=ScanResults(files_scanned=12),
+        gallery=GalleryResults(items=[GalleryItem(status="ok", path="gallery/example.png", message="present")]),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="mfigci.yml",
+        tool_version="2.5.0",
+    )
+
+    packet = build_evidence_packet_report(results)
+
+    assert packet.startswith("### matlab-figure-ci evidence packet")
+    assert "Review packet" in packet
+    assert "Application packet" in packet
+    assert "workflow run URL" in packet
+    assert "redacted issue or PR link" in packet
+    assert "mfigci-report.md" in packet
+    assert ".mfigci-results.json" in packet
+    assert "not an approval argument" in packet
+    assert "| warning | provenance.author_marker | 1 |" in packet
+    assert secret not in packet
+    assert "person@example.com" not in packet
 
 
 def test_json_report_has_stable_fields_and_redacted_findings():

@@ -103,6 +103,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
 mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
+mfigci report --style evidence --output mfigci-evidence.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci doctor --config mfigci.yml --format json
@@ -266,7 +267,7 @@ shape as the main file, and cannot include nested `presets`.
 | `mfigci scan` | Scan privacy, provenance, and risky file extensions |
 | `mfigci gallery` | Check expected gallery files exist, are non-empty, and use allowed formats |
 | `mfigci check` | Run scan, gallery, optional render, and write reports |
-| `mfigci report` | Build full Markdown, PR-comment Markdown, or JSON from `.mfigci-results.json` |
+| `mfigci report` | Build full Markdown, PR-comment Markdown, evidence-packet Markdown, or JSON from `.mfigci-results.json` |
 | `mfigci init` | Generate starter config and GitHub Actions workflow |
 | `mfigci render` | Optionally run MATLAB with `-batch` |
 | `mfigci doctor` | Show a privacy-safe summary of the effective configuration |
@@ -354,6 +355,7 @@ jobs:
 - [Dogfooding adoption report](docs/adoption-report-matlab-scientific-figures.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
+- [Evidence packet template](docs/evidence-packet-template.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)

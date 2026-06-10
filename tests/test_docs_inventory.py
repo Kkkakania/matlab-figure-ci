@@ -74,6 +74,8 @@ def test_adoption_playbook_documents_ecosystem_handoff_contract():
     assert "gallery/*.png and gallery/*.svg" in text
     assert "render_report.md and render_report.json" in text
     assert "mfigci-report.md and .mfigci-results.json" in text
+    assert "matlab-plotting-skill now dogfoods `mfigci check`" in text
+    assert "exported gallery artifacts before first-use reports" in text
     assert "Do not use `matlab-figure-ci` as a laundering step" in text
     assert "handoff contract" in readme
 

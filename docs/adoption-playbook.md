@@ -107,6 +107,8 @@ It should not be described as download volume, external adoption, or guaranteed 
 The current dogfooding snapshot is maintained in
 [`adoption-report-matlab-scientific-figures.md`](adoption-report-matlab-scientific-figures.md).
 
+The agent-facing companion repository matlab-plotting-skill now dogfoods `mfigci check` as a lighter handoff gate: it checks exported gallery artifacts before first-use reports or render summaries are copied into public issue triage. That workflow does not enable MATLAB rendering on hosted runners; it checks the committed preview gallery, risky files, provenance warnings, and privacy errors.
+
 ## Ecosystem Handoff Contract
 
 Use `matlab-figure-ci` as the review checkpoint between figure-producing work

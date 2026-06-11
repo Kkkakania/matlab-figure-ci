@@ -605,7 +605,7 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--input", default=".mfigci-results.json")
     report.add_argument("--output", default="mfigci-report.md")
     report.add_argument("--format", choices=["markdown", "json"], default="markdown")
-    report.add_argument("--style", choices=["full", "pr-comment", "evidence"], default="full")
+    report.add_argument("--style", choices=["full", "pr-comment", "evidence", "triage"], default="full")
     report.set_defaults(func=command_report)
 
     init = subparsers.add_parser("init", help="write example config and GitHub Actions workflow")

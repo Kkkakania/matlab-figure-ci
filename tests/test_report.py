@@ -5,6 +5,7 @@ from matlab_figure_ci.report import (
     build_json_report,
     build_markdown_report,
     build_pr_comment_report,
+    build_triage_report,
     load_results,
 )
 from matlab_figure_ci.result import CheckResults, Finding, GalleryItem, GalleryResults, ScanResults
@@ -161,6 +162,89 @@ def test_evidence_packet_report_is_copyable_and_bounded():
     assert "| warning | provenance.author_marker | 1 |" in packet
     assert secret not in packet
     assert "person@example.com" not in packet
+
+
+def test_triage_report_groups_errors_warnings_and_next_actions():
+    secret = "person@example.com"
+    results = CheckResults(
+        summary={"errors": 2, "warnings": 2, "files_scanned": 16, "gallery_checks": 4},
+        findings=[
+            Finding(
+                severity="error",
+                rule_id="privacy.email",
+                path="src/example.m",
+                line=3,
+                message="<redacted>",
+            ),
+            Finding(
+                severity="error",
+                rule_id="extensions.error",
+                path="private/source.fig",
+                line=None,
+                message="forbidden extension",
+            ),
+            Finding(
+                severity="warning",
+                rule_id="provenance.author_marker",
+                path="README.md",
+                line=8,
+                message="pattern matched",
+            ),
+            Finding(
+                severity="warning",
+                rule_id="generated_asset.source_tree",
+                path="src/preview.png",
+                line=None,
+                message="generated asset in source tree",
+            ),
+        ],
+        scan=ScanResults(files_scanned=16),
+        gallery=GalleryResults(
+            items=[
+                GalleryItem(status="error", path="gallery/missing.png", message="missing"),
+                GalleryItem(status="ok", path="gallery/example.png", message="present"),
+            ]
+        ),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="mfigci.yml",
+        tool_version="2.5.0",
+    )
+
+    note = build_triage_report(results)
+
+    assert note.startswith("### matlab-figure-ci triage note")
+    assert "Status: **blocked**" in note
+    assert "`privacy`" in note
+    assert "`provenance`" in note
+    assert "`gallery`" in note
+    assert "Blockers" in note
+    assert "| error | privacy.email | src/example.m:3 | <redacted> |" in note
+    assert "| error | extensions.error | private/source.fig | forbidden extension |" in note
+    assert "Warnings to review" in note
+    assert "| warning | generated_asset.source_tree | src/preview.png | generated asset in source tree |" in note
+    assert "Next maintainer action" in note
+    assert "Fix policy errors before merge or release" in note
+    assert secret not in note
+
+
+def test_triage_report_treats_render_error_as_blocking():
+    results = CheckResults(
+        summary={"errors": 0, "warnings": 0, "files_scanned": 3, "gallery_checks": 0},
+        findings=[],
+        scan=ScanResults(files_scanned=3),
+        gallery=GalleryResults(items=[]),
+        render={"status": "error", "message": "MATLAB executable not found"},
+        config_path="mfigci.yml",
+        tool_version="2.5.0",
+    )
+
+    note = build_triage_report(results)
+
+    assert "Status: **blocked**" in note
+    assert "`blocked`" in note
+    assert "`render`" in note
+    assert "| error | render | MATLAB | MATLAB executable not found |" in note
+    assert "Fix policy errors before merge or release" in note
 
 
 def test_json_report_has_stable_fields_and_redacted_findings():

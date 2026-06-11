@@ -183,6 +183,25 @@ def test_evidence_packet_template_is_documented():
     assert "not an approval argument" in text
 
 
+def test_triage_report_template_is_documented():
+    docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    text = (ROOT / "docs" / "issue-triage-report.md").read_text(encoding="utf-8")
+
+    assert "issue-triage-report.md" in docs_index
+    assert "issue-triage-report.md" in chinese_index
+    assert "mfigci report --style triage --output mfigci-triage.md" in readme
+    assert "Issue triage report style" in changelog.split("## v2.5.0", maxsplit=1)[0]
+    assert "# Issue Triage Report" in text
+    assert "mfigci report --style triage --output mfigci-triage.md" in text
+    assert "not a bot" in text
+    assert "Suggested triage labels" in text
+    assert "Do not commit `mfigci-triage.md` by default" in text
+    assert "privacy findings stay redacted" in text
+
+
 def test_public_version_references_match_package_version():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     roadmap = (ROOT / "ROADMAP.md").read_text(encoding="utf-8")

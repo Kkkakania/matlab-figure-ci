@@ -364,6 +364,48 @@ def test_report_can_write_evidence_packet_style(tmp_path):
     assert "not an approval argument" in output
 
 
+def test_report_can_write_triage_style(tmp_path):
+    (tmp_path / ".mfigci-results.json").write_text(
+        json.dumps(
+            {
+                "summary": {"errors": 1, "warnings": 1, "files_scanned": 5, "gallery_checks": 1},
+                "findings": [
+                    {
+                        "severity": "error",
+                        "rule_id": "privacy.email",
+                        "path": "src/example.m",
+                        "line": 1,
+                        "message": "<redacted>",
+                    },
+                    {
+                        "severity": "warning",
+                        "rule_id": "provenance.author_marker",
+                        "path": "README.md",
+                        "line": 3,
+                        "message": "pattern matched",
+                    },
+                ],
+                "scan": {"files_scanned": 5},
+                "gallery": {"items": [{"status": "ok", "path": "gallery/example.png", "message": "present"}]},
+                "render": {"status": "skipped", "message": "disabled"},
+                "config_path": "mfigci.yml",
+                "tool_version": "2.5.0",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_cli(["report", "--style", "triage", "--output", "mfigci-triage.md"], tmp_path)
+
+    output = (tmp_path / "mfigci-triage.md").read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert output.startswith("### matlab-figure-ci triage note")
+    assert "Status: **blocked**" in output
+    assert "`privacy`" in output
+    assert "`provenance`" in output
+    assert "Fix policy errors before merge or release" in output
+
+
 def test_report_can_write_public_json_format(tmp_path):
     secret = "person@example.com"
     (tmp_path / ".mfigci-results.json").write_text(

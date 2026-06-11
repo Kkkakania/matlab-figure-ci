@@ -224,6 +224,115 @@ def build_evidence_packet_report(results: CheckResults) -> str:
     return "\n".join(lines)
 
 
+def _suggest_triage_labels(results: CheckResults) -> list[str]:
+    labels: list[str] = []
+    if (
+        int(results.summary.get("errors", 0))
+        or any(item.status == "error" for item in results.gallery.items)
+        or results.render.get("status") == "error"
+    ):
+        labels.append("blocked")
+    elif int(results.summary.get("warnings", 0)) or any(item.status == "warning" for item in results.gallery.items):
+        labels.append("needs-maintainer-review")
+    else:
+        labels.append("ready")
+
+    rules = {finding.rule_id for finding in results.findings}
+    if any(rule.startswith("privacy.") for rule in rules):
+        labels.append("privacy")
+    if any(rule.startswith("provenance.") for rule in rules):
+        labels.append("provenance")
+    if any(rule.startswith("extensions.") for rule in rules):
+        labels.append("risky-files")
+    if any(rule.startswith("generated_asset.") for rule in rules):
+        labels.append("generated-assets")
+    if results.gallery.items:
+        labels.append("gallery")
+    if results.render.get("status") == "error":
+        labels.append("render")
+    return labels
+
+
+def build_triage_report(results: CheckResults) -> str:
+    summary = results.summary
+    errors = int(summary.get("errors", 0))
+    warnings = int(summary.get("warnings", 0))
+    gallery_errors = [item for item in results.gallery.items if item.status == "error"]
+    gallery_warnings = [item for item in results.gallery.items if item.status == "warning"]
+    render_error = results.render.get("status") == "error"
+    blocked = bool(errors or gallery_errors or render_error)
+    status = "blocked" if blocked else "needs maintainer review" if warnings or gallery_warnings else "ready"
+    labels = _suggest_triage_labels(results)
+
+    lines = [
+        "### matlab-figure-ci triage note",
+        "",
+        f"Status: **{status}**",
+        "",
+        f"- Errors: {errors}",
+        f"- Warnings: {warnings}",
+        f"- Files scanned: {summary.get('files_scanned', 0)}",
+        f"- Gallery checks: {summary.get('gallery_checks', 0)}",
+        f"- MATLAB render: {results.render.get('status', 'skipped')}",
+        f"- Config: `{results.config_path or 'mfigci.yml'}`",
+        "",
+        "Suggested triage labels:",
+        "",
+        ", ".join(f"`{label}`" for label in labels),
+        "",
+    ]
+
+    blockers = [finding for finding in results.findings if finding.severity == "error"]
+    if blockers or gallery_errors or render_error:
+        lines.extend(["Blockers:", "", "| Severity | Rule | Location | Message |", "|---|---|---|---|"])
+        for finding in blockers[:8]:
+            lines.append(
+                f"| {_markdown_table_cell(finding.severity)} | {_markdown_table_cell(finding.rule_id)} | "
+                f"{_markdown_table_cell(_format_location(finding.path, finding.line))} | {_markdown_table_cell(finding.message)} |"
+            )
+        for item in gallery_errors[:4]:
+            lines.append(f"| error | gallery | {_markdown_table_cell(item.path)} | {_markdown_table_cell(item.message)} |")
+        if render_error:
+            lines.append(f"| error | render | MATLAB | {_markdown_table_cell(results.render.get('message', 'MATLAB render failed.'))} |")
+        if len(blockers) > 8:
+            lines.append(f"| info | truncated |  | {len(blockers) - 8} more error finding(s) in the full report |")
+        lines.append("")
+    else:
+        lines.extend(["Blockers: none.", ""])
+
+    warning_findings = [finding for finding in results.findings if finding.severity == "warning"]
+    if warning_findings or gallery_warnings:
+        lines.extend(["Warnings to review:", "", "| Severity | Rule | Location | Message |", "|---|---|---|---|"])
+        for finding in warning_findings[:8]:
+            lines.append(
+                f"| {_markdown_table_cell(finding.severity)} | {_markdown_table_cell(finding.rule_id)} | "
+                f"{_markdown_table_cell(_format_location(finding.path, finding.line))} | {_markdown_table_cell(finding.message)} |"
+            )
+        for item in gallery_warnings[:4]:
+            lines.append(f"| warning | gallery | {_markdown_table_cell(item.path)} | {_markdown_table_cell(item.message)} |")
+        if len(warning_findings) > 8:
+            lines.append(f"| info | truncated |  | {len(warning_findings) - 8} more warning finding(s) in the full report |")
+        lines.append("")
+    else:
+        lines.extend(["Warnings to review: none.", ""])
+
+    lines.extend(["Next maintainer action:", ""])
+    if blocked:
+        lines.append("- Fix policy errors before merge or release, then rerun `mfigci check`.")
+    elif warnings or gallery_warnings:
+        lines.append("- Review warnings as provenance, generated-asset, or gallery-maintenance prompts before merging.")
+    else:
+        lines.append("- No blocking issue is visible in this report; keep the full report artifact with the review.")
+    lines.extend(
+        [
+            "- Keep privacy findings redacted and use relative paths when copying this note.",
+            "- Treat provenance warnings as review prompts, not as proof that material is licensed.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def build_json_report(results: CheckResults) -> str:
     payload = results.to_dict()
     public_payload = {
@@ -263,6 +372,8 @@ def save_markdown(results: CheckResults, path: str | Path, style: str = "full") 
         content = build_pr_comment_report(results)
     elif style == "evidence":
         content = build_evidence_packet_report(results)
+    elif style == "triage":
+        content = build_triage_report(results)
     else:
         content = build_markdown_report(results)
     output_path = Path(path)

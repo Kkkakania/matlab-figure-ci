@@ -63,8 +63,9 @@ The current public release is `v2.5.0`. The supported install path is still a
 GitHub release tag install, and the package is not published on PyPI yet.
 
 Unreleased on main after v2.5.0: `mfigci report --style evidence` can format a
-small review/application evidence packet from `.mfigci-results.json`. Use it
-from a source checkout until the next release tag includes it.
+small review/application evidence packet from `.mfigci-results.json`, and
+`mfigci report --style triage` can format a compact issue/PR triage note. Use
+these from a source checkout until the next release tag includes them.
 
 The `v2` line marks the v2 compatibility boundary for the CLI commands,
 configuration keys, exit codes, and report fields documented in
@@ -111,6 +112,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md --fail-on-warnings
 mfigci report --input .mfigci-results.json --output mfigci-report.md
 mfigci report --style pr-comment --output mfigci-pr-comment.md
 mfigci report --style evidence --output mfigci-evidence.md
+mfigci report --style triage --output mfigci-triage.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci doctor --config mfigci.yml --format json
@@ -275,7 +277,7 @@ shape as the main file, and cannot include nested `presets`.
 | `mfigci scan` | Scan privacy, provenance, and risky file extensions |
 | `mfigci gallery` | Check expected gallery files exist, are non-empty, and use allowed formats |
 | `mfigci check` | Run scan, gallery, optional render, and write reports |
-| `mfigci report` | Build full Markdown, PR-comment Markdown, evidence-packet Markdown, or JSON from `.mfigci-results.json` |
+| `mfigci report` | Build full Markdown, PR-comment Markdown, evidence-packet Markdown, triage Markdown, or JSON from `.mfigci-results.json` |
 | `mfigci init` | Generate starter config and GitHub Actions workflow |
 | `mfigci render` | Optionally run MATLAB with `-batch` |
 | `mfigci doctor` | Show a privacy-safe summary of the effective configuration |
@@ -368,6 +370,7 @@ jobs:
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Evidence packet template](docs/evidence-packet-template.md)
+- [Issue triage report](docs/issue-triage-report.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)
 - [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)

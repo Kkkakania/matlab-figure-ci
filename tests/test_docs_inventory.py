@@ -33,6 +33,7 @@ def test_chinese_readme_covers_core_user_flow():
     assert "不是版权清洗工具" in chinese
     assert "核心 scan、gallery、report 和 check 不依赖 MATLAB" in chinese
     assert "mfigci scan --config mfigci.yml --paths" in chinese
+    assert "mfigci report --style triage --output mfigci-triage.md" in chinese
     assert "mfigci release-preflight --require-dist" in chinese
     assert "docs/adoption-report-matlab-scientific-figures.md" in chinese
     assert "docs/v2-compatibility.md" in chinese

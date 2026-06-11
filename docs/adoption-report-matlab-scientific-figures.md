@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `545f6ed` |
-| Latest checked workflow | Figure quality workflow, run `27294668185` |
+| Latest checked downstream commit | `27c3755` |
+| Latest checked workflow | Figure quality workflow, run `27295930398` |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads Markdown report and `.mfigci-results.json` artifacts:
@@ -27,6 +27,9 @@ runs the full check, and uploads Markdown report and `.mfigci-results.json` arti
 mfigci rules --config mfigci.yml
 mfigci check --config mfigci.yml --report mfigci-report.md
 ```
+
+Run URL:
+<https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/27295930398>
 
 ## Configuration Summary
 
@@ -60,8 +63,8 @@ Result:
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `545f6ed` after the repository pinned
-`matlab-figure-ci` to the public `v2.5.0` tag.
+also completed successfully for commit `27c3755` while the repository stayed
+pinned to the public `v2.5.0` tag.
 
 ## What Worked
 

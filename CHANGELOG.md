@@ -6,6 +6,8 @@
   on `main` until the next release tag.
 - `mfigci check` now prints the follow-up evidence-packet command after writing
   `.mfigci-results.json`.
+- Refreshed downstream dogfooding adoption reports with the latest verified
+  `matlab-scientific-figures` and `matlab-plotting-skill` workflow runs.
 
 ## v2.5.0 - 2026-06-10
 

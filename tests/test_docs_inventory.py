@@ -84,8 +84,8 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
     assert "Snapshot date: 2026-06-11" in text
-    assert "Latest checked downstream commit | `545f6ed`" in text
-    assert "27294668185" in text
+    assert "Latest checked downstream commit | `27c3755`" in text
+    assert "27295930398" in text
     assert "271 file(s) scanned" in text
     assert "not a" in text
     assert "download metric" in text
@@ -108,6 +108,8 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "% of fundamental" in text
     assert "without expanding the domain pack" in text
     assert "198 file(s) scanned" not in text
+    assert "545f6ed" not in text
+    assert "27294668185" not in text
     assert "260 file(s) scanned" not in text
     assert "261 file(s) scanned" not in text
     assert "262 file(s) scanned" not in text
@@ -125,9 +127,9 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "adoption-report-matlab-plotting-skill.md" in docs_index
     assert "adoption-report-matlab-plotting-skill.md" in chinese_index
     assert "Snapshot date: 2026-06-11" in text
-    assert "Latest checked downstream commit | `a23411a`" in text
+    assert "Latest checked downstream commit | `f32bb61`" in text
     assert "Quality workflow" in text
-    assert "27294667935" in text
+    assert "27295673294" in text
     assert "public `v2.5.0` tag" in text
     assert "92 file(s) scanned" in text
     assert "13 binary/skipped" in text
@@ -139,6 +141,8 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "external adoption claim" in text
     assert "program eligibility claim" in text
     assert "not proof that MATLAB rendered on GitHub-hosted runners" in text
+    assert "a23411a" not in text
+    assert "27294667935" not in text
     assert "raw private data" not in text
 
 

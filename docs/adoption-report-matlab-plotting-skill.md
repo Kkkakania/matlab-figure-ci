@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed preview check |
-| Latest checked downstream commit | `a23411a` |
-| Latest checked workflow | Quality workflow, run `27294667935` |
+| Latest checked downstream commit | `f32bb61` |
+| Latest checked workflow | Quality workflow, run `27295673294` |
 
 The downstream workflow installs `matlab-figure-ci` from the public `v2.5.0` tag,
 prints the effective rules, runs the full check, and uploads Markdown report and
@@ -30,7 +30,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
 Run URL:
-<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27294667935>
+<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27295673294>
 
 ## Configuration Summary
 
@@ -65,7 +65,7 @@ Result:
 ```
 
 The downstream `Quality` GitHub Actions workflow also completed successfully
-for commit `a23411a`.
+for commit `f32bb61`.
 
 ## What Worked
 

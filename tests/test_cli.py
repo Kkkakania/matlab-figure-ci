@@ -129,6 +129,7 @@ gallery:
     assert result.returncode == 0
     assert (tmp_path / "mfigci-report.md").exists()
     assert (tmp_path / ".mfigci-results.json").exists()
+    assert "Evidence packet: mfigci report --style evidence --input .mfigci-results.json --output mfigci-evidence.md" in result.stdout
     payload = json.loads((tmp_path / ".mfigci-results.json").read_text(encoding="utf-8"))
     assert payload["summary"]["errors"] == 0
 

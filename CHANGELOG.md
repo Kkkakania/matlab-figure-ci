@@ -4,6 +4,8 @@
 
 - Evidence packet report style for `mfigci report --style evidence`, available
   on `main` until the next release tag.
+- `mfigci check` now prints the follow-up evidence-packet command after writing
+  `.mfigci-results.json`.
 
 ## v2.5.0 - 2026-06-10
 

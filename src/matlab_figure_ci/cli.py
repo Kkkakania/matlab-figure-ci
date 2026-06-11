@@ -250,6 +250,7 @@ def command_check(args) -> int:
     _print_gallery(results.gallery)
     print(f"Report written to {args.report}")
     print(f"Results written to {args.results}")
+    print(f"Evidence packet: mfigci report --style evidence --input {args.results} --output mfigci-evidence.md")
     if results.render.get("status") == "error":
         print(f"ERROR render {results.render.get('message')}")
         if "process_exit_code" in results.render:

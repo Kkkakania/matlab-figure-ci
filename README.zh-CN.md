@@ -21,6 +21,7 @@
 - [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures) 是主要的 clean-room gallery 和模板库。
 - [`matlab-figure-ci`](https://github.com/Kkkakania/matlab-figure-ci) 检查图表仓库的 gallery、来源、隐私和 release gate 漂移。
 - [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill) 把 MATLAB 绘图工作流接到 agent/Codex 风格的数据到图表任务。
+- [`scientific-plotting-function-library`](https://github.com/Kkkakania/scientific-plotting-function-library) 是更大的 Python + MATLAB 双语参考图库，用来沉淀更严格的 release state、配色、manifest 和大规模 gallery 检查经验。
 
 ## Dogfooding 状态
 

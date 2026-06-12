@@ -31,6 +31,9 @@ ecosystem:
   figure repositories for gallery, provenance, privacy, and release-gate drift.
 - [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill)
   connects MATLAB plotting workflows to agent/Codex-style data-to-figure tasks.
+- [`scientific-plotting-function-library`](https://github.com/Kkkakania/scientific-plotting-function-library)
+  is the larger Python + MATLAB reference gallery used to exercise stricter
+  release-state, palette, manifest, and large-gallery checks.
 
 ## Dogfooding Status
 

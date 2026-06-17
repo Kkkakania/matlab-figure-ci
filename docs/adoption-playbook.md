@@ -129,6 +129,26 @@ Private datasets, source packs, local absolute paths, screenshots from papers,
 and unclear third-party helper code should be removed from the handoff before
 the report is shared.
 
+Local export bundles need the same treatment. Many figure repositories create
+temporary delivery folders, course packs, preview bundles, or sales packages
+while a maintainer is experimenting. Keep those folders out of the public repo
+or ignore them explicitly before running `mfigci`:
+
+```yaml
+scan:
+  exclude:
+    - ".git"
+    - "dist"
+    - "build"
+    - "local-bundles"
+    - "sales-package"
+```
+
+An exclude is not a permission decision. It only keeps private generated
+material out of the report. If a file is meant to become public, move it into a
+reviewed source or gallery path, regenerate it from public inputs, and let the
+normal scan and gallery checks see it.
+
 ## Maintainer Checklist
 
 - Use relative paths in reports and issue examples.

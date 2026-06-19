@@ -184,6 +184,31 @@ def test_evidence_packet_template_is_documented():
     assert "not an approval argument" in text
 
 
+def test_submission_check_example_is_documented_and_bounded():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+    docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+    chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
+    text = (ROOT / "examples" / "reports" / "submission-check-example.md").read_text(encoding="utf-8")
+
+    assert "examples/reports/submission-check-example.md" in readme
+    assert "examples/reports/submission-check-example.md" in chinese
+    assert "../examples/reports/submission-check-example.md" in docs_index
+    assert "../examples/reports/submission-check-example.md" in chinese_index
+    assert "# Submission Check Example Report" in text
+    assert "synthetic paths" in text
+    assert "Font size" in text
+    assert "Line width" in text
+    assert "Figure dimensions" in text
+    assert "Export format" in text
+    assert "Local/private paths" in text
+    assert "Source boundary" in text
+    assert "Release readiness" in text
+    assert "does not verify scientific validity" in text
+    assert "journal acceptance" in text
+    assert "promising review outcomes" in text
+
+
 def test_triage_report_template_is_documented():
     docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
     chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")

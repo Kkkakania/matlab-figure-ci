@@ -22,6 +22,9 @@ This directory collects the public maintainer and user documentation for
   relative path guarantees.
 - [PR comment report](pr-comment-template.md): compact Markdown output for
   manual pull request review.
+- [Submission check example](../examples/reports/submission-check-example.md):
+  a concrete publication-figure QA report using synthetic paths and bounded
+  claims.
 - [Evidence packet template](evidence-packet-template.md): copyable review and
   application evidence packet generated from `.mfigci-results.json`.
 - [Issue triage report](issue-triage-report.md): compact issue/PR triage note

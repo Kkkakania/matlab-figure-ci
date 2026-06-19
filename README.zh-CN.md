@@ -104,6 +104,9 @@ mfigci-report.md
 .mfigci-results.json
 ```
 
+如果想看一份更接近“投稿前图件检查”的写法，可以参考
+[submission check example](examples/reports/submission-check-example.md)。这份示例会展示如何讨论字号、线宽、图尺寸、导出格式、隐私痕迹、来源边界和 release readiness，同时避免把工具报告写成科学有效性、论文录用或审稿结果承诺。
+
 ## 前 5 分钟
 
 如果只是试用工具，先不要改变 release 策略。推荐用这个路径：
@@ -305,6 +308,7 @@ jobs:
 - [Plotting-skill adoption report](docs/adoption-report-matlab-plotting-skill.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
+- [Submission check example](examples/reports/submission-check-example.md)
 - [Evidence packet template](docs/evidence-packet-template.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)

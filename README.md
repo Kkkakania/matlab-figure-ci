@@ -133,6 +133,12 @@ mfigci-report.md
 .mfigci-results.json
 ```
 
+For a concrete publication-figure review pattern, see the
+[submission check example](examples/reports/submission-check-example.md). It
+shows how to discuss fonts, line widths, figure dimensions, export formats,
+privacy findings, provenance boundaries, and release readiness without claiming
+scientific validity or journal acceptance.
+
 ## First 5 Minutes
 
 Use this path to try the tool without changing release policy immediately:
@@ -372,6 +378,7 @@ jobs:
 - [Plotting-skill adoption report](docs/adoption-report-matlab-plotting-skill.md)
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
+- [Submission check example](examples/reports/submission-check-example.md)
 - [Evidence packet template](docs/evidence-packet-template.md)
 - [Issue triage report](docs/issue-triage-report.md)
 - [Rule design](docs/rule-design.md)

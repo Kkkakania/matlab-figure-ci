@@ -190,11 +190,18 @@ def test_submission_check_example_is_documented_and_bounded():
     docs_index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
     chinese_index = (ROOT / "docs" / "README.zh-CN.md").read_text(encoding="utf-8")
     text = (ROOT / "examples" / "reports" / "submission-check-example.md").read_text(encoding="utf-8")
+    template = (
+        ROOT / "examples" / "reports" / "submission-check-template.zh-CN.md"
+    ).read_text(encoding="utf-8")
 
     assert "examples/reports/submission-check-example.md" in readme
     assert "examples/reports/submission-check-example.md" in chinese
     assert "../examples/reports/submission-check-example.md" in docs_index
     assert "../examples/reports/submission-check-example.md" in chinese_index
+    assert "examples/reports/submission-check-template.zh-CN.md" in readme
+    assert "examples/reports/submission-check-template.zh-CN.md" in chinese
+    assert "../examples/reports/submission-check-template.zh-CN.md" in docs_index
+    assert "../examples/reports/submission-check-template.zh-CN.md" in chinese_index
     assert "# Submission Check Example Report" in text
     assert "synthetic paths" in text
     assert "Font size" in text
@@ -207,6 +214,9 @@ def test_submission_check_example_is_documented_and_bounded():
     assert "does not verify scientific validity" in text
     assert "journal acceptance" in text
     assert "promising review outcomes" in text
+    assert "# MATLAB 图件投稿前检查模板" in template
+    assert "本模板只检查图件质量和发布卫生" in template
+    assert "不替代导师、学校、期刊或会议要求" in template
 
 
 def test_triage_report_template_is_documented():

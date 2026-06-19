@@ -25,6 +25,9 @@ This directory collects the public maintainer and user documentation for
 - [Submission check example](../examples/reports/submission-check-example.md):
   a concrete publication-figure QA report using synthetic paths and bounded
   claims.
+- [Submission check template (zh-CN)](../examples/reports/submission-check-template.zh-CN.md):
+  a Chinese-language worksheet for publication-figure review notes and
+  handoff checks.
 - [Evidence packet template](evidence-packet-template.md): copyable review and
   application evidence packet generated from `.mfigci-results.json`.
 - [Issue triage report](issue-triage-report.md): compact issue/PR triage note

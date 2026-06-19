@@ -379,6 +379,7 @@ jobs:
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Submission check example](examples/reports/submission-check-example.md)
+- [Submission check template (zh-CN)](examples/reports/submission-check-template.zh-CN.md)
 - [Evidence packet template](docs/evidence-packet-template.md)
 - [Issue triage report](docs/issue-triage-report.md)
 - [Rule design](docs/rule-design.md)

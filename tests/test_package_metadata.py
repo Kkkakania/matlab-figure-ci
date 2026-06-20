@@ -69,7 +69,8 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert "id-token: write" not in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in text
-    assert "actions/upload-artifact@v5" in text
+    assert "actions/upload-artifact@" in text
+    assert "actions/upload-artifact@v4" not in text
     assert "name: release-preflight" in text
     assert "path: release-preflight.json" in text
     assert "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json" in text

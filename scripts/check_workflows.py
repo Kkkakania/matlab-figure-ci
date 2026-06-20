@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CI_WORKFLOW = ROOT / ".github" / "workflows" / "ci.yml"
 PACKAGE_WORKFLOW = ROOT / ".github" / "workflows" / "package.yml"
+TRIAGE_WORKFLOW = ROOT / ".github" / "workflows" / "issue-triage.yml"
 
 
 def read_workflow(path: Path) -> str:
@@ -55,10 +56,24 @@ def check_package_workflow(text: str) -> None:
     reject(text, "TWINE_PASSWORD", "package.yml")
 
 
+def check_issue_triage_workflow(text: str) -> None:
+    require(text, "issues:", "issue-triage.yml")
+    require(text, "types: [opened]", "issue-triage.yml")
+    require(text, "issues: write", "issue-triage.yml")
+    require(text, "matlab-figure-ecosystem-triage", "issue-triage.yml")
+    require(text, "gh issue comment", "issue-triage.yml")
+    require(text, "minimal fixture or synthetic project", "issue-triage.yml")
+    require(text, "Kkkakania/matlab-scientific-figures#31", "issue-triage.yml")
+    require(text, "Awaiting feedback", "issue-triage.yml")
+    reject(text, "project:", "issue-triage.yml")
+    reject(text, "read:project", "issue-triage.yml")
+
+
 def main() -> int:
     try:
         check_ci_workflow(read_workflow(CI_WORKFLOW))
         check_package_workflow(read_workflow(PACKAGE_WORKFLOW))
+        check_issue_triage_workflow(read_workflow(TRIAGE_WORKFLOW))
     except AssertionError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return 1

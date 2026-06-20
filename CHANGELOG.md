@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added an issue-triage checklist workflow that comments on newly opened issues
+  with track, evidence-level, fixture, and release-readiness prompts while the
+  cross-repo Project board remains pending.
 - Added a submission-check example report for publication-figure QA workflows,
   with synthetic paths and explicit limits around scientific validity, asset
   reuse, and review outcomes.

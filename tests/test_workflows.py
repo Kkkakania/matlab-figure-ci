@@ -81,3 +81,34 @@ def test_package_workflow_check_rejects_old_actions_and_publish_markers():
             assert "package.yml" in str(exc)
         else:
             raise AssertionError("unsafe package workflow was accepted")
+
+
+def test_issue_triage_workflow_check_rejects_project_scope_markers():
+    script = load_workflow_script()
+    base = """
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  checklist:
+    steps:
+      - run: |
+          echo matlab-figure-ecosystem-triage
+          echo "minimal fixture or synthetic project"
+          echo "Kkkakania/matlab-scientific-figures#31"
+          echo "Awaiting feedback"
+          gh issue comment "$ISSUE_URL" --body-file /tmp/triage-comment.md
+"""
+
+    script.check_issue_triage_workflow(base)
+
+    for workflow in [base + "\n  project: read\n", base + "\n  read:project\n"]:
+        try:
+            script.check_issue_triage_workflow(workflow)
+        except AssertionError as exc:
+            assert "issue-triage.yml" in str(exc)
+        else:
+            raise AssertionError("project-scoped triage workflow was accepted")

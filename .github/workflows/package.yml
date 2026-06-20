@@ -45,14 +45,14 @@ jobs:
           /tmp/mfigci-wheel-smoke/bin/mfigci --help
 
       - name: Upload release preflight report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: release-preflight
           path: release-preflight.json
 
       - name: Upload PyPI name check
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: pypi-name-check

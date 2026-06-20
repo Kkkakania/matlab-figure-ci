@@ -18,6 +18,8 @@
   `.mfigci-results.json`.
 - Refreshed downstream dogfooding adoption reports with the latest verified
   `matlab-scientific-figures` and `matlab-plotting-skill` workflow runs.
+- Refreshed the `matlab-plotting-skill` adoption report again after the skill
+  repository added its own bounded application evidence note.
 
 ## v2.5.0 - 2026-06-10
 

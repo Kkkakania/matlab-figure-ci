@@ -127,14 +127,16 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "docs/adoption-report-matlab-plotting-skill.md" in readme
     assert "adoption-report-matlab-plotting-skill.md" in docs_index
     assert "adoption-report-matlab-plotting-skill.md" in chinese_index
-    assert "Snapshot date: 2026-06-11" in text
-    assert "Latest checked downstream commit | `f32bb61`" in text
+    assert "Snapshot date: 2026-06-20" in text
+    assert "Latest checked downstream commit | `1db56f7`" in text
     assert "Quality workflow" in text
-    assert "27295673294" in text
+    assert "27874276844" in text
     assert "public `v2.5.0` tag" in text
-    assert "92 file(s) scanned" in text
+    assert "104 file(s) scanned" in text
+    assert "1 warning(s)" in text
     assert "13 binary/skipped" in text
     assert "13 gallery file(s) ok" in text
+    assert "docs/application-evidence.md" in text
     assert "MATLAB render in public CI | Disabled" in text
     assert "Markdown report and `.mfigci-results.json` artifacts" in text
     assert "render reports are producer evidence, not source material" in text
@@ -144,6 +146,8 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "not proof that MATLAB rendered on GitHub-hosted runners" in text
     assert "a23411a" not in text
     assert "27294667935" not in text
+    assert "27295673294" not in text
+    assert "f32bb61" not in text
     assert "raw private data" not in text
 
 

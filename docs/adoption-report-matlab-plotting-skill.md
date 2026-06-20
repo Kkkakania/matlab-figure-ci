@@ -1,6 +1,6 @@
 # Adoption Report: matlab-plotting-skill
 
-Snapshot date: 2026-06-11
+Snapshot date: 2026-06-20
 
 This report records how the companion repository
 [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill)
@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed preview check |
-| Latest checked downstream commit | `f32bb61` |
-| Latest checked workflow | Quality workflow, run `27295673294` |
+| Latest checked downstream commit | `1db56f7` |
+| Latest checked workflow | Quality workflow, run `27874276844` |
 
 The downstream workflow installs `matlab-figure-ci` from the public `v2.5.0` tag,
 prints the effective rules, runs the full check, and uploads Markdown report and
@@ -30,7 +30,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
 Run URL:
-<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27295673294>
+<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27874276844>
 
 ## Configuration Summary
 
@@ -60,12 +60,12 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 Result:
 
 ```text
-0 error(s), 0 warning(s), 92 file(s) scanned, 13 binary/skipped.
+0 error(s), 1 warning(s), 104 file(s) scanned, 13 binary/skipped.
 0 error(s), 0 warning(s), 13 gallery file(s) ok.
 ```
 
 The downstream `Quality` GitHub Actions workflow also completed successfully
-for commit `f32bb61`.
+for commit `1db56f7`.
 
 ## What Worked
 
@@ -79,6 +79,9 @@ for commit `f32bb61`.
 - `mfigci-report.md`, `.mfigci-results.json`, and `mfigci-evidence.md` stay
   ignored locally unless a maintainer deliberately reviews and commits a
   redacted report.
+- The skill repository now carries its own reviewer-facing
+  `docs/application-evidence.md`, so the application story does not depend only
+  on the MATLAB gallery repository's evidence page.
 - The no-render public CI boundary matches the repository's first-use story:
   metadata, docs, manifests, and committed previews can be checked without
   requiring MATLAB on GitHub-hosted runners.
@@ -91,6 +94,8 @@ for commit `f32bb61`.
   third-party plotting helper is safe to publish.
 - The report should be cited as maintainer evidence only when linked to the
   exact commit, workflow run, and command summary above.
+- The one current warning is the reviewed generated-asset warning for the
+  checked diagram SVG under the skill examples directory.
 
 ## Follow-Up Uses
 

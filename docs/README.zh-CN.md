@@ -18,6 +18,7 @@
 - [JSON report](json-report.md)：机器可读报告字段、脱敏保证和相对路径保证。
 - [PR comment report](pr-comment-template.md)：适合复制到 pull request 评论里的紧凑 Markdown 报告。
 - [Submission check example](../examples/reports/submission-check-example.md)：一份使用合成路径和边界声明的投稿前图件检查示例。
+- [投稿前图件检查模板](../examples/reports/submission-check-template.zh-CN.md)：用于逐张记录图件呈现、导出和可复现风险的中文模板。
 - [Evidence packet template](evidence-packet-template.md)：从 `.mfigci-results.json` 生成 review/application 证据包草稿。
 - [Issue triage report](issue-triage-report.md)：从 `.mfigci-results.json` 生成 issue/PR 分诊摘要。
 - [v2 compatibility](v2-compatibility.md)：v2 版本线的 CLI、配置、报告和策略兼容边界。

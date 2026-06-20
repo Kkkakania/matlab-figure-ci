@@ -309,6 +309,7 @@ jobs:
 - [JSON report](docs/json-report.md)
 - [PR comment report](docs/pr-comment-template.md)
 - [Submission check example](examples/reports/submission-check-example.md)
+- [投稿前图件检查模板](examples/reports/submission-check-template.zh-CN.md)
 - [Evidence packet template](docs/evidence-packet-template.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)

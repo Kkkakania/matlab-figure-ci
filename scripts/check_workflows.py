@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CI_WORKFLOW = ROOT / ".github" / "workflows" / "ci.yml"
 PACKAGE_WORKFLOW = ROOT / ".github" / "workflows" / "package.yml"
 TRIAGE_WORKFLOW = ROOT / ".github" / "workflows" / "issue-triage.yml"
+DEPENDABOT_CONFIG = ROOT / ".github" / "dependabot.yml"
 
 
 def read_workflow(path: Path) -> str:
@@ -30,25 +31,29 @@ def reject(text: str, needle: str, workflow_name: str) -> None:
 
 
 def check_ci_workflow(text: str) -> None:
-    require(text, "actions/checkout@v6", "ci.yml")
-    require(text, "actions/setup-python@v6", "ci.yml")
+    require(text, "actions/checkout@", "ci.yml")
+    require(text, "actions/setup-python@", "ci.yml")
     require(text, "python scripts/check_markdown_links.py", "ci.yml")
     require(text, "python scripts/check_workflows.py", "ci.yml")
     reject(text, "actions/checkout@v4", "ci.yml")
+    reject(text, "actions/checkout@v5", "ci.yml")
     reject(text, "actions/setup-python@v4", "ci.yml")
+    reject(text, "actions/setup-python@v5", "ci.yml")
 
 
 def check_package_workflow(text: str) -> None:
     require(text, "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true", "package.yml")
-    require(text, "actions/checkout@v6", "package.yml")
-    require(text, "actions/setup-python@v6", "package.yml")
-    require(text, "actions/upload-artifact@v5", "package.yml")
+    require(text, "actions/checkout@", "package.yml")
+    require(text, "actions/setup-python@", "package.yml")
+    require(text, "actions/upload-artifact@", "package.yml")
     require(text, "mfigci release-preflight --require-dist --output release-preflight.json", "package.yml")
     require(text, "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json", "package.yml")
     require(text, "name: pypi-name-check", "package.yml")
     require(text, "path: pypi-name-check.json", "package.yml")
     reject(text, "actions/checkout@v4", "package.yml")
+    reject(text, "actions/checkout@v5", "package.yml")
     reject(text, "actions/setup-python@v4", "package.yml")
+    reject(text, "actions/setup-python@v5", "package.yml")
     reject(text, "actions/upload-artifact@v4", "package.yml")
     reject(text, "twine upload", "package.yml")
     reject(text, "pypa/gh-action-pypi-publish", "package.yml")
@@ -69,11 +74,25 @@ def check_issue_triage_workflow(text: str) -> None:
     reject(text, "read:project", "issue-triage.yml")
 
 
+def check_dependabot_config(text: str) -> None:
+    require(text, "version: 2", "dependabot.yml")
+    require(text, "package-ecosystem: github-actions", "dependabot.yml")
+    require(text, 'directory: "/"', "dependabot.yml")
+    require(text, "interval: weekly", "dependabot.yml")
+    require(text, "open-pull-requests-limit: 5", "dependabot.yml")
+    require(text, "prefix: ci", "dependabot.yml")
+    reject(text, "package-ecosystem: pip", "dependabot.yml")
+    reject(text, "package-ecosystem: npm", "dependabot.yml")
+    reject(text, "interval: daily", "dependabot.yml")
+    reject(text, "open-pull-requests-limit: 20", "dependabot.yml")
+
+
 def main() -> int:
     try:
         check_ci_workflow(read_workflow(CI_WORKFLOW))
         check_package_workflow(read_workflow(PACKAGE_WORKFLOW))
         check_issue_triage_workflow(read_workflow(TRIAGE_WORKFLOW))
+        check_dependabot_config(read_workflow(DEPENDABOT_CONFIG))
     except AssertionError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return 1

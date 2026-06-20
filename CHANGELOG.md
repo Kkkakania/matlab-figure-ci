@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Dependabot coverage for GitHub Actions and updated workflow guards so
+  reviewed action upgrades are allowed while outdated majors remain blocked.
 - Added an issue-triage checklist workflow that comments on newly opened issues
   with track, evidence-level, fixture, and release-readiness prompts while the
   cross-repo Project board remains pending.

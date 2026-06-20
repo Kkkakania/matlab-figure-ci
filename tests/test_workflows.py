@@ -112,3 +112,36 @@ jobs:
             assert "issue-triage.yml" in str(exc)
         else:
             raise AssertionError("project-scoped triage workflow was accepted")
+
+
+def test_dependabot_config_is_scoped_to_github_actions():
+    script = load_workflow_script()
+    valid = """
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+"""
+
+    script.check_dependabot_config(valid)
+
+    bad_configs = [
+        valid.replace("package-ecosystem: github-actions", "package-ecosystem: pip"),
+        valid.replace('directory: "/"', 'directory: "/src"'),
+        valid.replace("interval: weekly", "interval: daily"),
+        valid.replace("open-pull-requests-limit: 5", "open-pull-requests-limit: 20"),
+        valid.replace("prefix: ci", "prefix: chore"),
+    ]
+
+    for config in bad_configs:
+        try:
+            script.check_dependabot_config(config)
+        except AssertionError as exc:
+            assert "dependabot.yml" in str(exc)
+        else:
+            raise AssertionError("over-broad Dependabot configuration was accepted")

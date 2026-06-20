@@ -10,6 +10,8 @@ Useful workflows include:
 - triage issues into scanner rules, MATLAB render problems, and documentation
   gaps
 - help maintain a clean dogfooding workflow for `matlab-scientific-figures`
+- review Dependabot GitHub Actions updates as ordinary maintenance pull
+  requests, not as automatic merge authority
 
 AI assistance should not replace maintainer review. It should make review more
 consistent and make release checks easier to repeat.
@@ -58,6 +60,7 @@ to facts that can be linked or reproduced:
 - public repository URL
 - latest GitHub release tag
 - CI and package workflow status for the relevant commit
+- Dependabot GitHub Actions update PRs when workflow dependencies change
 - downstream dogfooding repository and workflow link
 - issue or discussion links that show real maintenance work
 - local command summaries such as `pytest`, `mfigci check`, and package build

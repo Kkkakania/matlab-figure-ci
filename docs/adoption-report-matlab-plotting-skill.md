@@ -1,6 +1,6 @@
 # Adoption Report: matlab-plotting-skill
 
-Snapshot date: 2026-06-20
+Snapshot date: 2026-06-21
 
 This report records how the companion repository
 [`matlab-plotting-skill`](https://github.com/Kkkakania/matlab-plotting-skill)
@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed preview check |
-| Latest checked downstream commit | `1db56f7` |
-| Latest checked workflow | Quality workflow, run `27874276844` |
+| Latest checked downstream commit | `a28131f` |
+| Latest checked workflow | Quality workflow, run `27894703366`, successful and annotation-free |
 
 The downstream workflow installs `matlab-figure-ci` from the public `v2.5.0` tag,
 prints the effective rules, runs the full check, and uploads Markdown report and
@@ -30,7 +30,7 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
 Run URL:
-<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27874276844>
+<https://github.com/Kkkakania/matlab-plotting-skill/actions/runs/27894703366>
 
 ## Configuration Summary
 
@@ -65,7 +65,7 @@ Result:
 ```
 
 The downstream `Quality` GitHub Actions workflow also completed successfully
-for commit `1db56f7`.
+for commit `a28131f`, with no GitHub annotations at the checked snapshot.
 
 ## What Worked
 
@@ -80,8 +80,9 @@ for commit `1db56f7`.
   ignored locally unless a maintainer deliberately reviews and commits a
   redacted report.
 - The skill repository now carries its own reviewer-facing
-  `docs/application-evidence.md`, so the application story does not depend only
-  on the MATLAB gallery repository's evidence page.
+  `docs/application-evidence.md`, and it now describes the repository as
+  companion skill evidence for `matlab-scientific-figures` rather than as the
+  main Codex for Open Source application repository.
 - The no-render public CI boundary matches the repository's first-use story:
   metadata, docs, manifests, and committed previews can be checked without
   requiring MATLAB on GitHub-hosted runners.
@@ -96,6 +97,8 @@ for commit `1db56f7`.
   exact commit, workflow run, and command summary above.
 - The one current warning is the reviewed generated-asset warning for the
   checked diagram SVG under the skill examples directory.
+- A green downstream workflow should be cited only together with the exact run
+  URL and annotation status, not as broad adoption evidence.
 
 ## Follow-Up Uses
 

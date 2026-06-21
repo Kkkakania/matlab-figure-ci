@@ -1,6 +1,6 @@
 # Adoption Report: matlab-scientific-figures
 
-Snapshot date: 2026-06-11
+Snapshot date: 2026-06-21
 
 This report records how the companion repository
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `27c3755` |
-| Latest checked workflow | Figure quality workflow, run `27295930398` |
+| Latest checked downstream commit | `3894c6f` |
+| Latest checked workflow | Figure quality run `27894597253` and Quality checks run `27894597258`, both successful and annotation-free |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads Markdown report and `.mfigci-results.json` artifacts:
@@ -28,8 +28,12 @@ mfigci rules --config mfigci.yml
 mfigci check --config mfigci.yml --report mfigci-report.md
 ```
 
-Run URL:
-<https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/27295930398>
+Run URLs:
+
+- Figure quality:
+  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/27894597253>
+- Quality checks:
+  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/27894597258>
 
 ## Configuration Summary
 
@@ -58,13 +62,13 @@ mfigci check --config mfigci.yml --report mfigci-report.md --results .mfigci-res
 Result:
 
 ```text
-0 error(s), 0 warning(s), 271 file(s) scanned, 30 binary/skipped.
+0 error(s), 0 warning(s), 280 file(s) scanned, 30 binary/skipped.
 0 error(s), 0 warning(s), 60 gallery file(s) ok.
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `27c3755` while the repository stayed
-pinned to the public `v2.5.0` tag.
+also completed successfully for commit `3894c6f` with zero annotations in the
+checked snapshot while the repository stayed pinned to the public `v2.5.0` tag.
 
 ## What Worked
 
@@ -103,12 +107,17 @@ pinned to the public `v2.5.0` tag.
 - The downstream domain examples now carry the accepted issue-feedback unit
   refinements for the synthetic 5 MW PV example and harmonic magnitudes in
   `% of fundamental`, without expanding the domain pack before more feedback.
+- The downstream live snapshot helper now treats green CI and annotation-free status
+  as an evidence boundary, so an application packet can cite exact run URLs
+  without turning workflow success into an adoption claim.
 
 ## Current Boundaries
 
 - A green `mfigci` check proves the committed gallery artifacts are present and
   policy-clean; it does not prove GitHub regenerated those artifacts from MATLAB
   source.
+- A successful workflow run is evidence for repository maintenance hygiene, not
+  proof of external usage, download volume, or program eligibility.
 - MATLAB rendering and unit tests remain a downstream local release-gate
   responsibility unless a runner with MATLAB is explicitly available.
 - Warning-strict mode is useful for release gates, but normal development keeps

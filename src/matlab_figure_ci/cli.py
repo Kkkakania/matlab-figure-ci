@@ -559,7 +559,12 @@ def command_release_preflight(args) -> int:
         require_dist=args.require_dist,
     )
     exit_code = release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
-    payload = release_preflight_payload(items, exit_code=exit_code)
+    payload = release_preflight_payload(
+        items,
+        exit_code=exit_code,
+        project_name=args.name,
+        project_version=__version__,
+    )
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)

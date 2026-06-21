@@ -28,10 +28,18 @@ def release_preflight_summary(items: list[PreflightItem]) -> dict[str, int]:
     }
 
 
-def release_preflight_payload(items: list[PreflightItem], *, exit_code: int) -> dict:
+def release_preflight_payload(
+    items: list[PreflightItem],
+    *,
+    exit_code: int,
+    project_name: str,
+    project_version: str,
+) -> dict:
     """Return a machine-readable release preflight payload."""
 
     return {
+        "projectName": project_name,
+        "projectVersion": project_version,
         "summary": release_preflight_summary(items),
         "exitCode": exit_code,
         "items": [

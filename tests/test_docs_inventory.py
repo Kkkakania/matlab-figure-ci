@@ -399,6 +399,10 @@ def test_release_artifacts_doc_explains_preflight_payload():
     text = (ROOT / "docs" / "release-artifacts.md").read_text(encoding="utf-8")
 
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
+    assert "projectName" in text
+    assert "projectVersion" in text
     assert "summary.errors" in text
+    assert "summary.checks" in text
+    assert "summary.total" not in text
     assert "release-preflight" in text
     assert "does not publish to PyPI" in text

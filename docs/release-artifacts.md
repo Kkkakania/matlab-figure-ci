@@ -22,7 +22,9 @@ GitHub Actions artifact named `release-preflight`.
 
 The JSON payload contains:
 
-- `summary.total`
+- `projectName`
+- `projectVersion`
+- `summary.checks`
 - `summary.errors`
 - `summary.warnings`
 - `exitCode`
@@ -31,10 +33,11 @@ The JSON payload contains:
 For a release candidate, inspect the artifact before tagging or publishing:
 
 1. Confirm `summary.errors` is `0`.
-2. Review any warnings instead of treating them as decoration.
-3. Confirm the workflow commit matches the intended release candidate.
-4. Confirm `dist/*.whl` and `dist/*.tar.gz` were required by the preflight run.
-5. Recheck the PyPI project name immediately before any future publish step.
+2. Confirm `projectName` and `projectVersion` match the intended package.
+3. Review any warnings instead of treating them as decoration.
+4. Confirm the workflow commit matches the intended release candidate.
+5. Confirm `dist/*.whl` and `dist/*.tar.gz` were required by the preflight run.
+6. Recheck the PyPI project name immediately before any future publish step.
 
 ## What It Does Not Do
 

@@ -801,6 +801,8 @@ def test_release_preflight_can_emit_json():
 
     assert result.returncode == 0
     payload = json.loads(result.stdout)
+    assert payload["projectName"] == "matlab-figure-ci"
+    assert payload["projectVersion"]
     assert payload["summary"]["errors"] == 0
     assert payload["summary"]["warnings"] == 0
     assert payload["exitCode"] == 0
@@ -818,6 +820,8 @@ def test_release_preflight_can_write_json_output(tmp_path):
     assert result.returncode == 0
     assert "0 error(s), 0 warning(s)" in result.stdout
     payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["projectName"] == "matlab-figure-ci"
+    assert payload["projectVersion"]
     assert payload["summary"]["errors"] == 0
     assert payload["exitCode"] == 0
     assert any(item["check"] == "package-workflow" for item in payload["items"])

@@ -97,8 +97,15 @@ def test_release_preflight_payload_is_machine_readable():
     ]
 
     assert release_preflight_summary(items) == {"errors": 0, "warnings": 1, "checks": 2}
-    payload = release_preflight_payload(items, exit_code=0)
+    payload = release_preflight_payload(
+        items,
+        exit_code=0,
+        project_name="matlab-figure-ci",
+        project_version=__version__,
+    )
 
+    assert payload["projectName"] == "matlab-figure-ci"
+    assert payload["projectVersion"] == __version__
     assert payload["summary"]["warnings"] == 1
     assert payload["exitCode"] == 0
     assert payload["items"][0] == {

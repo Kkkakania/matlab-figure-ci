@@ -1,6 +1,7 @@
 import re
 import importlib.util
 import json
+import subprocess
 from pathlib import Path
 
 from matlab_figure_ci import __version__
@@ -114,3 +115,17 @@ def test_pypi_release_checklist_uses_name_helper():
     assert "pypi-name-check.json" in text
     assert "package workflow does not publish" in text
     assert "exits `0` when PyPI returns `404`" in text
+
+
+def test_generated_python_artifacts_are_not_tracked():
+    output = subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True)
+
+    blocked = (
+        ".pytest_cache/",
+        "__pycache__/",
+        ".pyc",
+        ".egg-info/",
+    )
+    tracked = [path for path in output.splitlines() if any(part in path for part in blocked)]
+
+    assert tracked == []

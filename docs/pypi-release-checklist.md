@@ -25,7 +25,9 @@ change.
 5. Confirm the package name is still available on PyPI.
 6. Confirm no PyPI token is committed to the repository.
 7. Confirm the Package workflow uploaded `release-preflight.json` and
-   `pypi-name-check.json` for the release candidate commit.
+   `pypi-name-check.json` for the release candidate commit. The preflight
+   artifact should include the `pypi-name` check, and the standalone name-check
+   artifact remains a time-sensitive snapshot.
 8. Confirm the Package workflow still builds, checks, smoke-installs, and
    uploads a preflight artifact only. It must not contain `twine upload`,
    `pypa/gh-action-pypi-publish`, `id-token: write`, or PyPI token variables.
@@ -36,6 +38,7 @@ Run the local release preflight before building:
 mfigci release-preflight
 mfigci release-preflight --format json
 mfigci release-preflight --output release-preflight.json
+mfigci release-preflight --check-pypi-name --output release-preflight.json
 ```
 
 This checks required release files, `pyproject.toml` metadata, the matching

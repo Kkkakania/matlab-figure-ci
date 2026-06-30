@@ -25,8 +25,8 @@ def test_release_preflight_passes_for_repository_metadata():
     assert release_preflight_exit_code(items) == 0
     assert any(item.check == "pyproject" and item.message == f'version = "{__version__}"' for item in items)
     assert any(item.check == "package-workflow" and "smoke installs" in item.message for item in items)
-    assert any(item.check == "package-workflow" and "checks PyPI package name" in item.message for item in items)
-    assert any(item.check == "package-workflow" and "uploads PyPI name-check artifact" in item.message for item in items)
+    assert any(item.check == "package-workflow" and "records PyPI package name" in item.message for item in items)
+    assert any(item.check == "package-workflow" and "standalone PyPI name-check artifact" in item.message for item in items)
     assert any(item.check == "package-workflow" and "does not publish to PyPI" in item.message for item in items)
 
 

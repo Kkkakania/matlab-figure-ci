@@ -46,7 +46,7 @@ def check_package_workflow(text: str) -> None:
     require(text, "actions/checkout@", "package.yml")
     require(text, "actions/setup-python@", "package.yml")
     require(text, "actions/upload-artifact@", "package.yml")
-    require(text, "mfigci release-preflight --require-dist --output release-preflight.json", "package.yml")
+    require(text, "mfigci release-preflight --require-dist --check-pypi-name --output release-preflight.json", "package.yml")
     require(text, "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json", "package.yml")
     require(text, "name: pypi-name-check", "package.yml")
     require(text, "path: pypi-name-check.json", "package.yml")

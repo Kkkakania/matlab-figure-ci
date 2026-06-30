@@ -376,6 +376,8 @@ def test_readme_lists_release_preflight_command():
     assert "mfigci release-preflight" in readme
     assert "mfigci release-preflight --format json" in readme
     assert "mfigci release-preflight --output release-preflight.json" in readme
+    checklist = (ROOT / "docs" / "pypi-release-checklist.md").read_text(encoding="utf-8")
+    assert "mfigci release-preflight --check-pypi-name --output release-preflight.json" in checklist
     assert "mfigci release-preflight --require-dist" in readme
     assert "docs/release-artifacts.md" in readme
     assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in readme

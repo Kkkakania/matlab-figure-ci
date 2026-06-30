@@ -191,7 +191,8 @@ def run_release_preflight(
             "mfigci --version": "checks installed console script version",
             "mfigci --help": "checks installed console script help",
             "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true": "opts artifact upload steps into the current Node runtime",
-            "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json": "checks PyPI package name before publishing",
+            "mfigci release-preflight --require-dist --check-pypi-name --output release-preflight.json": "records PyPI package name in the preflight artifact",
+            "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json": "keeps a standalone PyPI name-check artifact",
             "path: pypi-name-check.json": "uploads PyPI name-check artifact",
         }
         for needle, description in workflow_checks.items():

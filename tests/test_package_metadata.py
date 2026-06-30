@@ -68,7 +68,7 @@ def test_package_workflow_builds_checks_and_smoke_installs_wheel():
     assert "twine upload" not in text
     assert "pypa/gh-action-pypi-publish" not in text
     assert "id-token: write" not in text
-    assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
+    assert "mfigci release-preflight --require-dist --check-pypi-name --output release-preflight.json" in text
     assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in text
     assert "actions/upload-artifact@" in text
     assert "actions/upload-artifact@v4" not in text
@@ -110,6 +110,7 @@ def test_pypi_release_checklist_uses_name_helper():
     assert "mfigci release-preflight" in text
     assert "mfigci release-preflight --format json" in text
     assert "mfigci release-preflight --output release-preflight.json" in text
+    assert "mfigci release-preflight --check-pypi-name --output release-preflight.json" in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json" in text
     assert "pypi-name-check.json" in text

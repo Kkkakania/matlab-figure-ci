@@ -16,7 +16,9 @@ mfigci release-preflight --require-dist --output release-preflight.json
 ```
 
 The package workflow runs the same preflight command and uploads the file as a
-GitHub Actions artifact named `release-preflight`.
+GitHub Actions artifact named `release-preflight`. The workflow also adds
+`--check-pypi-name`, so the artifact includes a `pypi-name` item from the PyPI
+JSON API while still avoiding any publish step.
 
 ## What To Inspect
 

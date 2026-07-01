@@ -1,6 +1,6 @@
 # Adoption Report: matlab-scientific-figures
 
-Snapshot date: 2026-06-21
+Snapshot date: 2026-07-01
 
 This report records how the companion repository
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `3894c6f` |
-| Latest checked workflow | Figure quality run `27894597253` and Quality checks run `27894597258`, both successful and annotation-free |
+| Latest checked downstream commit | `51472f9` |
+| Latest checked workflow | Figure quality run `28495760136` and Quality checks run `28495760059`, both successful and annotation-free |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads Markdown report and `.mfigci-results.json` artifacts:
@@ -31,16 +31,16 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 Run URLs:
 
 - Figure quality:
-  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/27894597253>
+  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/28495760136>
 - Quality checks:
-  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/27894597258>
+  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/28495760059>
 
 ## Configuration Summary
 
 The downstream configuration uses:
 
 - `presets: ["matlab-figures"]`
-- committed gallery checks for 30 PNG files and 30 SVG files
+- committed gallery checks for 31 PNG files and 31 SVG files
 - `.png`, `.svg`, and `.pdf` as allowed gallery extensions
 - `strict.fail_on_warnings: false`
 - `matlab.enabled: false`
@@ -62,12 +62,12 @@ mfigci check --config mfigci.yml --report mfigci-report.md --results .mfigci-res
 Result:
 
 ```text
-0 error(s), 0 warning(s), 280 file(s) scanned, 30 binary/skipped.
-0 error(s), 0 warning(s), 60 gallery file(s) ok.
+0 error(s), 0 warning(s), 291 file(s) scanned, 31 binary/skipped.
+0 error(s), 0 warning(s), 62 gallery file(s) ok.
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `3894c6f` with zero annotations in the
+also completed successfully for commit `51472f9` with zero annotations in the
 checked snapshot while the repository stayed pinned to the public `v2.5.0` tag.
 
 ## What Worked
@@ -101,6 +101,9 @@ checked snapshot while the repository stayed pinned to the public `v2.5.0` tag.
 - The downstream Project-board docs now list interim labels for the current
   open issues, so triage remains inspectable while the live GitHub Project board
   is still pending.
+- The downstream Project-board seed queue now removes closed feedback hub issues
+  from the live board plan while preserving the still-open Project-board,
+  domain-pack, and PyPI decision items.
 - The downstream workflow now pins `matlab-figure-ci` to `v2.5.0`, keeping the
   README, maintainer dashboard, quality-gate documentation, and version guard
   script aligned with the current public checker release.

@@ -84,13 +84,15 @@ def test_adoption_playbook_documents_ecosystem_handoff_contract():
 def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
-    assert "Snapshot date: 2026-06-21" in text
-    assert "Latest checked downstream commit | `3894c6f`" in text
-    assert "Figure quality run `27894597253`" in text
-    assert "Quality checks run `27894597258`" in text
+    assert "Snapshot date: 2026-07-01" in text
+    assert "Latest checked downstream commit | `51472f9`" in text
+    assert "Figure quality run `28495760136`" in text
+    assert "Quality checks run `28495760059`" in text
     assert "successful and annotation-free" in text
     assert "zero annotations" in text
-    assert "280 file(s) scanned" in text
+    assert "291 file(s) scanned" in text
+    assert "31 binary/skipped" in text
+    assert "62 gallery file(s) ok" in text
     assert "not a" in text
     assert "download metric" in text
     assert "external adoption claim" in text
@@ -105,6 +107,7 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "browser session can point to different GitHub users" in text
     assert "interim labels" in text
     assert "triage remains inspectable" in text
+    assert "closed feedback hub issues" in text
     assert "public `v2.5.0` tag" in text
     assert "version guard" in text
     assert "Markdown report and `.mfigci-results.json` artifacts" in text
@@ -124,6 +127,9 @@ def test_dogfooding_adoption_report_is_current_and_bounded():
     assert "261 file(s) scanned" not in text
     assert "262 file(s) scanned" not in text
     assert "263 file(s) scanned" not in text
+    assert "280 file(s) scanned" not in text
+    assert "3894c6f" not in text
+    assert "27894597253" not in text
 
 
 def test_plotting_skill_adoption_report_is_current_and_bounded():

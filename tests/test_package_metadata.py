@@ -116,6 +116,8 @@ def test_pypi_release_checklist_uses_name_helper():
     assert "pypi-name-check.json" in text
     assert "package workflow does not publish" in text
     assert "exits `0` when PyPI returns `404`" in text
+    assert "On 2026-07-01" in text
+    assert "returned `404`" in text
 
 
 def test_generated_python_artifacts_are_not_tracked():

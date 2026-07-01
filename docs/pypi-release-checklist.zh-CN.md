@@ -10,6 +10,7 @@
 
 - 公开 release tag 安装仍然是当前支持路径。
 - 每个 GitHub release 应先被 `matlab-scientific-figures` dogfood，再考虑是否推进 PyPI。
+- 2026-07-01，`https://pypi.org/pypi/matlab-figure-ci/json` 返回 `404`，表示该名称在当时未出现在 PyPI。
 - PyPI 名称状态是外部状态，随时可能变化。历史检查只能作为当时快照，不能替代发布前最后一次检查。
 - `Package` workflow 只负责构建、检查、smoke install 和上传 artifact；它不应该自动上传到 PyPI。
 
@@ -107,4 +108,3 @@ python -m venv /tmp/mfigci-pypi-test
 - 不要声称 PyPI 发布代表外部采用、下载量或任何项目申请一定通过。
 
 这个清单的价值是让未来发布决定有证据，而不是催促发布。
-

@@ -47,6 +47,8 @@ def test_chinese_pypi_checklist_preserves_publish_boundary():
     assert "当前尚未发布到 PyPI" in text
     assert "GitHub release tag" in text
     assert "mfigci release-preflight --require-dist" in text
+    assert "2026-07-01" in text
+    assert "404" in text
     assert "python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json" in text
     assert "pypi-name-check.json" in text
     assert "不要为了关闭 issue 而发布 PyPI" in text

@@ -44,6 +44,31 @@ def test_pdf_is_warning_not_error_by_default(tmp_path):
     assert result.findings[0].rule_id == "extension.warning"
 
 
+def test_extension_policy_matches_configured_extensions_case_insensitively(tmp_path):
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "plot.fig").write_bytes(b"binary")
+    (project / "figure.pdf").write_bytes(b"%PDF-1.7")
+    config_path = project / "mfigci.yml"
+    config_path.write_text(
+        """
+extensions:
+  error:
+    - .FIG
+  warning:
+    - .PDF
+""".lstrip(),
+        encoding="utf-8",
+    )
+
+    result = run_scan(project, load_config(config_path))
+
+    assert {(finding.severity, finding.rule_id, finding.path) for finding in result.findings} == {
+        ("error", "extension.error", "plot.fig"),
+        ("warning", "extension.warning", "figure.pdf"),
+    }
+
+
 def test_origin_addons_and_matlab_toolboxes_warn_by_default(tmp_path):
     project = tmp_path / "project"
     project.mkdir()

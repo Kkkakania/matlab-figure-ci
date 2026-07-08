@@ -86,10 +86,10 @@ def test_adoption_playbook_documents_ecosystem_handoff_contract():
 def test_dogfooding_adoption_report_is_current_and_bounded():
     text = (ROOT / "docs" / "adoption-report-matlab-scientific-figures.md").read_text(encoding="utf-8")
 
-    assert "Snapshot date: 2026-07-01" in text
-    assert "Latest checked downstream commit | `51472f9`" in text
-    assert "Figure quality run `28495760136`" in text
-    assert "Quality checks run `28495760059`" in text
+    assert "Snapshot date: 2026-07-09" in text
+    assert "Latest checked downstream commit | `6a1939e`" in text
+    assert "Figure quality run `28958347031`" in text
+    assert "Quality checks run `28958347024`" in text
     assert "successful and annotation-free" in text
     assert "zero annotations" in text
     assert "291 file(s) scanned" in text

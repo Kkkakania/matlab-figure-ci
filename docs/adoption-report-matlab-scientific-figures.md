@@ -1,6 +1,6 @@
 # Adoption Report: matlab-scientific-figures
 
-Snapshot date: 2026-07-01
+Snapshot date: 2026-07-09
 
 This report records how the companion repository
 [`matlab-scientific-figures`](https://github.com/Kkkakania/matlab-scientific-figures)
@@ -17,8 +17,8 @@ download metric, external adoption claim, or program eligibility claim.
 | Install mode | GitHub release tag in GitHub Actions |
 | MATLAB render in public CI | Disabled |
 | Gallery policy | Committed output check |
-| Latest checked downstream commit | `51472f9` |
-| Latest checked workflow | Figure quality run `28495760136` and Quality checks run `28495760059`, both successful and annotation-free |
+| Latest checked downstream commit | `6a1939e` |
+| Latest checked workflow | Figure quality run `28958347031` and Quality checks run `28958347024`, both successful and annotation-free |
 
 The downstream workflow installs `matlab-figure-ci`, prints the effective rules,
 runs the full check, and uploads Markdown report and `.mfigci-results.json` artifacts:
@@ -31,9 +31,9 @@ mfigci check --config mfigci.yml --report mfigci-report.md
 Run URLs:
 
 - Figure quality:
-  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/28495760136>
+  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/28958347031>
 - Quality checks:
-  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/28495760059>
+  <https://github.com/Kkkakania/matlab-scientific-figures/actions/runs/28958347024>
 
 ## Configuration Summary
 
@@ -67,7 +67,7 @@ Result:
 ```
 
 The downstream `Figure quality` and `Quality checks` GitHub Actions workflows
-also completed successfully for commit `51472f9` with zero annotations in the
+also completed successfully for commit `6a1939e` with zero annotations in the
 checked snapshot while the repository stayed pinned to the public `v2.5.0` tag.
 
 ## What Worked

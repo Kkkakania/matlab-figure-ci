@@ -38,6 +38,7 @@ def release_preflight_payload(
     """Return a machine-readable release preflight payload."""
 
     return {
+        "schemaVersion": 1,
         "projectName": project_name,
         "projectVersion": project_version,
         "summary": release_preflight_summary(items),

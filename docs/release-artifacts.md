@@ -24,6 +24,7 @@ JSON API while still avoiding any publish step.
 
 The JSON payload contains:
 
+- `schemaVersion`
 - `projectName`
 - `projectVersion`
 - `summary.checks`
@@ -35,11 +36,12 @@ The JSON payload contains:
 For a release candidate, inspect the artifact before tagging or publishing:
 
 1. Confirm `summary.errors` is `0`.
-2. Confirm `projectName` and `projectVersion` match the intended package.
-3. Review any warnings instead of treating them as decoration.
-4. Confirm the workflow commit matches the intended release candidate.
-5. Confirm `dist/*.whl` and `dist/*.tar.gz` were required by the preflight run.
-6. Recheck the PyPI project name immediately before any future publish step.
+2. Confirm `schemaVersion` is supported by the reader you plan to use.
+3. Confirm `projectName` and `projectVersion` match the intended package.
+4. Review any warnings instead of treating them as decoration.
+5. Confirm the workflow commit matches the intended release candidate.
+6. Confirm `dist/*.whl` and `dist/*.tar.gz` were required by the preflight run.
+7. Recheck the PyPI project name immediately before any future publish step.
 
 ## What It Does Not Do
 

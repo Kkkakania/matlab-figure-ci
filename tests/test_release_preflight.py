@@ -104,6 +104,7 @@ def test_release_preflight_payload_is_machine_readable():
         project_version=__version__,
     )
 
+    assert payload["schemaVersion"] == 1
     assert payload["projectName"] == "matlab-figure-ci"
     assert payload["projectVersion"] == __version__
     assert payload["summary"]["warnings"] == 1

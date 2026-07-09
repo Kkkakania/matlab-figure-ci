@@ -362,6 +362,8 @@ def load_results(path: str | Path) -> CheckResults:
         )
     try:
         data = json.loads(results_path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise ValueError(f"Could not read {results_path}: {exc.strerror}") from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f"Could not parse {results_path}: {exc.msg}") from exc
     return CheckResults.from_dict(data)

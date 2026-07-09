@@ -297,7 +297,7 @@ def _validate_string_list(values: Any, key: str, label: str) -> None:
 
 
 def _validate_repo_relative_path(value: Any, key: str) -> None:
-    if not isinstance(value, str) or not value:
+    if not isinstance(value, str) or not value.strip():
         raise ConfigError(f"{key} must be a non-empty relative path")
     path = Path(value)
     windows_path = PureWindowsPath(value)

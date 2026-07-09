@@ -344,3 +344,29 @@ def test_markdown_report_uses_longer_fence_for_backtick_excerpts():
     full = build_markdown_report(results)
 
     assert "````text\nbefore\n```matlab\nplot(1)\n```\nafter\n````" in full
+
+
+def test_full_markdown_report_escapes_gallery_list_items():
+    results = CheckResults(
+        summary={"errors": 0, "warnings": 1, "files_scanned": 1, "gallery_checks": 1},
+        findings=[],
+        scan=ScanResults(files_scanned=1),
+        gallery=GalleryResults(
+            items=[
+                GalleryItem(
+                    status="warning",
+                    path="gallery/with|pipe.png",
+                    message="review | file\nnext line",
+                )
+            ]
+        ),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="mfigci.yml",
+        tool_version="0.1.0",
+    )
+
+    markdown = build_markdown_report(results)
+
+    assert "gallery/with\\|pipe.png" in markdown
+    assert "review \\| file next line" in markdown
+    assert "review | file\nnext line" not in markdown

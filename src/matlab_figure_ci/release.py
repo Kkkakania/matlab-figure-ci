@@ -85,6 +85,8 @@ def check_pypi_project_name(name: str, timeout: float = 10.0) -> PreflightItem:
         status = classify_pypi_status(exc.code)
     except urllib.error.URLError as exc:
         return PreflightItem("warning", "pypi-name", f"{url} could not be checked: {exc.reason}")
+    except TimeoutError as exc:
+        return PreflightItem("warning", "pypi-name", f"{url} could not be checked: {exc}")
 
     if status == "available":
         return PreflightItem("ok", "pypi-name", f"{name} is not present on PyPI")

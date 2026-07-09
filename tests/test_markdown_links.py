@@ -33,3 +33,13 @@ def test_markdown_link_checker_accepts_existing_local_link(tmp_path):
     doc.write_text("[Target](target.md)\n", encoding="utf-8")
 
     assert check_markdown_links.check_file(doc, root=tmp_path) == []
+
+
+def test_markdown_link_checker_accepts_angle_bracket_paths_with_spaces(tmp_path):
+    doc = tmp_path / "docs" / "guide.md"
+    target = tmp_path / "docs" / "target with spaces.md"
+    doc.parent.mkdir()
+    target.write_text("# Target\n", encoding="utf-8")
+    doc.write_text("[Target](<target with spaces.md>)\n", encoding="utf-8")
+
+    assert check_markdown_links.check_file(doc, root=tmp_path) == []

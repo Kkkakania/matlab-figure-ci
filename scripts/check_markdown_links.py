@@ -27,8 +27,10 @@ def iter_markdown_files(root: Path = ROOT) -> list[Path]:
 
 
 def normalize_target(raw_target: str) -> str:
-    target = raw_target.strip().strip("<>")
-    if " " in target:
+    stripped = raw_target.strip()
+    bracketed = stripped.startswith("<") and stripped.endswith(">")
+    target = stripped.strip("<>")
+    if " " in target and not bracketed:
         target = target.split()[0]
     return unquote(target)
 

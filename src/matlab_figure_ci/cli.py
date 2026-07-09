@@ -290,6 +290,8 @@ def command_report(args) -> int:
 
 
 def _write_if_allowed(path: Path, content: str, force: bool) -> str:
+    if path.is_dir():
+        return f"skipped {path.as_posix()} (directory exists)"
     if path.exists() and not force:
         return f"skipped {path.as_posix()} (already exists)"
     path.parent.mkdir(parents=True, exist_ok=True)

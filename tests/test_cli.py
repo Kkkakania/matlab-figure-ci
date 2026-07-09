@@ -140,7 +140,7 @@ def test_check_records_relative_config_path_when_called_with_absolute_path(tmp_p
 
     result = run_cli(["check", "--config", str(config_path)], tmp_path)
 
-    assert result.returncode in {0, 1}
+    assert result.returncode == 0
     payload = json.loads((tmp_path / ".mfigci-results.json").read_text(encoding="utf-8"))
     report = (tmp_path / "mfigci-report.md").read_text(encoding="utf-8")
     assert payload["config_path"] == "mfigci.yml"

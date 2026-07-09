@@ -32,6 +32,8 @@ def run_gallery_check(root: str | Path, config: dict) -> GalleryResults:
     result = GalleryResults()
 
     if not gallery_path.exists():
+        if not expected:
+            return result
         result.items.append(GalleryItem("error", _rel(root_path, gallery_path), "gallery directory missing"))
         return result
 

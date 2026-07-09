@@ -4,6 +4,7 @@ from matlab_figure_ci.gallery import run_gallery_check
 
 def write_config(project, expected, min_size=8, allowed=None):
     allowed = allowed or [".png", ".svg", ".pdf"]
+    expected_yaml = "  expected: []" if not expected else f"  expected:\n{chr(10).join(f'    - {name}' for name in expected)}"
     config_path = project / "mfigci.yml"
     config_path.write_text(
         f"""
@@ -12,8 +13,7 @@ gallery:
   allowed_extensions:
 {chr(10).join(f"    - {ext}" for ext in allowed)}
   min_size_bytes: {min_size}
-  expected:
-{chr(10).join(f"    - {name}" for name in expected)}
+{expected_yaml}
 """,
         encoding="utf-8",
     )
@@ -29,6 +29,14 @@ def test_gallery_ok_returns_zero(tmp_path):
 
     assert result.error_count == 0
     assert result.checked_count == 1
+    assert result.exit_code == 0
+
+
+def test_gallery_allows_missing_directory_when_manifest_is_empty(tmp_path):
+    result = run_gallery_check(tmp_path, write_config(tmp_path, []))
+
+    assert result.error_count == 0
+    assert result.checked_count == 0
     assert result.exit_code == 0
 
 

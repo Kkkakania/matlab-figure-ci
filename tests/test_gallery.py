@@ -89,8 +89,16 @@ def test_gallery_rejects_expected_paths_outside_gallery(tmp_path):
     gallery = tmp_path / "gallery"
     gallery.mkdir()
     (tmp_path / "outside.png").write_bytes(b"123456789")
+    config = {
+        "gallery": {
+            "path": "gallery",
+            "allowed_extensions": [".png", ".svg", ".pdf"],
+            "min_size_bytes": 8,
+            "expected": ["../outside.png"],
+        }
+    }
 
-    result = run_gallery_check(tmp_path, write_config(tmp_path, ["../outside.png"]))
+    result = run_gallery_check(tmp_path, config)
 
     assert result.error_count == 1
     assert result.items[0].status == "error"

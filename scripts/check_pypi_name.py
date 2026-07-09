@@ -29,6 +29,8 @@ def check_name(name: str, timeout: float = 10.0) -> tuple[str, str]:
         status = classify_status(exc.code)
     except urllib.error.URLError as exc:
         return "unknown", f"{url} could not be checked: {exc.reason}"
+    except TimeoutError as exc:
+        return "unknown", f"{url} could not be checked: {exc}"
     return status, url
 
 

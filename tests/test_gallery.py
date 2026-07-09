@@ -65,6 +65,18 @@ def test_gallery_reports_unexpected_extension(tmp_path):
     assert result.items[0].status == "warning"
 
 
+def test_gallery_allows_configured_extensions_case_insensitively(tmp_path):
+    gallery = tmp_path / "gallery"
+    gallery.mkdir()
+    (gallery / "example.png").write_bytes(b"123456789")
+
+    result = run_gallery_check(tmp_path, write_config(tmp_path, ["example.png"], allowed=[".PNG"]))
+
+    assert result.error_count == 0
+    assert result.warning_count == 0
+    assert result.items[0].status == "ok"
+
+
 def test_gallery_rejects_expected_paths_outside_gallery(tmp_path):
     gallery = tmp_path / "gallery"
     gallery.mkdir()

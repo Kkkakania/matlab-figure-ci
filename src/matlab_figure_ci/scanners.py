@@ -119,9 +119,11 @@ def _extension_findings(root: Path, path: Path, config: dict) -> list[Finding]:
     extensions = config.get("extensions", {})
     if _extension_is_allowed(relative, suffix, extensions.get("allow", [])):
         return []
-    if suffix in extensions.get("error", []):
+    error_extensions = {str(item).lower() for item in extensions.get("error", [])}
+    warning_extensions = {str(item).lower() for item in extensions.get("warning", [])}
+    if suffix in error_extensions:
         return [Finding("error", "extension.error", relative, None, f"risky extension {suffix}")]
-    if suffix in extensions.get("warning", []):
+    if suffix in warning_extensions:
         return [Finding("warning", "extension.warning", relative, None, f"review extension {suffix}")]
     return []
 

@@ -44,6 +44,30 @@ def test_pdf_is_warning_not_error_by_default(tmp_path):
     assert result.findings[0].rule_id == "extension.warning"
 
 
+def test_extension_policy_entries_are_case_insensitive(tmp_path):
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "plot.fig").write_bytes(b"binary")
+    (project / "notes.pdf").write_bytes(b"%PDF-1.7")
+    config_path = project / "mfigci.yml"
+    config_path.write_text(
+        """
+extensions:
+  error:
+    - .FIG
+  warning:
+    - .PDF
+""",
+        encoding="utf-8",
+    )
+
+    result = run_scan(project, load_config(config_path))
+
+    by_path = {finding.path: finding.rule_id for finding in result.findings}
+    assert by_path["plot.fig"] == "extension.error"
+    assert by_path["notes.pdf"] == "extension.warning"
+
+
 def test_origin_addons_and_matlab_toolboxes_warn_by_default(tmp_path):
     project = tmp_path / "project"
     project.mkdir()

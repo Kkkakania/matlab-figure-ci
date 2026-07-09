@@ -26,7 +26,7 @@ def run_gallery_check(root: str | Path, config: dict) -> GalleryResults:
     root_path = Path(root).resolve()
     gallery_config = config.get("gallery", {})
     gallery_path = root_path / str(gallery_config.get("path", "gallery"))
-    allowed = set(gallery_config.get("allowed_extensions", [".png", ".svg", ".pdf"]))
+    allowed = {str(extension).lower() for extension in gallery_config.get("allowed_extensions", [".png", ".svg", ".pdf"])}
     min_size = int(gallery_config.get("min_size_bytes", 1024))
     expected = list(gallery_config.get("expected", []))
     result = GalleryResults()

@@ -70,6 +70,9 @@ def check_issue_triage_workflow(text: str) -> None:
     require(text, "minimal fixture or synthetic project", "issue-triage.yml")
     require(text, "Kkkakania/matlab-scientific-figures#31", "issue-triage.yml")
     require(text, "Awaiting feedback", "issue-triage.yml")
+    require(text, "run_gh()", "issue-triage.yml")
+    require(text, "max_attempts=3", "issue-triage.yml")
+    require(text, "HTTP 5", "issue-triage.yml")
     reject(text, "project:", "issue-triage.yml")
     reject(text, "read:project", "issue-triage.yml")
 

@@ -6,6 +6,16 @@ from dataclasses import dataclass, field
 from typing import Any
 
 
+def _line_number(value: Any) -> int | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        line = int(value)
+    except (TypeError, ValueError):
+        return None
+    return line if line > 0 else None
+
+
 @dataclass
 class Finding:
     severity: str
@@ -29,7 +39,7 @@ class Finding:
             severity=str(data.get("severity", "")),
             rule_id=str(data.get("rule_id", "")),
             path=str(data.get("path", "")),
-            line=data.get("line"),
+            line=_line_number(data.get("line")),
             message=str(data.get("message", "")),
         )
 

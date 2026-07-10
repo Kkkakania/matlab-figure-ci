@@ -310,6 +310,13 @@ def _validate_scan(config: dict[str, Any]) -> None:
     _validate_string_list(scan.get("exclude", []), "scan.exclude", "path or glob string")
 
 
+def _validate_project(config: dict[str, Any]) -> None:
+    project = _require_mapping(config.get("project", {}), "project")
+    name = project.get("name", "matlab-figure-ci-project")
+    if not isinstance(name, str) or not name:
+        raise ConfigError("project.name must be a non-empty string")
+
+
 def _validate_policy_rules(config: dict[str, Any], section_name: str) -> None:
     section = _require_mapping(config.get(section_name, {}), section_name)
     _require_bool(section.get("enabled", True), f"{section_name}.enabled")
@@ -393,6 +400,7 @@ def _validate_generated_assets(config: dict[str, Any]) -> None:
 
 
 def _validate_config(config: dict[str, Any]) -> None:
+    _validate_project(config)
     _validate_scan(config)
     _validate_policy_rules(config, "privacy")
     _validate_policy_rules(config, "provenance")

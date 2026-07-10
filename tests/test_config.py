@@ -42,6 +42,20 @@ matlab:
     assert config["matlab"]["enabled"] is True
 
 
+def test_invalid_project_name_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+project:
+  name: []
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="project.name"):
+        load_config(config_path)
+
+
 def test_invalid_config_shape_raises_clear_error(tmp_path):
     config_path = tmp_path / "mfigci.yml"
     config_path.write_text("- not\n- a\n- mapping\n", encoding="utf-8")

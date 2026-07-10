@@ -40,6 +40,7 @@ def test_privacy_scan_matches_local_absolute_path_without_leaking(tmp_path):
     [
         "/users/example/Desktop/private-data",
         "/home/example/private-data",
+        "~/private-data",
         "/mnt/c/Users/example/private-data",
         "c:\\users\\example\\private-data",
         "C:\\Users\\example\\private-data",

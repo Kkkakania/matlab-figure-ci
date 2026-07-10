@@ -54,6 +54,8 @@ def test_ci_workflow_check_rejects_old_actions():
 def test_package_workflow_check_rejects_old_actions_and_publish_markers():
     script = load_workflow_script()
     base = """
+    permissions:
+      contents: read
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -81,6 +83,51 @@ def test_package_workflow_check_rejects_old_actions_and_publish_markers():
             assert "package.yml" in str(exc)
         else:
             raise AssertionError("unsafe package workflow was accepted")
+
+
+def test_ci_and_package_workflows_require_read_only_contents_permission():
+    script = load_workflow_script()
+    ci = """
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+      - run: python scripts/check_markdown_links.py
+      - run: python scripts/check_workflows.py
+"""
+    package = """
+    permissions:
+      contents: read
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+      - uses: actions/upload-artifact@v5
+      - run: mfigci release-preflight --require-dist --check-pypi-name --output release-preflight.json
+      - run: python scripts/check_pypi_name.py matlab-figure-ci --json-out pypi-name-check.json
+      - name: pypi-name-check
+        with:
+          path: pypi-name-check.json
+    """
+
+    script.check_ci_workflow(ci)
+    script.check_package_workflow(package)
+
+    bad_workflows = [
+        (script.check_ci_workflow, ci.replace("permissions:\n      contents: read\n", "")),
+        (script.check_ci_workflow, ci.replace("contents: read", "contents: write")),
+        (script.check_package_workflow, package.replace("permissions:\n      contents: read\n", "")),
+        (script.check_package_workflow, package.replace("contents: read", "contents: write")),
+    ]
+    for check_workflow, workflow in bad_workflows:
+        try:
+            check_workflow(workflow)
+        except AssertionError as exc:
+            assert "permissions" in str(exc) or "contents: write" in str(exc)
+        else:
+            raise AssertionError("workflow without read-only contents permission was accepted")
 
 
 def test_issue_triage_workflow_check_rejects_project_scope_markers():

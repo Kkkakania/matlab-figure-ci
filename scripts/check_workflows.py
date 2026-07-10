@@ -30,7 +30,14 @@ def reject(text: str, needle: str, workflow_name: str) -> None:
         raise AssertionError(f"{workflow_name} contains outdated or unsafe setting: {needle}")
 
 
+def require_read_only_contents_permission(text: str, workflow_name: str) -> None:
+    reject(text, "contents: write", workflow_name)
+    require(text, "permissions:", workflow_name)
+    require(text, "contents: read", workflow_name)
+
+
 def check_ci_workflow(text: str) -> None:
+    require_read_only_contents_permission(text, "ci.yml")
     require(text, "actions/checkout@", "ci.yml")
     require(text, "actions/setup-python@", "ci.yml")
     require(text, "python scripts/check_markdown_links.py", "ci.yml")
@@ -42,6 +49,7 @@ def check_ci_workflow(text: str) -> None:
 
 
 def check_package_workflow(text: str) -> None:
+    require_read_only_contents_permission(text, "package.yml")
     require(text, "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true", "package.yml")
     require(text, "actions/checkout@", "package.yml")
     require(text, "actions/setup-python@", "package.yml")

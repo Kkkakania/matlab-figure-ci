@@ -43,3 +43,11 @@ def test_markdown_link_checker_accepts_angle_bracket_paths_with_spaces(tmp_path)
     doc.write_text("[Target](<target with spaces.md>)\n", encoding="utf-8")
 
     assert check_markdown_links.check_file(doc, root=tmp_path) == []
+
+
+def test_markdown_link_checker_ignores_inline_code_examples(tmp_path):
+    doc = tmp_path / "docs" / "guide.md"
+    doc.parent.mkdir()
+    doc.write_text("Run `[Missing](missing.md)` only as a literal example.\n", encoding="utf-8")
+
+    assert check_markdown_links.check_file(doc, root=tmp_path) == []

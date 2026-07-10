@@ -12,6 +12,7 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 FENCE_RE = re.compile(r"```.*?```", re.DOTALL)
+INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
 EXCLUDED_DIRS = {".git", ".mypy_cache", ".pytest_cache", ".venv", "__pycache__", "build", "dist"}
 EXTERNAL_PREFIXES = ("http://", "https://", "mailto:", "tel:")
 
@@ -49,6 +50,7 @@ def check_file(path: Path, root: Path = ROOT) -> list[str]:
     path = path.resolve()
     text = path.read_text(encoding="utf-8")
     text = FENCE_RE.sub("", text)
+    text = INLINE_CODE_RE.sub("", text)
     errors: list[str] = []
 
     for match in LINK_RE.finditer(text):

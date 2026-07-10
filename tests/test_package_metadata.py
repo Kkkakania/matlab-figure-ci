@@ -114,6 +114,20 @@ def test_pypi_name_json_writer_creates_parent_directories(tmp_path):
     assert json.loads(output.read_text(encoding="utf-8")) == payload
 
 
+def test_pypi_name_helper_timeout_is_unknown(monkeypatch):
+    script = load_script("scripts/check_pypi_name.py")
+
+    def raise_timeout(*_args, **_kwargs):
+        raise TimeoutError("timed out")
+
+    monkeypatch.setattr(script.urllib.request, "urlopen", raise_timeout)
+
+    status, detail = script.check_name("matlab-figure-ci", timeout=0.01)
+
+    assert status == "unknown"
+    assert detail == "https://pypi.org/pypi/matlab-figure-ci/json could not be checked: timed out"
+
+
 def test_pypi_release_checklist_uses_name_helper():
     text = read_text("docs/pypi-release-checklist.md")
 

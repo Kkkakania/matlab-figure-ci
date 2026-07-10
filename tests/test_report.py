@@ -275,6 +275,28 @@ def test_json_report_has_stable_fields_and_redacted_findings():
     assert secret not in json.dumps(payload)
 
 
+def test_reports_redact_absolute_config_paths():
+    results = CheckResults(
+        summary={"errors": 0, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},
+        findings=[],
+        scan=ScanResults(files_scanned=1),
+        gallery=GalleryResults(items=[]),
+        render={"status": "skipped", "message": "disabled"},
+        config_path="/Users/example/private-project/mfigci.yml",
+        tool_version="0.1.0",
+    )
+
+    json_payload = json.loads(build_json_report(results))
+    evidence = build_evidence_packet_report(results)
+    triage = build_triage_report(results)
+
+    assert json_payload["config_path"] == "mfigci.yml"
+    assert "private-project" not in evidence
+    assert "private-project" not in triage
+    assert "- Config: `mfigci.yml`" in evidence
+    assert "- Config: `mfigci.yml`" in triage
+
+
 def test_markdown_reports_escape_table_cells():
     results = CheckResults(
         summary={"errors": 1, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},

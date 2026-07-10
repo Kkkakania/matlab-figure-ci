@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 from .result import CheckResults
 
@@ -13,6 +13,19 @@ def _format_location(path: str, line: int | None) -> str:
     if line is None:
         return path
     return f"{path}:{line}"
+
+
+def _public_config_path(config_path: str) -> str:
+    raw = str(config_path or "").strip()
+    if not raw:
+        return "mfigci.yml"
+    windows_path = PureWindowsPath(raw)
+    if windows_path.is_absolute():
+        return windows_path.name or "mfigci.yml"
+    posix_path = Path(raw)
+    if posix_path.is_absolute() or raw.startswith("~"):
+        return posix_path.name or "mfigci.yml"
+    return raw
 
 
 def _markdown_table_cell(value: object) -> str:
@@ -179,7 +192,7 @@ def build_evidence_packet_report(results: CheckResults) -> str:
         f"- Files scanned: {summary.get('files_scanned', 0)}",
         f"- Gallery checks: {summary.get('gallery_checks', 0)}",
         f"- MATLAB render: {results.render.get('status', 'skipped')}",
-        f"- Config: `{results.config_path or 'mfigci.yml'}`",
+        f"- Config: `{_public_config_path(results.config_path)}`",
         f"- Tool version: `{results.tool_version or 'unknown'}`",
         "",
         "Artifacts to attach or link:",
@@ -274,7 +287,7 @@ def build_triage_report(results: CheckResults) -> str:
         f"- Files scanned: {summary.get('files_scanned', 0)}",
         f"- Gallery checks: {summary.get('gallery_checks', 0)}",
         f"- MATLAB render: {results.render.get('status', 'skipped')}",
-        f"- Config: `{results.config_path or 'mfigci.yml'}`",
+        f"- Config: `{_public_config_path(results.config_path)}`",
         "",
         "Suggested triage labels:",
         "",
@@ -338,7 +351,7 @@ def build_json_report(results: CheckResults) -> str:
     public_payload = {
         "schema_version": "mfigci.report.v1",
         "tool_version": payload.get("tool_version", ""),
-        "config_path": payload.get("config_path", ""),
+        "config_path": _public_config_path(str(payload.get("config_path", ""))),
         "summary": payload.get("summary", {}),
         "findings": payload.get("findings", []),
         "gallery": payload.get("gallery", {}),

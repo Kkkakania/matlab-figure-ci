@@ -90,7 +90,7 @@ def build_markdown_report(results: CheckResults) -> str:
     lines.extend(["", "## Gallery", ""])
     if results.gallery.items:
         for item in results.gallery.items:
-            lines.append(f"- {item.status.upper()} {item.path}: {item.message}")
+            lines.append(f"- {item.status.upper()} {_markdown_table_cell(item.path)}: {_markdown_table_cell(item.message)}")
     else:
         lines.append("- No gallery entries checked.")
 

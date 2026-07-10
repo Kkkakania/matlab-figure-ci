@@ -270,26 +270,13 @@ gallery:
         load_config(config_path)
 
 
-def test_absolute_gallery_path_raises_clear_error(tmp_path):
+@pytest.mark.parametrize("gallery_path", ["../gallery", "/tmp/gallery", r"C:\Users\Alice\gallery"])
+def test_gallery_path_must_stay_relative_inside_project(tmp_path, gallery_path):
     config_path = tmp_path / "mfigci.yml"
     config_path.write_text(
-        """
+        f"""
 gallery:
-  path: "/Users/example/private-gallery"
-""",
-        encoding="utf-8",
-    )
-
-    with pytest.raises(ConfigError, match="gallery.path"):
-        load_config(config_path)
-
-
-def test_parent_gallery_path_raises_clear_error(tmp_path):
-    config_path = tmp_path / "mfigci.yml"
-    config_path.write_text(
-        """
-gallery:
-  path: "../private-gallery"
+  path: {gallery_path}
 """,
         encoding="utf-8",
     )

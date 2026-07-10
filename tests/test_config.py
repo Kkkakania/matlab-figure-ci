@@ -285,6 +285,21 @@ gallery:
         load_config(config_path)
 
 
+@pytest.mark.parametrize("gallery_path", ["", "   "])
+def test_empty_gallery_path_raises_clear_error(tmp_path, gallery_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        f"""
+gallery:
+  path: "{gallery_path}"
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="gallery.path"):
+        load_config(config_path)
+
+
 def test_non_list_gallery_expected_raises_clear_error(tmp_path):
     config_path = tmp_path / "mfigci.yml"
     config_path.write_text(

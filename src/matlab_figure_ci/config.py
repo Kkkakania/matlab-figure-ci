@@ -276,7 +276,14 @@ def _validate_extension_list(values: Any, key: str) -> None:
     if not isinstance(values, list):
         raise ConfigError(f"{key} must be a list of extensions")
     for index, value in enumerate(values):
-        if not isinstance(value, str) or not value.startswith("."):
+        if (
+            not isinstance(value, str)
+            or not value.startswith(".")
+            or value != value.strip()
+            or len(value) == 1
+            or "/" in value
+            or "\\" in value
+        ):
             raise ConfigError(f"{key}[{index}] must be an extension string such as .png")
 
 

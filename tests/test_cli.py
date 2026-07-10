@@ -472,6 +472,17 @@ def test_init_does_not_overwrite_without_force(tmp_path):
     assert "keep-me" not in existing.read_text(encoding="utf-8")
 
 
+def test_init_force_skips_directory_targets_without_traceback(tmp_path):
+    (tmp_path / "mfigci.yml").mkdir()
+
+    result = run_cli(["init", "--force"], tmp_path)
+
+    assert result.returncode == 0
+    assert "skipped mfigci.yml (directory exists)" in result.stdout
+    assert "Traceback" not in result.stderr
+    assert "IsADirectoryError" not in result.stderr
+
+
 def test_init_workflow_uses_current_release_tag(tmp_path):
     result = run_cli(["init"], tmp_path)
 

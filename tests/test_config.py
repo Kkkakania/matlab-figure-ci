@@ -342,6 +342,21 @@ gallery:
         load_config(config_path)
 
 
+def test_gallery_expected_parent_path_raises_clear_error(tmp_path):
+    config_path = tmp_path / "mfigci.yml"
+    config_path.write_text(
+        """
+gallery:
+  expected:
+    - ../outside.png
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match=r"gallery.expected\[0\]"):
+        load_config(config_path)
+
+
 def test_invalid_matlab_enabled_flag_raises_clear_error(tmp_path):
     config_path = tmp_path / "mfigci.yml"
     config_path.write_text(

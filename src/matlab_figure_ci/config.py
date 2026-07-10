@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from copy import deepcopy
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from typing import Any
 
 import yaml
@@ -300,7 +300,8 @@ def _validate_repo_relative_path(value: Any, key: str) -> None:
     if not isinstance(value, str) or not value:
         raise ConfigError(f"{key} must be a non-empty relative path")
     path = Path(value)
-    if path.is_absolute() or ".." in path.parts:
+    windows_path = PureWindowsPath(value)
+    if path.is_absolute() or windows_path.is_absolute() or ".." in path.parts or ".." in windows_path.parts:
         raise ConfigError(f"{key} must stay inside the repository")
 
 
@@ -370,6 +371,8 @@ def _validate_gallery(config: dict[str, Any]) -> None:
         raise ConfigError("gallery.min_size_bytes must be a non-negative integer")
     expected = gallery.get("expected", [])
     _validate_string_list(expected, "gallery.expected", "path string")
+    for index, value in enumerate(expected):
+        _validate_repo_relative_path(value, f"gallery.expected[{index}]")
 
 
 def _validate_matlab(config: dict[str, Any]) -> None:

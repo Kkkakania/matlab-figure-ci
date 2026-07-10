@@ -288,6 +288,14 @@ def _validate_string_list(values: Any, key: str, label: str) -> None:
             raise ConfigError(f"{key}[{index}] must be a non-empty {label}")
 
 
+def _validate_repo_relative_path(value: Any, key: str) -> None:
+    if not isinstance(value, str) or not value:
+        raise ConfigError(f"{key} must be a non-empty relative path")
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts:
+        raise ConfigError(f"{key} must stay inside the repository")
+
+
 def _validate_scan(config: dict[str, Any]) -> None:
     scan = _require_mapping(config.get("scan", {}), "scan")
     _validate_string_list(scan.get("include", []), "scan.include", "path string")
@@ -340,8 +348,7 @@ def _validate_extensions(config: dict[str, Any]) -> None:
 
 def _validate_gallery(config: dict[str, Any]) -> None:
     gallery = _require_mapping(config.get("gallery", {}), "gallery")
-    if not isinstance(gallery.get("path", "gallery"), str):
-        raise ConfigError("gallery.path must be a string")
+    _validate_repo_relative_path(gallery.get("path", "gallery"), "gallery.path")
     _validate_extension_list(gallery.get("allowed_extensions", []), "gallery.allowed_extensions")
     min_size = gallery.get("min_size_bytes", 1024)
     if not isinstance(min_size, int) or min_size < 0:

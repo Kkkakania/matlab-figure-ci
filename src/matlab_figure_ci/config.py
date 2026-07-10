@@ -47,7 +47,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
                     r"|(?i:/home/)[^\s'\"<>]+"
                     r"|~[\\/][^\s'\"<>]+"
                     r"|(?i:/mnt/[a-z]/)[^\s'\"<>]+"
-                    r"|(?i:[a-z]:\\users\\)[^\s'\"<>]+"
+                    r"|(?i:[a-z]:\\+users\\+)[^\s'\"<>]+"
                     r"|(?i:%USERPROFILE%[\\/])[^\s'\"<>]+"
                     r"|/workspaces/[^\s'\"<>]+"
                     r"|/Volumes/[^\s'\"<>]+)"

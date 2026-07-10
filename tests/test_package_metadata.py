@@ -104,6 +104,16 @@ def test_pypi_name_helper_payload_is_machine_readable():
     assert json.dumps(payload, sort_keys=True)
 
 
+def test_pypi_name_json_writer_creates_parent_directories(tmp_path):
+    script = load_script("scripts/check_pypi_name.py")
+    output = tmp_path / "reports" / "pypi-name-check.json"
+    payload = script.name_check_payload("matlab-figure-ci", "available", "https://pypi.org/pypi/matlab-figure-ci/json")
+
+    script.write_json_payload(output, payload)
+
+    assert json.loads(output.read_text(encoding="utf-8")) == payload
+
+
 def test_pypi_release_checklist_uses_name_helper():
     text = read_text("docs/pypi-release-checklist.md")
 

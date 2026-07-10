@@ -49,6 +49,11 @@ def name_check_payload(name: str, status: str, detail: str) -> dict[str, str | i
     }
 
 
+def write_json_payload(path: Path, payload: dict[str, str | int]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("name", help="PyPI project name to check.")
@@ -59,7 +64,7 @@ def main() -> int:
     payload = name_check_payload(args.name, status, detail)
     if args.json_out:
         path = Path(args.json_out)
-        path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        write_json_payload(path, payload)
 
     if status == "available":
         print(f"available: {detail} returned 404")

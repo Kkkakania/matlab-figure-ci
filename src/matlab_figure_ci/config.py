@@ -45,6 +45,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
                 "pattern": (
                     r"((?i:/users/)[^\s'\"<>]+"
                     r"|(?i:/home/)[^\s'\"<>]+"
+                    r"|~[\\/][^\s'\"<>]+"
                     r"|(?i:/mnt/[a-z]/)[^\s'\"<>]+"
                     r"|(?i:[a-z]:\\users\\)[^\s'\"<>]+"
                     r"|(?i:%USERPROFILE%[\\/])[^\s'\"<>]+"

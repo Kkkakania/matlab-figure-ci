@@ -3,6 +3,7 @@ from pathlib import Path
 from matlab_figure_ci import __version__
 from matlab_figure_ci.release import (
     PreflightItem,
+    check_pypi_project_name,
     check_package_workflow_does_not_publish,
     classify_pypi_status,
     release_preflight_exit_code,
@@ -120,6 +121,21 @@ def test_classify_pypi_status_codes():
     assert classify_pypi_status(404) == "available"
     assert classify_pypi_status(200) == "taken"
     assert classify_pypi_status(500) == "unknown"
+
+
+def test_pypi_name_timeout_becomes_preflight_warning(monkeypatch):
+    def raise_timeout(*_args, **_kwargs):
+        raise TimeoutError("timed out")
+
+    monkeypatch.setattr("matlab_figure_ci.release.urllib.request.urlopen", raise_timeout)
+
+    item = check_pypi_project_name("matlab-figure-ci", timeout=0.01)
+
+    assert item == PreflightItem(
+        "warning",
+        "pypi-name",
+        "https://pypi.org/pypi/matlab-figure-ci/json could not be checked: timed out",
+    )
 
 
 def test_package_workflow_publish_guard_rejects_upload_markers():

@@ -298,6 +298,18 @@ def test_report_rejects_invalid_results_json_without_traceback(tmp_path):
     assert not (tmp_path / "report.md").exists()
 
 
+def test_report_rejects_directory_input_without_traceback(tmp_path):
+    (tmp_path / ".mfigci-results.json").mkdir()
+
+    result = run_cli(["report", "--output", "report.md"], tmp_path)
+
+    assert result.returncode == 2
+    assert "Could not read .mfigci-results.json" in result.stdout
+    assert "Traceback" not in result.stderr
+    assert "IsADirectoryError" not in result.stderr
+    assert not (tmp_path / "report.md").exists()
+
+
 def test_report_can_write_pr_comment_style(tmp_path):
     (tmp_path / ".mfigci-results.json").write_text(
         json.dumps(

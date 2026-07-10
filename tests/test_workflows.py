@@ -149,10 +149,22 @@ jobs:
           echo "Awaiting feedback"
           gh issue comment "$ISSUE_URL" --body-file /tmp/triage-comment.md
 """
+    retry_base = base.replace(
+        'gh issue comment "$ISSUE_URL" --body-file /tmp/triage-comment.md',
+        'run_gh() { local output status attempt max_attempts=3; echo "HTTP 5"; }\n'
+        '          run_gh issue comment "$ISSUE_URL" --body-file /tmp/triage-comment.md',
+    )
 
-    script.check_issue_triage_workflow(base)
+    script.check_issue_triage_workflow(retry_base)
 
-    for workflow in [base + "\n  project: read\n", base + "\n  read:project\n"]:
+    try:
+        script.check_issue_triage_workflow(base)
+    except AssertionError as exc:
+        assert "issue-triage.yml" in str(exc)
+    else:
+        raise AssertionError("issue triage workflow without gh retry was accepted")
+
+    for workflow in [retry_base + "\n  project: read\n", retry_base + "\n  read:project\n"]:
         try:
             script.check_issue_triage_workflow(workflow)
         except AssertionError as exc:

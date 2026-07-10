@@ -324,3 +324,23 @@ def test_markdown_reports_escape_table_cells():
     assert "pattern \\| matched next line" in full
     assert "privacy.custom\\|pipe" in comment
     assert "src/with\\|pipe.m:4" in comment
+
+
+def test_markdown_report_uses_longer_fence_for_backtick_excerpts():
+    results = CheckResults(
+        summary={"errors": 1, "warnings": 0, "files_scanned": 1, "gallery_checks": 0},
+        findings=[],
+        scan=ScanResults(files_scanned=1),
+        gallery=GalleryResults(items=[]),
+        render={
+            "status": "error",
+            "message": "MATLAB render failed",
+            "stdout_excerpt": "before\n```matlab\nplot(1)\n```\nafter",
+        },
+        config_path="mfigci.yml",
+        tool_version="0.1.0",
+    )
+
+    full = build_markdown_report(results)
+
+    assert "````text\nbefore\n```matlab\nplot(1)\n```\nafter\n````" in full

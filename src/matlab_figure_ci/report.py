@@ -36,7 +36,8 @@ def _markdown_table_cell(value: object) -> str:
 def _append_render_excerpt(lines: list[str], label: str, content: str | None) -> None:
     if not content:
         return
-    lines.extend(["", f"### {label}", "", "```text", content, "```"])
+    fence = "````" if "```" in content else "```"
+    lines.extend(["", f"### {label}", "", f"{fence}text", content, fence])
 
 
 def _finding_counts_by_rule(results: CheckResults) -> list[tuple[str, str, int]]:

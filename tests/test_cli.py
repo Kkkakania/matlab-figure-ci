@@ -4,6 +4,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
+
 from matlab_figure_ci import __version__
 
 
@@ -508,6 +510,33 @@ def test_init_config_excludes_reviewed_root_license(tmp_path):
     config_text = (tmp_path / "mfigci.yml").read_text(encoding="utf-8")
     assert result.returncode == 0
     assert '    - "LICENSE"' in config_text
+
+
+def test_init_profile_static_scan_omits_expected_gallery_files(tmp_path):
+    result = run_cli(["init", "--profile", "static-scan"], tmp_path)
+
+    config = yaml.safe_load((tmp_path / "mfigci.yml").read_text(encoding="utf-8"))
+    assert result.returncode == 0
+    assert config["gallery"]["expected"] == []
+    assert config["strict"]["fail_on_warnings"] is False
+
+
+def test_init_profile_png_svg_writes_paired_gallery_contract(tmp_path):
+    result = run_cli(["init", "--profile", "png-svg-gallery"], tmp_path)
+
+    config = yaml.safe_load((tmp_path / "mfigci.yml").read_text(encoding="utf-8"))
+    assert result.returncode == 0
+    assert config["gallery"]["allowed_extensions"] == [".png", ".svg"]
+    assert config["gallery"]["expected"] == ["example.png", "example.svg"]
+
+
+def test_init_profile_strict_release_enables_warning_failure(tmp_path):
+    result = run_cli(["init", "--profile", "strict-release"], tmp_path)
+
+    config = yaml.safe_load((tmp_path / "mfigci.yml").read_text(encoding="utf-8"))
+    assert result.returncode == 0
+    assert config["gallery"]["expected"] == ["example.png", "example.svg", "example.pdf"]
+    assert config["strict"]["fail_on_warnings"] is True
 
 
 def test_init_can_append_report_artifacts_to_gitignore(tmp_path):

@@ -120,8 +120,19 @@ mfigci-report.md
 2. 在临时分支或 scratch 仓库中生成 starter 文件。
 
    ```bash
-   mfigci init
-   ```
+mfigci init
+```
+
+如果仓库还没有准备好默认示例 gallery，可以选择更明确的初始化场景：
+
+```bash
+mfigci init --profile static-scan
+mfigci init --profile png-svg-gallery
+mfigci init --profile strict-release
+```
+
+`static-scan` 不要求 gallery 文件，`png-svg-gallery` 要求成对的 PNG/SVG
+预览，`strict-release` 还会把策略警告视为失败。
 
    只有当你希望 CLI 管理报告产物的 ignore 条目时，才添加：
 

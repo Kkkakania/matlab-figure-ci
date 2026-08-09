@@ -152,8 +152,20 @@ Use this path to try the tool without changing release policy immediately:
 2. Create starter files in a throwaway branch or scratch repository.
 
    ```bash
-   mfigci init
-   ```
+mfigci init
+```
+
+Choose a narrower starting contract when the repository is not ready for the
+default example gallery yet:
+
+```bash
+mfigci init --profile static-scan
+mfigci init --profile png-svg-gallery
+mfigci init --profile strict-release
+```
+
+`static-scan` has no required gallery files, `png-svg-gallery` requires paired
+PNG/SVG previews, and `strict-release` also treats policy warnings as failures.
 
    Add report artifacts to `.gitignore` only when you want the CLI to manage
    those entries:

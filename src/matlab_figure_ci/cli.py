@@ -562,6 +562,34 @@ def command_rules(args) -> int:
     extensions = config.get("extensions", {})
     generated_assets = config.get("generated_assets", {})
 
+    if args.format == "json":
+        payload = {
+            "schema_version": 1,
+            "privacy": {
+                "enabled": bool(privacy.get("enabled", True)),
+                "redact_matches": bool(privacy.get("redact_matches", True)),
+                "rule_count": len(privacy.get("rules", [])),
+                "rules": privacy.get("rules", []),
+            },
+            "provenance": {
+                "enabled": bool(provenance.get("enabled", True)),
+                "rule_count": len(provenance.get("rules", [])),
+                "rules": provenance.get("rules", []),
+            },
+            "extensions": {
+                "error": extensions.get("error", []),
+                "warning": extensions.get("warning", []),
+            },
+            "generated_assets": {
+                "enabled": bool(generated_assets.get("enabled", True)),
+                "severity": generated_assets.get("severity", "warning"),
+                "source_dirs": generated_assets.get("source_dirs", []),
+                "extensions": generated_assets.get("extensions", []),
+            },
+        }
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0
+
     print("matlab-figure-ci rules")
     _print_rule_group("Privacy rules", privacy, privacy=True)
     _print_rule_group("Provenance rules", provenance)
@@ -653,6 +681,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     rules = subparsers.add_parser("rules", help="show effective privacy, provenance, and extension rules")
     rules.add_argument("--config", default="mfigci.yml")
+    rules.add_argument("--format", choices=["text", "json"], default="text", help="output format")
     rules.set_defaults(func=command_rules)
 
     release_preflight = subparsers.add_parser("release-preflight", help="check packaging readiness before a release")

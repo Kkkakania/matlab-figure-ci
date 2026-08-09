@@ -91,6 +91,7 @@ mfigci report --style triage --output mfigci-triage.md
 mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci rules --config mfigci.yml
+mfigci rules --config mfigci.yml --format json
 mfigci release-preflight
 mfigci release-preflight --format json
 mfigci release-preflight --output release-preflight.json

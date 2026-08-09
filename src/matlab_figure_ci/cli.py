@@ -7,6 +7,8 @@ import json
 import sys
 from pathlib import Path
 
+import yaml
+
 from . import __version__
 from .config import ConfigError, load_config
 from .gallery import run_gallery_check
@@ -125,6 +127,29 @@ jobs:
             mfigci-report.md
             .mfigci-results.json
 """
+
+
+INIT_PROFILES = ("starter", "static-scan", "png-svg-gallery", "strict-release")
+
+
+def _example_config_for_profile(profile: str) -> str:
+    if profile == "starter":
+        return EXAMPLE_CONFIG
+
+    config = yaml.safe_load(EXAMPLE_CONFIG)
+    config["strict"] = {"fail_on_warnings": profile == "strict-release"}
+    gallery = config["gallery"]
+    if profile == "static-scan":
+        gallery["expected"] = []
+    elif profile == "png-svg-gallery":
+        gallery["allowed_extensions"] = [".png", ".svg"]
+        gallery["expected"] = ["example.png", "example.svg"]
+    elif profile == "strict-release":
+        config["presets"] = ["matlab-figures"]
+        gallery["expected"] = ["example.png", "example.svg", "example.pdf"]
+    else:
+        raise ValueError(f"unknown init profile: {profile}")
+    return yaml.safe_dump(config, sort_keys=False, allow_unicode=False)
 
 
 def _print_scan(result) -> None:
@@ -330,7 +355,7 @@ def _update_gitignore(path: Path) -> str:
 
 def command_init(args) -> int:
     messages = [
-        _write_if_allowed(Path("mfigci.yml"), EXAMPLE_CONFIG, args.force),
+        _write_if_allowed(Path("mfigci.yml"), _example_config_for_profile(args.profile), args.force),
         _write_if_allowed(Path(".github/workflows/figure-quality.yml"), WORKFLOW, args.force),
     ]
     if args.gitignore:
@@ -617,6 +642,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     init = subparsers.add_parser("init", help="write example config and GitHub Actions workflow")
     init.add_argument("--force", action="store_true")
+    init.add_argument("--profile", choices=INIT_PROFILES, default="starter", help="starter policy and gallery contract")
     init.add_argument("--gitignore", action="store_true", help="append local report artifacts to .gitignore")
     init.set_defaults(func=command_init)
 

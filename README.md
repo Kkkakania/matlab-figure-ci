@@ -384,7 +384,7 @@ jobs:
 - [Issue triage report](docs/issue-triage-report.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)
-- [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
+- [Maintainer workflow](docs/maintainer-workflow.md)
 - [PyPI release checklist](docs/pypi-release-checklist.md)
 - [Release artifacts](docs/release-artifacts.md)
 - [Release cadence](docs/release-cadence.md)

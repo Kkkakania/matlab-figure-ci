@@ -313,7 +313,7 @@ jobs:
 - [Evidence packet template](docs/evidence-packet-template.md)
 - [Rule design](docs/rule-design.md)
 - [v2 compatibility](docs/v2-compatibility.md)
-- [OpenAI Codex maintainer workflow](docs/openai-codex-maintainer-workflow.md)
+- [维护者工作流](docs/maintainer-workflow.md)
 - [中文 PyPI 发布检查清单](docs/pypi-release-checklist.zh-CN.md)
 - [PyPI release checklist](docs/pypi-release-checklist.md)
 - [Release artifacts](docs/release-artifacts.md)

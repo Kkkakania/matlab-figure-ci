@@ -154,9 +154,8 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "1 warning(s)" in text
     assert "13 binary/skipped" in text
     assert "13 gallery file(s) ok" in text
-    assert "docs/application-evidence.md" in text
-    assert "companion skill evidence for `matlab-scientific-figures`" in text
-    assert "main Codex for Open Source application repository" in text
+    assert "docs/application-evidence.md" not in text
+    assert "main Codex for Open Source application repository" not in text
     assert "MATLAB render in public CI | Disabled" in text
     assert "Markdown report and `.mfigci-results.json` artifacts" in text
     assert "render reports are producer evidence, not source material" in text
@@ -174,20 +173,20 @@ def test_plotting_skill_adoption_report_is_current_and_bounded():
     assert "raw private data" not in text
 
 
-def test_codex_workflow_documents_review_packet_boundaries():
-    text = (ROOT / "docs" / "openai-codex-maintainer-workflow.md").read_text(encoding="utf-8")
+def test_maintainer_workflow_documents_review_packet_boundaries():
+    text = (ROOT / "docs" / "maintainer-workflow.md").read_text(encoding="utf-8")
 
+    assert text.startswith("# Maintainer Workflow")
     assert "## Review Packet For Maintainers" in text
-    assert "## Application Evidence Packet" in text
     assert "workflow run URL" in text
     assert "mfigci-report.md and .mfigci-results.json" in text
     assert "release-preflight.json" in text
-    assert "redacted issue or PR link" in text
-    assert "not an approval argument" in text
     assert "mfigci release-preflight --require-dist --output release-preflight.json" in text
     assert "downstream `matlab-scientific-figures` dogfooding workflow" in text
     assert "never raw private paths or unredacted findings" in text
     assert "not proof of broad adoption" in text
+    assert "Candidate API Credit Uses" not in text
+    assert "Application Evidence Packet" not in text
 
 
 def test_evidence_packet_template_is_documented():

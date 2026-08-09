@@ -120,6 +120,7 @@ mfigci report --format json --output mfigci-report.json
 mfigci doctor --config mfigci.yml
 mfigci doctor --config mfigci.yml --format json
 mfigci rules --config mfigci.yml
+mfigci rules --config mfigci.yml --format json
 mfigci release-preflight
 mfigci release-preflight --format json
 mfigci release-preflight --output release-preflight.json

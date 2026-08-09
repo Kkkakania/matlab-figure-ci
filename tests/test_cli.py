@@ -998,3 +998,15 @@ matlab:
     assert "<redacted>" in report
     assert "/Users/alice/private/file.m" not in report
     assert "helper@example.com" not in report
+
+
+def test_rules_json_reports_effective_rules(tmp_path):
+    result = run_cli(["rules", "--format", "json"], tmp_path)
+
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    assert payload["schema_version"] == 1
+    assert payload["privacy"]["enabled"] is True
+    assert payload["privacy"]["rule_count"] == len(payload["privacy"]["rules"])
+    assert payload["provenance"]["rule_count"] == len(payload["provenance"]["rules"])
+    assert payload["generated_assets"]["enabled"] is True

@@ -1,4 +1,4 @@
-# OpenAI Codex Maintainer Workflow
+# Maintainer Workflow
 
 `matlab-figure-ci` is designed to support real open-source maintenance.
 
@@ -13,12 +13,7 @@ Useful workflows include:
 - review Dependabot GitHub Actions updates as ordinary maintenance pull
   requests, not as automatic merge authority
 
-AI assistance should not replace maintainer review. It should make review more
-consistent and make release checks easier to repeat.
-
-## Candidate API Credit Uses
-
-Use API credits for repetitive maintenance checks that still leave the final
+Automation can support repetitive maintenance checks while leaving the final
 decision with a maintainer:
 
 - draft first responses for incomplete bug reports without exposing private
@@ -32,8 +27,7 @@ decision with a maintainer:
 - prepare changelog drafts from merged commits while avoiding adoption,
   download, or eligibility claims
 
-Do not use automation to manufacture stars, comments, downloads, fake users, or
-program-approval claims.
+Do not use automation to manufacture stars, comments, downloads, or fake users.
 
 ## Dogfooding Review Loop
 
@@ -49,13 +43,10 @@ Dogfooding evidence should be factual: link the downstream workflow, release
 tag, and issue numbers. Do not translate a passing internal workflow into
 claims about broad adoption, downloads, or guaranteed external review outcomes.
 
-This project does not claim that any application or benefit program will be
-approved. Its purpose is to create useful, auditable maintenance automation.
-
 ## Evidence Checklist
 
-When describing the project in a public application, keep the evidence limited
-to facts that can be linked or reproduced:
+When describing the project publicly, keep the evidence limited to facts that
+can be linked or reproduced:
 
 - public repository URL
 - latest GitHub release tag
@@ -72,35 +63,19 @@ repository instead of inventing adoption.
 
 ## Review Packet For Maintainers
 
-For a release candidate, issue update, or application note, collect a compact
+For a release candidate, issue update, or public maintainer note, collect a compact
 review packet:
 
 - the release tag or commit under review;
-- the `CI` and `Package` workflow results for that commit;
+- the `CI` and `Package` workflow run URL for that commit;
+- `mfigci-report.md and .mfigci-results.json` as CI artifacts or redacted
+  summaries, never copied raw findings;
 - the `mfigci release-preflight --require-dist --output release-preflight.json`
   artifact when packaging readiness matters;
 - the downstream `matlab-scientific-figures` dogfooding workflow result when a
   rule or report change affects figure repositories;
-- the exact issue or adoption report that motivated the change;
+- a redacted issue or PR link that shows what motivated the change;
 - the command output summary, never raw private paths or unredacted findings.
 
 This packet is evidence for maintainership and repeatability. It is not proof of broad adoption.
 It is also not proof of download volume or eligibility for any external program.
-
-## Application Evidence Packet
-
-When `matlab-figure-ci` is mentioned outside the repository, keep the packet
-short enough that another maintainer can verify it:
-
-- repository URL, current release tag, and the workflow run URL for the commit
-  being discussed;
-- `mfigci-report.md and .mfigci-results.json` as CI artifacts or redacted
-  summaries, not pasted raw findings;
-- `release-preflight.json` when packaging readiness is part of the claim;
-- downstream `matlab-scientific-figures` dogfooding workflow result when the
-  change affects figure repositories;
-- one redacted issue or PR link that shows why the change was made.
-
-This is not an approval argument. It is a maintenance receipt. Do not add usage
-numbers, download claims, broad adoption language, or statements that any
-external program will approve the project.

@@ -25,7 +25,7 @@
 
 ## 维护和发布
 
-- [OpenAI Codex maintainer workflow](openai-codex-maintainer-workflow.md)：如何把 Codex 用在真实 OSS 维护中，例如 issue triage、PR review 和 release notes。
+- [维护者工作流](maintainer-workflow.md)：issue triage、PR review、release notes 与自动化检查的人工复核边界。
 - [中文 PyPI 发布检查清单](pypi-release-checklist.zh-CN.md)：未来发布 PyPI 前需要确认的事项，以及为什么当前不应为了关闭 issue 而发布。
 - [PyPI release checklist](pypi-release-checklist.md)：英文版 PyPI 发布检查清单。
 - [Release artifacts](release-artifacts.md)：如何查看 `release-preflight` JSON artifact。

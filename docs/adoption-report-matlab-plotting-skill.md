@@ -79,10 +79,8 @@ for commit `a28131f`, with no GitHub annotations at the checked snapshot.
 - `mfigci-report.md`, `.mfigci-results.json`, and `mfigci-evidence.md` stay
   ignored locally unless a maintainer deliberately reviews and commits a
   redacted report.
-- The skill repository now carries its own reviewer-facing
-  `docs/application-evidence.md`, and it now describes the repository as
-  companion skill evidence for `matlab-scientific-figures` rather than as the
-  main Codex for Open Source application repository.
+- The skill repository documents its own public review and provenance
+  boundaries instead of treating render reports as source material.
 - The no-render public CI boundary matches the repository's first-use story:
   metadata, docs, manifests, and committed previews can be checked without
   requiring MATLAB on GitHub-hosted runners.

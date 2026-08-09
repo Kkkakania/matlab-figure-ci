@@ -41,9 +41,8 @@ This directory collects the public maintainer and user documentation for
 
 ## Maintainer Workflow
 
-- [OpenAI Codex maintainer workflow](openai-codex-maintainer-workflow.md):
-  practical AI-assisted maintenance uses without adoption claims or eligibility
-  promises.
+- [Maintainer workflow](maintainer-workflow.md): practical automation-supported
+  maintenance with explicit human review boundaries.
 - [PyPI release checklist](pypi-release-checklist.md): future package publishing
   readiness steps.
 - [Chinese PyPI release checklist](pypi-release-checklist.zh-CN.md):

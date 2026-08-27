@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `release-preflight --pypi-timeout` so slow or restricted networks can
+  bound the optional PyPI name query without changing other preflight checks.
 - Added Dependabot coverage for GitHub Actions and updated workflow guards so
   reviewed action upgrades are allowed while outdated majors remain blocked.
 - Added an issue-triage checklist workflow that comments on newly opened issues

@@ -138,6 +138,26 @@ def test_pypi_name_timeout_becomes_preflight_warning(monkeypatch):
     )
 
 
+def test_release_preflight_forwards_pypi_timeout(monkeypatch):
+    observed = {}
+
+    def record_timeout(name, timeout=10.0):
+        observed.update(name=name, timeout=timeout)
+        return PreflightItem("ok", "pypi-name", "available")
+
+    monkeypatch.setattr("matlab_figure_ci.release.check_pypi_project_name", record_timeout)
+
+    run_release_preflight(
+        ROOT,
+        expected_name="matlab-figure-ci",
+        expected_version=__version__,
+        check_pypi_name=True,
+        pypi_timeout=2.5,
+    )
+
+    assert observed == {"name": "matlab-figure-ci", "timeout": 2.5}
+
+
 def test_package_workflow_publish_guard_rejects_upload_markers():
     clean = check_package_workflow_does_not_publish("python -m build\npython -m twine check dist/*\n")
     direct_upload = check_package_workflow_does_not_publish("python -m twine upload dist/*\n")

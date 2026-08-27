@@ -125,6 +125,7 @@ mfigci release-preflight
 mfigci release-preflight --format json
 mfigci release-preflight --output release-preflight.json
 mfigci release-preflight --require-dist
+mfigci release-preflight --check-pypi-name --pypi-timeout 3
 ```
 
 `mfigci check` writes both a Markdown report and machine-readable JSON:
@@ -327,7 +328,9 @@ publish anything. By default it checks repository files, `pyproject.toml`,
 `CHANGELOG.md`, and the package workflow. Add `--require-dist` after running
 `python -m build` to require `dist/*.whl` and `dist/*.tar.gz`. Add
 `--check-pypi-name` only when you intentionally want the command to query the
-PyPI JSON API. Add `--format json` when a release workflow needs structured
+PyPI JSON API. The query waits up to 10 seconds by default; use
+`--pypi-timeout <seconds>` when a shorter or longer network bound is more
+appropriate. Add `--format json` when a release workflow needs structured
 preflight items and summary counts on stdout. Add `--output
 release-preflight.json` when CI should upload the structured payload as an
 artifact while keeping the normal text summary in logs. The package workflow

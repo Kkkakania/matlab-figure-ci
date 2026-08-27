@@ -840,6 +840,27 @@ def test_release_preflight_passes_for_current_repository():
     assert "0 error(s), 0 warning(s)" in result.stdout
 
 
+def test_release_preflight_rejects_non_positive_pypi_timeout():
+    result = run_cli(
+        ["release-preflight", "--pypi-timeout", "0"],
+        Path(__file__).resolve().parents[1],
+    )
+
+    assert result.returncode == 2
+    assert "--pypi-timeout must be greater than zero" in result.stderr
+
+
+def test_release_preflight_rejects_non_finite_pypi_timeout():
+    for value in ("nan", "inf"):
+        result = run_cli(
+            ["release-preflight", "--pypi-timeout", value],
+            Path(__file__).resolve().parents[1],
+        )
+
+        assert result.returncode == 2
+        assert "--pypi-timeout must be a finite number" in result.stderr
+
+
 def test_release_preflight_can_require_dist_outputs(tmp_path):
     result = run_cli(["release-preflight", "--require-dist"], Path(__file__).resolve().parents[1])
 

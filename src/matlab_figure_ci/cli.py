@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -606,11 +607,18 @@ def command_release_preflight(args) -> int:
     if args.output == "":
         print("--output must not be empty", file=sys.stderr)
         return 2
+    if not math.isfinite(args.pypi_timeout):
+        print("--pypi-timeout must be a finite number", file=sys.stderr)
+        return 2
+    if args.pypi_timeout <= 0:
+        print("--pypi-timeout must be greater than zero", file=sys.stderr)
+        return 2
     items = run_release_preflight(
         Path.cwd(),
         expected_name=args.name,
         expected_version=__version__,
         check_pypi_name=args.check_pypi_name,
+        pypi_timeout=args.pypi_timeout,
         require_dist=args.require_dist,
     )
     exit_code = release_preflight_exit_code(items, fail_on_warnings=args.fail_on_warnings)
@@ -692,6 +700,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--check-pypi-name",
         action="store_true",
         help="query the PyPI JSON API for the project name; disabled by default",
+    )
+    release_preflight.add_argument(
+        "--pypi-timeout",
+        type=float,
+        default=10.0,
+        help="PyPI query timeout in seconds (default: 10)",
     )
     release_preflight.add_argument("--require-dist", action="store_true", help="require dist/*.whl and dist/*.tar.gz")
     release_preflight.add_argument(

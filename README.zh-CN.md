@@ -96,6 +96,7 @@ mfigci release-preflight
 mfigci release-preflight --format json
 mfigci release-preflight --output release-preflight.json
 mfigci release-preflight --require-dist
+mfigci release-preflight --check-pypi-name --pypi-timeout 3
 ```
 
 `mfigci check` 会同时写出 Markdown 报告和机器可读 JSON：
@@ -261,7 +262,7 @@ presets:
 
 默认情况下，warning 不会让 CI 失败。需要在 release gate 中把 warning 当作策略失败时，对 `scan` 或 `check` 添加 `--fail-on-warnings`。
 
-`mfigci release-preflight` 是本地打包准备检查，不会发布任何内容。默认检查仓库文件、`pyproject.toml`、`CHANGELOG.md` 和 package workflow。运行 `python -m build` 后可以添加 `--require-dist`，要求存在 wheel 和 source distribution。只有在你明确需要查询 PyPI JSON API 时，才添加 `--check-pypi-name`。需要结构化 stdout 时使用 `--format json`；需要把结构化 payload 作为 CI artifact 上传时使用 `--output release-preflight.json`。更多说明见 [Release artifacts](docs/release-artifacts.md)。
+`mfigci release-preflight` 是本地打包准备检查，不会发布任何内容。默认检查仓库文件、`pyproject.toml`、`CHANGELOG.md` 和 package workflow。运行 `python -m build` 后可以添加 `--require-dist`，要求存在 wheel 和 source distribution。只有在你明确需要查询 PyPI JSON API 时，才添加 `--check-pypi-name`。查询默认等待最多 10 秒；网络较慢或希望更快失败时，可用 `--pypi-timeout <秒数>` 调整。需要结构化 stdout 时使用 `--format json`；需要把结构化 payload 作为 CI artifact 上传时使用 `--output release-preflight.json`。更多说明见 [Release artifacts](docs/release-artifacts.md)。
 
 ## GitHub Actions
 

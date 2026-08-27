@@ -122,6 +122,7 @@ def run_release_preflight(
     expected_name: str,
     expected_version: str,
     check_pypi_name: bool = False,
+    pypi_timeout: float = 10.0,
     require_dist: bool = False,
 ) -> list[PreflightItem]:
     """Run local release-readiness checks without publishing anything."""
@@ -229,7 +230,7 @@ def run_release_preflight(
         )
 
     if check_pypi_name:
-        items.append(check_pypi_project_name(expected_name))
+        items.append(check_pypi_project_name(expected_name, timeout=pypi_timeout))
 
     return items
 

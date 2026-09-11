@@ -57,6 +57,63 @@ def test_release_preflight_can_require_dist_outputs(tmp_path):
     assert any(item.check == "dist" and "dist/*.tar.gz missing" in item.message for item in items)
 
 
+def test_release_preflight_rejects_stale_dist_outputs(tmp_path):
+    for relative_path in [
+        "pyproject.toml",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE",
+        "src/matlab_figure_ci/cli.py",
+        ".github/workflows/package.yml",
+    ]:
+        source = ROOT / relative_path
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    dist = tmp_path / "dist"
+    dist.mkdir()
+    (dist / "matlab_figure_ci-2.4.5-py3-none-any.whl").touch()
+    (dist / "matlab_figure_ci-2.4.5.tar.gz").touch()
+
+    items = run_release_preflight(
+        tmp_path,
+        expected_name="matlab-figure-ci",
+        expected_version=__version__,
+        require_dist=True,
+    )
+
+    assert any(item.status == "error" and f"{__version__} wheel" in item.message for item in items)
+    assert any(item.status == "error" and f"{__version__} source distribution" in item.message for item in items)
+
+
+def test_release_preflight_accepts_current_dist_outputs(tmp_path):
+    for relative_path in [
+        "pyproject.toml",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE",
+        "src/matlab_figure_ci/cli.py",
+        ".github/workflows/package.yml",
+    ]:
+        source = ROOT / relative_path
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    dist = tmp_path / "dist"
+    dist.mkdir()
+    (dist / f"matlab_figure_ci-{__version__}-py3-none-any.whl").touch()
+    (dist / f"matlab_figure_ci-{__version__}.tar.gz").touch()
+
+    items = run_release_preflight(
+        tmp_path,
+        expected_name="matlab-figure-ci",
+        expected_version=__version__,
+        require_dist=True,
+    )
+
+    assert not [item for item in items if item.check == "dist" and item.status == "error"]
+
+
 def test_release_preflight_detects_metadata_drift(tmp_path):
     for relative_path in [
         "README.md",

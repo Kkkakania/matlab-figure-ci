@@ -43,6 +43,9 @@ mfigci release-preflight --check-pypi-name --output release-preflight.json
 
 This checks required release files, `pyproject.toml` metadata, the matching
 `CHANGELOG.md` entry, the console script entry point, and the package workflow.
+With `--require-dist`, it requires wheel and source archives whose normalized
+project name and version match the release being checked; stale artifacts from
+an earlier build do not satisfy the gate.
 It does not publish anything and does not query PyPI by default. Use the JSON
 format in release workflows that need machine-readable `summary`, `exitCode`,
 and per-check `items`. Use `--output release-preflight.json` when the normal

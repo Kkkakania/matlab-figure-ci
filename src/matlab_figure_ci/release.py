@@ -212,20 +212,30 @@ def run_release_preflight(
 
     if require_dist:
         dist_path = root_path / "dist"
-        wheels = list(dist_path.glob("*.whl")) if dist_path.exists() else []
-        source_archives = list(dist_path.glob("*.tar.gz")) if dist_path.exists() else []
+        distribution_name = re.sub(r"[-_.]+", "_", expected_name)
+        distribution_stem = f"{distribution_name}-{expected_version}"
+        wheels = list(dist_path.glob(f"{distribution_stem}-*.whl")) if dist_path.exists() else []
+        source_archives = list(dist_path.glob(f"{distribution_stem}.tar.gz")) if dist_path.exists() else []
         items.append(
             PreflightItem(
                 "ok" if wheels else "error",
                 "dist",
-                "wheel distribution present" if wheels else "dist/*.whl missing; run python -m build",
+                (
+                    f"{expected_version} wheel distribution present"
+                    if wheels
+                    else f"dist/*.whl missing for {expected_version} wheel; run python -m build"
+                ),
             )
         )
         items.append(
             PreflightItem(
                 "ok" if source_archives else "error",
                 "dist",
-                "source distribution present" if source_archives else "dist/*.tar.gz missing; run python -m build",
+                (
+                    f"{expected_version} source distribution present"
+                    if source_archives
+                    else f"dist/*.tar.gz missing for {expected_version} source distribution; run python -m build"
+                ),
             )
         )
 

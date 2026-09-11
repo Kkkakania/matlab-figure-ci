@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Release preflight now requires wheel and source archives for the current
+  project version instead of accepting stale files left in `dist/`.
 - Added `release-preflight --pypi-timeout` so slow or restricted networks can
   bound the optional PyPI name query without changing other preflight checks.
 - Added Dependabot coverage for GitHub Actions and updated workflow guards so
